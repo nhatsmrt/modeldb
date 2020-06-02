@@ -286,7 +286,6 @@ class ExperimentRun(val clientSet: ClientSet, val expt: Experiment, val run: Mod
     val keyLocationMap = keyPaths.map(
       _.map(pair => (pair._1, VertamodeldbLocation(Some(pair._2.split("/").toList))))
     )
-    println(commit.commit.commit_sha)
 
     clientSet.experimentRunService.logVersionedInput(
       body = ModeldbLogVersionedInput(
