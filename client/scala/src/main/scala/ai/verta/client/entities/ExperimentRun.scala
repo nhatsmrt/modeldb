@@ -9,6 +9,7 @@ import ai.verta.client.entities.subobjects._
 import ai.verta.client.entities.utils.KVHandler
 import ai.verta.swagger._public.modeldb.model._
 import ai.verta.swagger.client.ClientSet
+import ai.verta.repository.{Commit, Repository}
 
 import scala.collection.mutable
 import scala.concurrent.duration.Duration
@@ -273,5 +274,28 @@ class ExperimentRun(val clientSet: ClientSet, val expt: Experiment, val run: Mod
           Duration.Inf
         )
       })
+  }
+
+  /** Associate a Commit with this Experiment Run
+   *  @param commit Verta commit
+   *  @param keyPaths (optional) A mapping between descriptive keys and paths of particular interest within commit. This can be useful for, say, highlighting a particular file as the training dataset used for this Experiment Run.
+   */
+  def logCommit(commit: Commit, keyPaths: Option[Map[String, String]])(implicit ec: ExecutionContext) = {
+    // convert the path to correct format for query
+    // split it, then wrapped with VertamodeldbLocation
+    val keyLocationMap = keyPaths.map(
+      _.map(pair => (pair._1, VertamodeldbLocation(Some(pair._2.split("/").toList))))
+    )
+    println(commit.commit.commit_sha)
+
+    clientSet.experimentRunService.logVersionedInput(
+      body = ModeldbLogVersionedInput(
+        id = run.id, versioned_inputs = Some(ModeldbVersioningEntry(
+          commit = commit.commit.commit_sha,
+          key_location_map = keyLocationMap,
+          repository_id = commit.repo.id
+        ))
+      )
+    )
   }
 }
