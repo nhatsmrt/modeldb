@@ -286,7 +286,6 @@ class ExperimentRun(val clientSet: ClientSet, val expt: Experiment, val run: Mod
     val keyLocationMap = keyPaths.map(
       _.map(pair => (pair._1, VertamodeldbLocation(Some(pair._2.split("/").toList))))
     )
-    println(commit.commit.commit_sha)
 
     clientSet.experimentRunService.logVersionedInput(
       body = ModeldbLogVersionedInput(
@@ -298,4 +297,26 @@ class ExperimentRun(val clientSet: ClientSet, val expt: Experiment, val run: Mod
       )
     )
   }
+
+  /** Gets the Commit associated with this Experiment Run
+   *  @return commit sha and the associated key-paths
+   */
+  def getCommit()(implicit ec: ExecutionContext): Try[CommitKeyPaths] = {
+    val response = clientSet.experimentRunService.getVersionedInputs(id = run.id)
+
+    response match {
+      case Failure(e) => Failure(e)
+      case _ => {
+        val versioningEntry = response.get.versioned_inputs.get
+        val keyPaths = versioningEntry.key_location_map.map(
+          _.map(pair => (pair._1, pair._2.location.get.mkString("/")))
+        )
+
+        Success(new CommitKeyPaths(versioningEntry.commit.get, keyPaths))
+      }
+    }
+  }
 }
+
+/** Commit and the associated key-path map. Output of ExperimentRun's getCommit */
+class CommitKeyPaths(val commitSHA: String, val keyPaths: Option[Map[String, String]])

@@ -20,7 +20,7 @@ class TestExperimentRun extends FunSuite {
     f.client.close()
   }
 
-  test("log commit") {
+  test("log and get commit") {
     val f = fixture
     val repo = f.client.getOrCreateRepository("ExpRun Repo").get
     val commit = repo.getCommitByBranch()
@@ -35,10 +35,21 @@ class TestExperimentRun extends FunSuite {
 
       val expRun = f.client.getOrCreateProject("scala test")
         .flatMap(_.getOrCreateExperiment("experiment"))
-        .flatMap(_.getOrCreateExperimentRun())
-        .flatMap(_.logCommit(commit.get, Some(Map[String, String]("mnp/qrs" -> "abc/def"))))
+        .flatMap(_.getOrCreateExperimentRun()).get
 
-      assert(expRun.isSuccess)
+      val logAttempt =
+        expRun.logCommit(commit.get, Some(Map[String, String]("mnp/qrs" -> "abc/def")))
+
+      assert(logAttempt.isSuccess)
+
+      val getCommitAttempt =
+        expRun.getCommit()
+
+      assert(getCommitAttempt.isSuccess)
+
+      val commitKeyPaths = getCommitAttempt.get
+      assert(commitKeyPaths.commitSHA.equals(commit.get.commit.commit_sha.get))
+      assert(commitKeyPaths.keyPaths.get.contains(("mnp/qrs")))
     } finally {
       f.client.deleteRepository(repo.repo.id.get.toString)
       cleanup(f)
