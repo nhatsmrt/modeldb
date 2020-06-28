@@ -183,7 +183,7 @@ object Dataset {
      component.last_modified_at_source.get,
      component.md5.get,
      component.path.get,
-     component.size.get,
+     component.size.getOrElse(0),
      versionId
    )
 
