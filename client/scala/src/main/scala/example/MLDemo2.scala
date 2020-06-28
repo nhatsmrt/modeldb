@@ -16,7 +16,7 @@ import org.apache.spark.sql.{DataFrame, SparkSession}
 import org.apache.spark.ml.feature._
 import org.apache.spark.sql.types._
 import org.apache.spark.ml.evaluation.RegressionEvaluator
-import org.apache.spark.ml.classification.LogisticRegression
+import org.apache.spark.ml.classification.{LogisticRegression, LogisticRegressionModel}
 import org.apache.spark.mllib.evaluation.MulticlassMetrics
 
 object MLDemo2 extends App {
@@ -49,7 +49,7 @@ object MLDemo2 extends App {
     val irisDF = sparkSession.read.parquet("iris/iris.parquet")
 
     // split data into train and test set:
-    val splits = irisDF.randomSplit(Array(0.8, 0.2))
+    val splits = irisDF.randomSplit(Array(0.8, 0.2), 2221999)
     val trainDF = splits(0)
     val testDF = splits(1)
 
@@ -65,8 +65,16 @@ object MLDemo2 extends App {
       .setElasticNetParam(elasticNetParam)
       .fit(trainDF)
 
+    // save the model:
+    expRun.logArtifactObj("model", model)
+
+    // load the model:
+    val loadedModel: LogisticRegressionModel = expRun.getArtifactObj("model").get match {
+      case logRegModel: LogisticRegressionModel => logRegModel
+    }
+
     // evaluate on the test set:
-    val predictionAndLabels = model
+    val predictionAndLabels = loadedModel
       .transform(testDF).cache()
 
     val predictions = predictionAndLabels.select("prediction").rdd.map(_.getDouble(0))
