@@ -15,7 +15,6 @@ import scala.concurrent.ExecutionContext
 trait Dataset extends Blob {
   protected val contents: HashMap[String, FileMetadata] // for deduplication and comparing
   private[verta] val enableMDBVersioning: Boolean // whether to version the blob with ModelDB
-  private val ChunkSize: Int = 32 * 1024 * 1024 // default chunk size, 32 MB
 
   // mutable state, populated when getting blob from commit
   /** TODO: Figure out a way to remove this */
@@ -23,10 +22,9 @@ trait Dataset extends Blob {
   private[verta] var blobPath: Option[String] = None // path to the blob in the commit
 
   /** Downloads componentPath from this dataset if ModelDB-managed versioning was enabled
-   *  Currently, only support downloading a specific component/folder to a specific path
+   *  Currently, only support downloading to a specific path
    *  @param componentPath Original path of the file or directory in this dataset to download
    *  @param downloadToPath Path to download to
-   *  @param chunkSize Number of bytes to download at a time (default: 32 MB)
    *  @return Whether the download attempts succeed.
    */
   def download(
@@ -62,11 +60,10 @@ trait Dataset extends Blob {
     val file = new File(downloadToPath)
 
     Try ({
-      file.mkdirs() // create the ancestor directories, if necessary
+      Option(file.getParentFile()).map(_.mkdirs()) // create the ancestor directories, if necessary
       file.createNewFile() // create the new file, if necessary
     })
-      .flatMap(_ => commit.get.getURLForArtifact(blobPath.get, componentPath, "GET"))
-      .flatMap(url =>  commit.get.downloadFromURL(url, file))
+      .flatMap(_ => commit.get.downloadComponent(blobPath.get, componentPath, file))
   }
 
   /** Identify components to be downloaded, along with their local destination paths.
@@ -80,11 +77,10 @@ trait Dataset extends Blob {
   ): Map[String, String] = {
     if (componentPath.isEmpty) {
       // download entire blob
-      val componentPaths = contents.keySet.toList
       val downloadToPaths =
-        componentPaths.map(comp => joinPaths(downloadToPath, removePrefixDir(comp, "s3:")))
+        listPaths.map(comp => joinPaths(downloadToPath, removePrefixDir(comp, "s3:")))
 
-      componentPaths.zip(downloadToPaths).toMap
+      listPaths.zip(downloadToPaths).toMap
     }
     else if (contents.contains(componentPath.get)) // download a component
       Map(componentPath.get -> downloadToPath)
@@ -102,9 +98,9 @@ trait Dataset extends Blob {
    *  @param path directory path
    *  @return Set of component paths inside the directory
    */
-  def getComponentPathInside(path: String): Iterable[String] = {
+  def getComponentPathInside(path: String): List[String] = {
     val dirPath = if(path.endsWith("/")) path else path + "/"
-    contents.keySet.filter(_.startsWith(dirPath))
+    listPaths.filter(_.startsWith(dirPath))
   }
 
   /** Helper to convert VersioningPathDatasetComponentBlob to FileMetadata
@@ -171,6 +167,10 @@ trait Dataset extends Blob {
   private def joinPaths(prefix: String, suffix: String): String =
     Paths.get(prefix, suffix).toString
 
+  /** Returns the paths of all components in this dataset
+   *  @return Paths of all components
+   */
+  def listPaths: List[String] = contents.keySet.toList.sorted
 }
 
 object Dataset {
@@ -180,9 +180,9 @@ object Dataset {
      component: VersioningPathDatasetComponentBlob,
      versionId: Option[String] = None
    ) = new FileMetadata(
-     component.last_modified_at_source.get,
-     component.md5.get,
-     component.path.get,
+     component.last_modified_at_source.getOrElse(0),
+     component.md5.getOrElse(""),
+     component.path.getOrElse(""),
      component.size.getOrElse(0),
      versionId
    )
