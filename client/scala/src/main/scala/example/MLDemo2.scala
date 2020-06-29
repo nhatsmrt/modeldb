@@ -88,7 +88,7 @@ object MLDemo2 extends App {
       "elasticNetParam" -> elasticNetParam
     ))
     expRun.logMetric("accuracy", metrics.accuracy)
-    expRun.logCommit(commit)
+    expRun.logCommit(commit, Some(Map("data" -> "iris")))
   } finally {
     client.close()
     deleteDirectory(new File("iris"))
