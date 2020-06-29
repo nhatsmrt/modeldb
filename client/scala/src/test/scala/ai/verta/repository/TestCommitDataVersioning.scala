@@ -14,8 +14,9 @@ import java.util.{Arrays, Random}
 
 import org.scalatest.FunSuite
 import org.scalatest.Assertions._
+import org.scalatest.prop._
 
-class TestCommitDataVersioning extends FunSuite {
+class TestCommitDataVersioning extends FunSuite with Checkers {
   implicit val ec = ExecutionContext.global
 
   def fixture =
@@ -59,8 +60,8 @@ class TestCommitDataVersioning extends FunSuite {
   }
 
   /** Generate a random file to the given path */
-  def generateRandomFile(path: String, size: Int = 1024 * 1024): Try[Array[Byte]] = {
-    val random = new Random()
+  def generateRandomFile(path: String, seed: Long, size: Int = 1024 * 1024): Try[Array[Byte]] = {
+    val random = new Random(seed)
     val contents = new Array[Byte](size)
     random.nextBytes(contents)
 
@@ -190,28 +191,40 @@ class TestCommitDataVersioning extends FunSuite {
   }
 
   test("downloading a versioned blob should recover the original content") {
-    val f = fixture
+    check((firstSeed: Long, secondSeed: Long) => {
+      val f = fixture
 
-    try {
-      val originalContent = generateRandomFile("somefile").get
-      val pathBlob = PathBlob("somefile", true).get
-      val commit = f.commit
-        .update("file", pathBlob)
-        .flatMap(_.save("some-msg")).get
+      try {
+        val originalContent = generateRandomFile("somefile", firstSeed).get
+        val pathBlob = PathBlob("somefile", true).get
+        val commit = f.commit
+          .update("file", pathBlob)
+          .flatMap(_.save("some-msg")).get
 
-      // create a new file with same name
-      val updatedContent = generateRandomFile("somefile").get
-      // check that the content is now different:
-      assert(!Files.readAllBytes((new File("somefile")).toPath).sameElements(originalContent))
+        // create a new file with same name
+        val updatedContent = generateRandomFile("somefile", secondSeed).get
+        // check that the content is now different:
+        val contentIsUpdated =
+          !Files.readAllBytes((new File("somefile")).toPath).sameElements(originalContent)
 
-      // recover the old versioned file:
-      val retrievedBlob: Dataset = commit.get("file").get match {
-        case path: PathBlob => path
+        // recover the old versioned file:
+        val retrievedBlob: Dataset = commit.get("file").get match {
+          case path: PathBlob => path
+        }
+        retrievedBlob.download(Some("somefile"), "somefile")
+        val contentIsRestored =
+          Files.readAllBytes((new File("somefile")).toPath).sameElements(originalContent)
+
+        if(!((originalContent.sameElements(updatedContent)) || (contentIsUpdated && contentIsRestored))) {
+          println(firstSeed)
+          println(secondSeed)
+          println(contentIsUpdated && contentIsRestored)
+        }
+
+        (originalContent.sameElements(updatedContent)) || (contentIsUpdated && contentIsRestored)
+      } finally {
+        cleanup(f)
       }
-      retrievedBlob.download(Some("somefile"), "somefile")
-      assert(Files.readAllBytes((new File("somefile")).toPath).sameElements(originalContent))
-    } finally {
-      cleanup(f)
-    }
+    }, minSuccessful(100))
   }
 }

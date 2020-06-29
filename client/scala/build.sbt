@@ -15,7 +15,8 @@ libraryDependencies ++= Seq(
   "net.liftweb" %% "lift-json" % "3.3.0",
   "com.softwaremill.sttp.client" %% "core" % "2.0.0-RC11",
   "com.softwaremill.sttp.client" %% "async-http-client-backend-future" % "2.0.0-RC11",
-  "com.amazonaws" % "aws-java-sdk" % "1.11.70"
+  "com.amazonaws" % "aws-java-sdk" % "1.11.70",
+  "org.scalacheck" %% "scalacheck" % "1.13.4" % "test"
 )
 
 resolvers ++= Seq(
