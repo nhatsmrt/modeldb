@@ -45,7 +45,7 @@ object MLDemo2 extends App {
                         .flatMap(_.getOrCreateExperimentRun()).get
 
     val irisBlob: Dataset = commit.get("iris").get match { case path: Dataset => path }
-    irisBlob.download(Some("/Users/nhat/Documents/data/iris/iris.parquet"), "iris/iris.parquet")
+    irisBlob.download(Some("/Users/nhat/Documents/data/iris/iris.parquet"), Some("iris/iris.parquet"))
     val irisDF = sparkSession.read.parquet("iris/iris.parquet")
 
     // split data into train and test set:
