@@ -59,8 +59,8 @@ class TestCommitDataVersioning extends FunSuite {
   }
 
   /** Generate a random file to the given path */
-  def generateRandomFile(path: String, seed: Long, size: Int = 1024 * 1024): Try[Array[Byte]] = {
-    val random = new Random(seed)
+  def generateRandomFile(path: String, size: Int = 1024 * 1024): Try[Array[Byte]] = {
+    val random = new Random()
     val contents = new Array[Byte](size)
     random.nextBytes(contents)
 
@@ -213,4 +213,5 @@ class TestCommitDataVersioning extends FunSuite {
     } finally {
       cleanup(f)
     }
+  }
 }

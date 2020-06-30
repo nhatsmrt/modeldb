@@ -82,6 +82,33 @@ class TestCommitProperty extends FunSuite with Checkers {
     }
   }
 
+  test("Property: downloading an uploaded file should retrieve the same content") {
+    check((seed: Long) => {
+      val f = fixture
+
+      try {
+        val originalContent = generateRandomFile("somefile", seed).get
+        val pathBlob = PathBlob("somefile", true).get
+
+
+        val commit = f.commit
+          .update("file", pathBlob)
+          .flatMap(_.save("some-msg")).get
+
+        // download the old versioned file:
+        val retrievedBlob: Dataset = commit.get("file").get match {
+          case path: PathBlob => path
+        }
+        retrievedBlob.download(Some("somefile"), "samefile")
+
+        checkEqualFile(new File("somefile"), new File("samefile"))
+      } finally {
+        (new File("samefile")).delete()
+        cleanup(f)
+      }
+    }, minSuccessful(100))
+  }
+
   test("Property: downloading a versioned blob should recover the original content") {
     check((firstSeed: Long, secondSeed: Long) => {
       val f = fixture
