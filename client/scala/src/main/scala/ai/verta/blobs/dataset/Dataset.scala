@@ -5,7 +5,7 @@ import ai.verta.blobs._
 
 import java.security.{MessageDigest, DigestInputStream}
 import java.io.{File, FileInputStream}
-import java.nio.file.{Path, Paths, Files}
+import java.nio.file.{Path, Paths, Files, StandardCopyOption}
 
 import scala.collection.mutable.HashMap
 import scala.util.{Failure, Success, Try}
@@ -19,7 +19,7 @@ trait Dataset extends Blob {
   /** TODO: Figure out a way to remove this */
   // Function to downwload a component, given its path in the blob, the blob's path in the commit
   // and the file pointing to local path to download to:
-  private[verta] var downloadFunction: Option[(String, String, File) => Try[Unit]] = None
+  private[verta] var downloadFunction: Option[(String, String) => Try[File]] = None
   private[verta] var blobPath: Option[String] = None // path to the blob in the commit
 
   /** Downloads componentPath from this dataset if ModelDB-managed versioning was enabled
@@ -42,15 +42,33 @@ trait Dataset extends Blob {
     else {
       val componentToLocalPath = determineComponentAndLocalPaths(componentPath, downloadToPath)
 
-      Try ({
-        componentToLocalPath.componentToLocalPath
-          .map(pair => downloadComponent(pair._1, pair._2))
-          .map(_.get)
-      }) match {
-        case Success(_) => Success(componentToLocalPath.absoluteLocalPath)
-        case Failure(e) => {
-          componentToLocalPath.componentToLocalPath.values.map(path => Try((new File(path)).delete()))
-          Failure(e)
+      if (componentToLocalPath.componentToLocalPath.isEmpty)
+        Failure(new NoSuchElementException("Components not found."))
+      else {
+        val downloadAttempts =
+          componentToLocalPath.componentToLocalPath.map(pair => pair._2 -> downloadComponent(pair._1, pair._2))
+
+        Try(downloadAttempts.mapValues(_.get)) match {
+          case Success(downloadAttempts) => {
+            // move the temporary files to correct locations:
+            downloadAttempts.foreach(pair =>
+              Files.move(
+                pair._2.toPath, // temporary file
+                Paths.get(pair._1), // correct location
+                StandardCopyOption.REPLACE_EXISTING
+              )
+            )
+
+            Success(componentToLocalPath.absoluteLocalPath)
+          }
+          case Failure(e) => {
+            // remove downloaded files:
+            downloadAttempts.values
+              .filter(file => file.isSuccess)
+              .map(file => Try(file.get.delete()))
+
+            Failure(e)
+          }
         }
       }
     }
@@ -64,19 +82,19 @@ trait Dataset extends Blob {
   private def downloadComponent(
     componentPath: String,
     downloadToPath: String
-  )(implicit ec: ExecutionContext): Try[Unit] = {
+  )(implicit ec: ExecutionContext): Try[File] = {
     val file = new File(downloadToPath)
 
     Try ({
       Option(file.getParentFile()).map(_.mkdirs()) // create the ancestor directories, if necessary
       file.createNewFile() // create the new file, if necessary
     })
-      .flatMap(_ => downloadFunction.get(blobPath.get, componentPath, file))
+      .flatMap(_ => downloadFunction.get(blobPath.get, componentPath))
   }
 
   /** Identify components to be downloaded, along with their local destination paths.
    *  @param componentPath (Optional) path to directory or file within blob.
-   *  @param downloadToPath Local path to download to
+   *  @param downloadToPath (Optional) Local path to download to
    *  @return Map of component paths to local destination paths,
    *  along with absolute local path to the downloaded file(s)
    */
