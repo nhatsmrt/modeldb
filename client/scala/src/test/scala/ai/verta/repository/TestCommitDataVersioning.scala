@@ -231,9 +231,11 @@ class TestCommitDataVersioning extends FunSuite {
       val retrievedBlob: Dataset = commit.get("file").get match {
         case path: PathBlob => path
       }
-      retrievedBlob.download(Some("somefile"))
+      val downloadToPath = retrievedBlob.download(Some("somefile")).get
+
+      assert(downloadToPath equals (new File("somefile 1")).getAbsolutePath)
       // old file should not be overritten
-      assert(Files.readAllBytes((new File("somefile 1")).toPath).sameElements(originalContent))
+      assert(Files.readAllBytes((new File(downloadToPath)).toPath).sameElements(originalContent))
       assert(!Files.readAllBytes((new File("somefile")).toPath).sameElements(originalContent))
     } finally {
       (new File("somefile 1")).delete()
@@ -256,12 +258,49 @@ class TestCommitDataVersioning extends FunSuite {
       val retrievedBlob: Dataset = commit.get("file").get match {
         case path: PathBlob => path
       }
-      retrievedBlob.download()
-      // old file should not be overritten
+      val downloadToPath = retrievedBlob.download().get
+
+      assert(downloadToPath equals (new File(f"${Dataset.DefaultDownloadDir}")).getAbsolutePath)
       assert(
-        Files.readAllBytes((new File(f"${Dataset.DefaultDownloadDir}/somefile")).toPath).sameElements(originalContent)
+        Files.readAllBytes((new File(f"${downloadToPath}/somefile")).toPath).sameElements(originalContent)
       )
     } finally {
+      cleanup(f)
+    }
+  }
+
+  test("s3 downloadToPath inference should be correct") {
+    val f = fixture
+
+    try {
+      val retrievedS3Blob: Dataset = f.commit.get("s3-blob").get match {
+        case s3Blob: S3 => s3Blob
+      }
+
+      // single file:
+      val downloadToPath = retrievedS3Blob.download(Some("s3://verta-scala-test/testdir/testfile")).get
+      assert(downloadToPath equals (new File("testfile")).getAbsolutePath)
+
+      // s3 root:
+      val downloadToPath2 = retrievedS3Blob.download(Some("s3://")).get
+      // should NOT be s3:
+      assert(downloadToPath2 equals (new File(f"${Dataset.DefaultDownloadDir}")).getAbsolutePath)
+
+      // folder:
+      val downloadToPath3 = retrievedS3Blob.download(
+        Some("s3://verta-scala-test/testdir/testsubdir/")
+      ).get
+      assert(downloadToPath3 equals (new File("testsubdir")).getAbsolutePath)
+
+      // entire blob:
+      val downloadToPath4 = retrievedS3Blob.download().get
+      // note that the default download directory is incremented to avoid overwritting:
+      assert(downloadToPath4 equals (new File(f"${Dataset.DefaultDownloadDir} 1")).getAbsolutePath)
+
+    } finally {
+      deleteDirectory(new File("testsubdir"))
+      (new File("testfile")).delete()
+      deleteDirectory((new File(f"${Dataset.DefaultDownloadDir} 1")))
       cleanup(f)
     }
   }
