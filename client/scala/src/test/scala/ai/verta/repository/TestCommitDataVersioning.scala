@@ -27,8 +27,8 @@ class TestCommitDataVersioning extends FunSuite {
         val s3Blob = S3(S3Location("s3://verta-scala-test/testdir/").get, true).get
 
         val commit = repo.getCommitByBranch()
-          .flatMap(_.update("abc", s3Blob))
-          .flatMap(_.update("def", pathBlob))
+          .flatMap(_.update("s3-blob", s3Blob))
+          .flatMap(_.update("path-blob", pathBlob))
           .flatMap(_.save("some-msg")).get
     }
 
@@ -37,6 +37,7 @@ class TestCommitDataVersioning extends FunSuite {
   ) = {
     deleteDirectory(new File("./somefiles"))
     deleteDirectory(new File("./somefiles2"))
+    deleteDirectory(new File(Dataset.DefaultDownloadDir))
 
     (new File("./somefile")).delete()
     (new File("./somefile2")).delete()
@@ -86,12 +87,12 @@ class TestCommitDataVersioning extends FunSuite {
 
     try {
       // check for s3:
-      val versionedS3Blob: S3 = f.commit.get("abc").get match {
+      val versionedS3Blob: S3 = f.commit.get("s3-blob").get match {
         case s3: S3 => s3
       }
       val downloadS3Attempt = versionedS3Blob.download(
         Some("s3://verta-scala-test/testdir/testsubdir/testfile2"),
-        "./somefile2"
+        Some("./somefile2")
       )
       assert(downloadS3Attempt.isSuccess)
       val downloadedS3MD5 = PathBlob("./somefile2").get
@@ -101,12 +102,12 @@ class TestCommitDataVersioning extends FunSuite {
       )
 
       // check for path:
-      val versionedPathBlob: PathBlob = f.commit.get("def").get match {
+      val versionedPathBlob: PathBlob = f.commit.get("path-blob").get match {
         case path: PathBlob => path
       }
       val downloadPathAttempt = versionedPathBlob.download(
         Some("./src/test/scala/ai/verta/blobs/testdir/testfile"),
-        "./somefile"
+        Some("./somefile")
       )
       assert(downloadPathAttempt.isSuccess)
       assert(checkEqualFile(
@@ -122,12 +123,12 @@ class TestCommitDataVersioning extends FunSuite {
     val f = fixture
 
     try {
-      val versionedS3Blob: S3 = f.commit.get("abc").get match {
+      val versionedS3Blob: S3 = f.commit.get("s3-blob").get match {
         case s3: S3 => s3
       }
       val downloadS3Attempt = versionedS3Blob.download(
         Some("s3://verta-scala-test/testdir/testsubdir"),
-        "./somefiles2"
+        Some("./somefiles2")
       )
       val downloadedS3MD5 = PathBlob("./somefiles2").get
       assert(
@@ -135,13 +136,13 @@ class TestCommitDataVersioning extends FunSuite {
         f.s3Blob.getMetadata("s3://verta-scala-test/testdir/testsubdir/testfile2").get.md5
       )
 
-      val versionedPathBlob: PathBlob = f.commit.get("def").get match {
+      val versionedPathBlob: PathBlob = f.commit.get("path-blob").get match {
         case path: PathBlob => path
       }
 
       versionedPathBlob.download(
         Some("./src/test/scala/ai/verta/blobs/testdir"),
-        "./somefiles"
+        Some("./somefiles")
       )
       assert(checkEqualFile(
         new File("./src/test/scala/ai/verta/blobs/testdir/testfile"),
@@ -161,20 +162,20 @@ class TestCommitDataVersioning extends FunSuite {
     val f = fixture
 
     try {
-        val versionedS3Blob: S3 = f.commit.get("abc").get match {
+        val versionedS3Blob: S3 = f.commit.get("s3-blob").get match {
           case s3: S3 => s3
         }
-        versionedS3Blob.download(downloadToPath = "./somefiles2")
+        versionedS3Blob.download(downloadToPath = Some("./somefiles2"))
         val downloadedS3MD5 = PathBlob("./somefiles2").get
         assert(
           downloadedS3MD5.getMetadata("./somefiles2/verta-scala-test/testdir/testsubdir/testfile2").get.md5 equals
           f.s3Blob.getMetadata("s3://verta-scala-test/testdir/testsubdir/testfile2").get.md5
         )
 
-        val versionedPathBlob: PathBlob = f.commit.get("def").get match {
+        val versionedPathBlob: PathBlob = f.commit.get("path-blob").get match {
           case path: PathBlob => path
         }
-        versionedPathBlob.download(downloadToPath = "./somefiles")
+        versionedPathBlob.download(downloadToPath = Some("./somefiles"))
         assert(checkEqualFile(
           new File("./src/test/scala/ai/verta/blobs/testdir/testfile"),
           new File("./somefiles/src/test/scala/ai/verta/blobs/testdir/testfile")
@@ -208,8 +209,58 @@ class TestCommitDataVersioning extends FunSuite {
       val retrievedBlob: Dataset = commit.get("file").get match {
         case path: PathBlob => path
       }
-      retrievedBlob.download(Some("somefile"), "somefile")
+      retrievedBlob.download(Some("somefile"), Some("somefile"))
       assert(Files.readAllBytes((new File("somefile")).toPath).sameElements(originalContent))
+    } finally {
+      cleanup(f)
+    }
+  }
+
+  test("if componentPath is provided but not downloadToPath, then it is used to determine the latter") {
+    val f = fixture
+
+    try {
+      val originalContent = generateRandomFile("somefile").get
+      val pathBlob = PathBlob("somefile", true).get
+      val commit = f.commit
+        .update("file", pathBlob)
+        .flatMap(_.save("some-msg")).get
+      generateRandomFile("somefile").get // change content of original file
+
+      // recover the old versioned file:
+      val retrievedBlob: Dataset = commit.get("file").get match {
+        case path: PathBlob => path
+      }
+      retrievedBlob.download(Some("somefile"))
+      // old file should not be overritten
+      assert(Files.readAllBytes((new File("somefile 1")).toPath).sameElements(originalContent))
+      assert(!Files.readAllBytes((new File("somefile")).toPath).sameElements(originalContent))
+    } finally {
+      (new File("somefile 1")).delete()
+      cleanup(f)
+    }
+  }
+
+  test("if neither is provided, then default path is used") {
+    val f = fixture
+
+    try {
+      val originalContent = generateRandomFile("somefile").get
+      val pathBlob = PathBlob("somefile", true).get
+      val commit = f.commit
+        .update("file", pathBlob)
+        .flatMap(_.save("some-msg")).get
+      generateRandomFile("somefile").get
+
+      // recover the old versioned file:
+      val retrievedBlob: Dataset = commit.get("file").get match {
+        case path: PathBlob => path
+      }
+      retrievedBlob.download()
+      // old file should not be overritten
+      assert(
+        Files.readAllBytes((new File(f"${Dataset.DefaultDownloadDir}/somefile")).toPath).sameElements(originalContent)
+      )
     } finally {
       cleanup(f)
     }
