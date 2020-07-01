@@ -14,12 +14,15 @@ import org.apache.spark.sql.{DataFrame, SparkSession}
 import org.apache.spark.ml.feature._
 import org.apache.spark.sql.types._
 import org.apache.spark.sql.SaveMode
+import org.apache.log4j.{Level, Logger}
 
 object MLDemo extends App {
   def castAll(df: DataFrame, columns: List[String], outputType: DataType): DataFrame = {
     if (columns.isEmpty) df
     else castAll(df.withColumn(columns.head, df(columns.head).cast(outputType)), columns.tail, outputType)
   }
+
+  Logger.getLogger("org").setLevel(Level.ERROR)
 
   implicit val ec = ExecutionContext.global
 
@@ -30,7 +33,7 @@ object MLDemo extends App {
     .config("spark.some.config.option", "some-value")
     .getOrCreate()
 
-  sparkSession.sparkContext.setLogLevel("OFF")
+  sparkSession.sparkContext.setLogLevel("ERROR")
 
   try {
     // Load the data:

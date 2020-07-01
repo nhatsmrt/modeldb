@@ -18,18 +18,20 @@ import org.apache.spark.sql.types._
 import org.apache.spark.ml.evaluation.RegressionEvaluator
 import org.apache.spark.ml.classification.{LogisticRegression, LogisticRegressionModel}
 import org.apache.spark.mllib.evaluation.MulticlassMetrics
+import org.apache.log4j.{Level, Logger}
 
 object MLDemo2 extends App {
+  Logger.getLogger("org").setLevel(Level.ERROR)
+
   implicit val ec = ExecutionContext.global
 
   val client = new Client(ClientConnection.fromEnvironment())
-
   val sparkSession = SparkSession.builder.master("local")
     .appName("spark session example")
     .config("spark.some.config.option", "some-value")
     .getOrCreate()
 
-  sparkSession.sparkContext.setLogLevel("OFF")
+  sparkSession.sparkContext.setLogLevel("ERROR")
 
   def deleteDirectory(dir: File): Unit = {
     Option(dir.listFiles()).map(_.foreach(deleteDirectory))
