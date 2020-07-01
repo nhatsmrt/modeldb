@@ -78,6 +78,7 @@ class Commit(
     else
       loadBlobs().flatMap(_ => {
         val blobsToVersion = blobs
+          .par // prepare for upload, upload, and clean up in parallel
           .mapValues(toMDBVersioningDataset)
           .filter(pair => pair._2.isDefined)
           .mapValues(_.get) // Map[String, Dataset]
