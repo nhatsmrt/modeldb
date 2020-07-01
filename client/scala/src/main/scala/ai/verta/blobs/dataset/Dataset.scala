@@ -13,7 +13,7 @@ import scala.concurrent.ExecutionContext
 
 trait Dataset extends Blob {
   protected val contents: HashMap[String, FileMetadata] // for deduplication and comparing
-  private[verta] val enableMDBVersioning: Boolean // whether to version the blob with ModelDB
+  val enableMDBVersioning: Boolean // whether to version the blob with ModelDB
 
   // mutable state, populated when getting blob from commit
   /** TODO: Figure out a way to remove this */
@@ -42,11 +42,11 @@ trait Dataset extends Blob {
     else {
       val componentToLocalPath = determineComponentAndLocalPaths(componentPath, downloadToPath)
 
-      if (componentToLocalPath.componentToLocalPath.isEmpty)
+      if (componentToLocalPath.componentToLocalPathMap.isEmpty)
         Failure(new NoSuchElementException("Components not found."))
       else {
         val downloadAttempts =
-          componentToLocalPath.componentToLocalPath.map(pair => pair._2 -> downloadComponent(pair._1, pair._2))
+          componentToLocalPath.componentToLocalPathMap.map(pair => pair._2 -> downloadComponent(pair._1, pair._2))
 
         Try(downloadAttempts.mapValues(_.get)) match {
           case Success(downloadAttempts) => {
