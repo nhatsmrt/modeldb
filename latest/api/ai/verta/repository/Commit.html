@@ -451,8 +451,7 @@
         <img src="../../../lib/permalink.png" alt="Permalink" />
       </a>
     </span>
-      <p class="shortcomment cmt">Merges a branch headed by other into this commit
- This method creates and returns a new Commit in ModelDB, and assigns a new ID to this object</p><div class="fullcomment"><div class="comment cmt"><p>Merges a branch headed by other into this commit
+      <p class="shortcomment cmt">Merges a branch headed by other into this commit.</p><div class="fullcomment"><div class="comment cmt"><p>Merges a branch headed by other into this commit.
  This method creates and returns a new Commit in ModelDB, and assigns a new ID to this object</p></div><dl class="paramcmts block"><dt class="param">other</dt><dd class="cmt"><p>Commit to be merged</p></dd><dt class="param">message</dt><dd class="cmt"><p>Description of the merge. If not provided, a default message will be used</p></dd><dt>returns</dt><dd class="cmt"><p>Failure if this commit or other has not yet been saved, or if they do not belong to the same Repository; the merged commit otherwise.</p></dd></dl></div>
     </li><li name="scala.AnyRef#ne" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
       <a id="ne(x$1:AnyRef):Boolean"></a>
@@ -575,7 +574,7 @@
       </a>
     </span>
       <p class="shortcomment cmt">Reverts other.</p><div class="fullcomment"><div class="comment cmt"><p>Reverts other.
- This method creates and returns a new Commit in ModelDB, and assigns a new ID to this object
+ This method creates and returns a new Commit in ModelDB, and assigns a new ID to this object.
  Currently reverting a merge commit is not supported. Unexpected behavior might occur.</p></div><dl class="paramcmts block"><dt class="param">other</dt><dd class="cmt"><p>Base for the revert. If not provided, this commit will be reverted</p></dd><dt class="param">message</dt><dd class="cmt"><p>Description of the revert. If not provided, a default message will be used</p></dd><dt>returns</dt><dd class="cmt"><p>The new commit, with the changes in other reverted, if suceeds. Failure if this commit or other has not yet been saved, or if they do not belong to the same Repository.</p></dd></dl></div>
     </li><li name="ai.verta.repository.Commit#save" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
       <a id="save(message:String)(implicitec:scala.concurrent.ExecutionContext):scala.util.Try[ai.verta.repository.Commit]"></a>
@@ -661,8 +660,7 @@
         <img src="../../../lib/permalink.png" alt="Permalink" />
       </a>
     </span>
-      <p class="shortcomment cmt">Adds blob to this commit at path
- If path is already in this Commit, it will be updated to the new blob</p><div class="fullcomment"><div class="comment cmt"><p>Adds blob to this commit at path
+      <p class="shortcomment cmt">Adds blob to this commit at path.</p><div class="fullcomment"><div class="comment cmt"><p>Adds blob to this commit at path.
  If path is already in this Commit, it will be updated to the new blob</p></div><dl class="paramcmts block"><dt class="param">path</dt><dd class="cmt"><p>Location to add blob to</p></dd><dt class="param">blob</dt><dd class="cmt"><p>Instance of Blob subclass.</p></dd><dt>returns</dt><dd class="cmt"><p>The new commit, if succeeds.</p></dd></dl></div>
     </li><li name="scala.AnyRef#wait" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
       <a id="wait():Unit"></a>
