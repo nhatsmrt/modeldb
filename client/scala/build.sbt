@@ -1,6 +1,6 @@
 import Dependencies._
 
-ThisBuild / scalaVersion := "2.11.12"
+ThisBuild / scalaVersion := "2.12.11"
 ThisBuild / version := "1.0.0"
 ThisBuild / organization := "ai.verta"
 ThisBuild / organizationName := "verta"
