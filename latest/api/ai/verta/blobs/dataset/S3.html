@@ -51,7 +51,7 @@
       </span>
       </h4>
       
-          <div id="comment" class="fullcommenttop"><div class="comment cmt"><p>Captures metadata about S3 objects
+          <div id="comment" class="fullcommenttop"><div class="comment cmt"><p>Captures metadata about S3 objects.
  Please set up AWS_ACCESS_KEY_ID, AWS_SECRET_ACCESS_KEY, and AWS_REGION environment variables before use.
  To create a new instance, use the constructor taking a list of S3 Locations or a single location</p><pre><span class="kw">val</span> s3Blob: Try[S3] = S3(<span class="std">List</span>(S3Location(<span class="lit">"some-path-1"</span>).get, S3Location(<span class="lit">"some-path-2"</span>).get))
 <span class="kw">val</span> s3Blob2: Try[S3] = S3(S3Location(<span class="lit">"some-path"</span>))</pre></div><div class="toggleContainer block">

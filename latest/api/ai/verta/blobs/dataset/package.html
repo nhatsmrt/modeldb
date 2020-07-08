@@ -138,8 +138,7 @@
         <img src="../../../../lib/permalink.png" alt="Permalink" />
       </a>
     </span>
-      <p class="shortcomment cmt">Captures metadata about S3 objects
- Please set up AWS_ACCESS_KEY_ID, AWS_SECRET_ACCESS_KEY, and AWS_REGION environment variables before use.</p><div class="fullcomment"><div class="comment cmt"><p>Captures metadata about S3 objects
+      <p class="shortcomment cmt">Captures metadata about S3 objects.</p><div class="fullcomment"><div class="comment cmt"><p>Captures metadata about S3 objects.
  Please set up AWS_ACCESS_KEY_ID, AWS_SECRET_ACCESS_KEY, and AWS_REGION environment variables before use.
  To create a new instance, use the constructor taking a list of S3 Locations or a single location</p><pre><span class="kw">val</span> s3Blob: Try[S3] = S3(<span class="std">List</span>(S3Location(<span class="lit">"some-path-1"</span>).get, S3Location(<span class="lit">"some-path-2"</span>).get))
 <span class="kw">val</span> s3Blob2: Try[S3] = S3(S3Location(<span class="lit">"some-path"</span>))</pre></div></div>
@@ -159,8 +158,7 @@
         <img src="../../../../lib/permalink.png" alt="Permalink" />
       </a>
     </span>
-      <p class="shortcomment cmt">A location in S3
- To initialize, pass in an S3 path and (optionally) a version ID:</p><div class="fullcomment"><div class="comment cmt"><p>A location in S3
+      <p class="shortcomment cmt">A location in S3.</p><div class="fullcomment"><div class="comment cmt"><p>A location in S3.
  To initialize, pass in an S3 path and (optionally) a version ID:</p><pre><span class="kw">val</span> S3Location: Try[S3Location] = S3Location(<span class="lit">"some-path-1"</span>)</pre></div></div>
     </li></ol>
             </div>
