@@ -1,0 +1,268 @@
+<!DOCTYPE html >
+<html>
+        <head>
+          <title>dataset - ai.verta.blobs.dataset</title>
+          <meta name="description" content="dataset - ai.verta.blobs.dataset" />
+          <meta name="keywords" content="dataset ai.verta.blobs.dataset" />
+          <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+          
+      <link href="../../../../lib/template.css" media="screen" type="text/css" rel="stylesheet" />
+      <link href="../../../../lib/diagrams.css" media="screen" type="text/css" rel="stylesheet" id="diagrams-css" />
+      <script type="text/javascript" src="../../../../lib/jquery.js" id="jquery-js"></script>
+      <script type="text/javascript" src="../../../../lib/jquery-ui.js"></script>
+      <script type="text/javascript" src="../../../../lib/template.js"></script>
+      <script type="text/javascript" src="../../../../lib/tools.tooltip.js"></script>
+      
+      <script type="text/javascript">
+         if(top === self) {
+            var url = '../../../../index.html';
+            var hash = 'ai.verta.blobs.dataset.package';
+            var anchor = window.location.hash;
+            var anchor_opt = '';
+            if (anchor.length >= 1)
+              anchor_opt = '@' + anchor.substring(1);
+            window.location.href = url + '#' + hash + anchor_opt;
+         }
+   	  </script>
+    
+        </head>
+        <body class="value">
+      <div id="definition">
+        <img alt="Package" src="../../../../lib/package_big.png" />
+        <p id="owner"><a href="../../../package.html" class="extype" name="ai">ai</a>.<a href="../../package.html" class="extype" name="ai.verta">verta</a>.<a href="../package.html" class="extype" name="ai.verta.blobs">blobs</a></p>
+        <h1>dataset</h1><span class="permalink">
+      <a href="../../../../index.html#ai.verta.blobs.dataset.package" title="Permalink" target="_top">
+        <img src="../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      </div>
+
+      <h4 id="signature" class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">package</span>
+      </span>
+      <span class="symbol">
+        <span class="name">dataset</span>
+      </span>
+      </h4>
+      
+          <div id="comment" class="fullcommenttop"></div>
+        
+
+      <div id="mbrsel">
+        <div id="textfilter"><span class="pre"></span><span class="input"><input id="mbrsel-input" type="text" accesskey="/" /></span><span class="post"></span></div>
+        
+        
+        <div id="visbl">
+            <span class="filtertype">Visibility</span>
+            <ol><li class="public in"><span>Public</span></li><li class="all out"><span>All</span></li></ol>
+          </div>
+      </div>
+
+      <div id="template">
+        <div id="allMembers">
+        
+
+        <div id="types" class="types members">
+              <h3>Type Members</h3>
+              <ol><li name="ai.verta.blobs.dataset.Dataset" visbl="pub" data-isabs="true" fullComment="no" group="Ungrouped">
+      <a id="DatasetextendsBlob"></a>
+      <a id="Dataset:Dataset"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">trait</span>
+      </span>
+      <span class="symbol">
+        <a href="Dataset.html"><span class="name">Dataset</span></a><span class="result"> extends <a href="../Blob.html" class="extype" name="ai.verta.blobs.Blob">Blob</a></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../index.html#ai.verta.blobs.dataset.package@DatasetextendsBlob" title="Permalink" target="_top">
+        <img src="../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      
+    </li><li name="ai.verta.blobs.dataset.FileMetadata" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="FileMetadataextendsProductwithSerializable"></a>
+      <a id="FileMetadata:FileMetadata"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">case class</span>
+      </span>
+      <span class="symbol">
+        <a href="FileMetadata.html"><span class="name">FileMetadata</span></a><span class="params">(<span name="lastModified">lastModified: <span class="extype" name="scala.BigInt">BigInt</span></span>, <span name="md5">md5: <span class="extype" name="scala.Predef.String">String</span></span>, <span name="path">path: <span class="extype" name="scala.Predef.String">String</span></span>, <span name="size">size: <span class="extype" name="scala.BigInt">BigInt</span></span>, <span name="versionId">versionId: <span class="extype" name="scala.Option">Option</span>[<span class="extype" name="scala.Predef.String">String</span>] = <span class="symbol">None</span></span>)</span><span class="result"> extends <span class="extype" name="scala.Product">Product</span> with <span class="extype" name="scala.Serializable">Serializable</span></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../index.html#ai.verta.blobs.dataset.package@FileMetadataextendsProductwithSerializable" title="Permalink" target="_top">
+        <img src="../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      <p class="shortcomment cmt">Represent a file's metadata stored in Dataset Blob</p><div class="fullcomment"><div class="comment cmt"><p>Represent a file's metadata stored in Dataset Blob</p></div><dl class="paramcmts block"><dt class="param">lastModified</dt><dd class="cmt"><p>last time file was modified</p></dd><dt class="param">md5</dt><dd class="cmt"><p>MD5 hash of the file</p></dd><dt class="param">path</dt><dd class="cmt"><p>path of the file</p></dd><dt class="param">size</dt><dd class="cmt"><p>size of the file</p></dd></dl></div>
+    </li><li name="ai.verta.blobs.dataset.PathBlob" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="PathBlobextendsDatasetwithProductwithSerializable"></a>
+      <a id="PathBlob:PathBlob"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">case class</span>
+      </span>
+      <span class="symbol">
+        <a href="PathBlob.html"><span class="name">PathBlob</span></a><span class="params">(<span name="contents">contents: <span class="extype" name="scala.collection.mutable.HashMap">HashMap</span>[<span class="extype" name="scala.Predef.String">String</span>, <a href="FileMetadata.html" class="extype" name="ai.verta.blobs.dataset.FileMetadata">FileMetadata</a>]</span>, <span name="enableMDBVersioning">enableMDBVersioning: <span class="extype" name="scala.Boolean">Boolean</span> = <span class="symbol">false</span></span>)</span><span class="result"> extends <a href="Dataset.html" class="extype" name="ai.verta.blobs.dataset.Dataset">Dataset</a> with <span class="extype" name="scala.Product">Product</span> with <span class="extype" name="scala.Serializable">Serializable</span></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../index.html#ai.verta.blobs.dataset.package@PathBlobextendsDatasetwithProductwithSerializable" title="Permalink" target="_top">
+        <img src="../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      <p class="shortcomment cmt">Captures metadata about files
+ To create a new instance, use the constructor taking a list of paths (each is a string) or a single path:</p><div class="fullcomment"><div class="comment cmt"><p>Captures metadata about files
+ To create a new instance, use the constructor taking a list of paths (each is a string) or a single path:</p><pre><span class="kw">val</span> pathList = <span class="std">List</span>(<span class="lit">"some-path1"</span>, <span class="lit">"some-path2"</span>)
+<span class="kw">val</span> pathBlob: Try[PathBlob] = PathBlob(pathList)
+<span class="kw">val</span> pathBlob2: Try[PathBlob] = PathBlob(<span class="lit">"some-other-path"</span>)</pre><p> If an invalid path is passed to the constructor, it will return a failure.
+</p></div></div>
+    </li><li name="ai.verta.blobs.dataset.S3" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="S3extendsDatasetwithProductwithSerializable"></a>
+      <a id="S3:S3"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">case class</span>
+      </span>
+      <span class="symbol">
+        <a href="S3.html"><span class="name">S3</span></a><span class="params">(<span name="contents">contents: <span class="extype" name="scala.collection.mutable.HashMap">HashMap</span>[<span class="extype" name="scala.Predef.String">String</span>, <a href="FileMetadata.html" class="extype" name="ai.verta.blobs.dataset.FileMetadata">FileMetadata</a>]</span>, <span name="enableMDBVersioning">enableMDBVersioning: <span class="extype" name="scala.Boolean">Boolean</span> = <span class="symbol">false</span></span>)</span><span class="result"> extends <a href="Dataset.html" class="extype" name="ai.verta.blobs.dataset.Dataset">Dataset</a> with <span class="extype" name="scala.Product">Product</span> with <span class="extype" name="scala.Serializable">Serializable</span></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../index.html#ai.verta.blobs.dataset.package@S3extendsDatasetwithProductwithSerializable" title="Permalink" target="_top">
+        <img src="../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      <p class="shortcomment cmt">Captures metadata about S3 objects
+ Please set up AWS_ACCESS_KEY_ID, AWS_SECRET_ACCESS_KEY, and AWS_REGION environment variables before use.</p><div class="fullcomment"><div class="comment cmt"><p>Captures metadata about S3 objects
+ Please set up AWS_ACCESS_KEY_ID, AWS_SECRET_ACCESS_KEY, and AWS_REGION environment variables before use.
+ To create a new instance, use the constructor taking a list of S3 Locations or a single location</p><pre><span class="kw">val</span> s3Blob: Try[S3] = S3(<span class="std">List</span>(S3Location(<span class="lit">"some-path-1"</span>).get, S3Location(<span class="lit">"some-path-2"</span>).get))
+<span class="kw">val</span> s3Blob2: Try[S3] = S3(S3Location(<span class="lit">"some-path"</span>))</pre></div></div>
+    </li><li name="ai.verta.blobs.dataset.S3Location" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="S3LocationextendsAnyRef"></a>
+      <a id="S3Location:S3Location"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">class</span>
+      </span>
+      <span class="symbol">
+        <a href="S3Location.html"><span class="name">S3Location</span></a><span class="result"> extends <span class="extype" name="scala.AnyRef">AnyRef</span></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../index.html#ai.verta.blobs.dataset.package@S3LocationextendsAnyRef" title="Permalink" target="_top">
+        <img src="../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      <p class="shortcomment cmt">A location in S3
+ To initialize, pass in an S3 path and (optionally) a version ID:</p><div class="fullcomment"><div class="comment cmt"><p>A location in S3
+ To initialize, pass in an S3 path and (optionally) a version ID:</p><pre><span class="kw">val</span> S3Location: Try[S3Location] = S3Location(<span class="lit">"some-path-1"</span>)</pre></div></div>
+    </li></ol>
+            </div>
+
+        
+
+        <div id="values" class="values members">
+              <h3>Value Members</h3>
+              <ol><li name="ai.verta.blobs.dataset.Dataset" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
+      <a id="Dataset"></a>
+      <a id="Dataset:Dataset"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">object</span>
+      </span>
+      <span class="symbol">
+        <a href="Dataset$.html"><span class="name">Dataset</span></a>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../index.html#ai.verta.blobs.dataset.package@Dataset" title="Permalink" target="_top">
+        <img src="../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      
+    </li><li name="ai.verta.blobs.dataset.PathBlob" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
+      <a id="PathBlob"></a>
+      <a id="PathBlob:PathBlob"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">object</span>
+      </span>
+      <span class="symbol">
+        <a href="PathBlob$.html"><span class="name">PathBlob</span></a><span class="result"> extends <span class="extype" name="scala.Serializable">Serializable</span></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../index.html#ai.verta.blobs.dataset.package@PathBlob" title="Permalink" target="_top">
+        <img src="../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      <p class="shortcomment cmt">Companion object to initialize instances and handle interaction with versioning blob</p>
+    </li><li name="ai.verta.blobs.dataset.S3" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
+      <a id="S3"></a>
+      <a id="S3:S3"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">object</span>
+      </span>
+      <span class="symbol">
+        <a href="S3$.html"><span class="name">S3</span></a><span class="result"> extends <span class="extype" name="scala.Serializable">Serializable</span></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../index.html#ai.verta.blobs.dataset.package@S3" title="Permalink" target="_top">
+        <img src="../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      <p class="shortcomment cmt">Companion object to handle interaction with versioning blob</p>
+    </li><li name="ai.verta.blobs.dataset.S3Location" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
+      <a id="S3Location"></a>
+      <a id="S3Location:S3Location"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">object</span>
+      </span>
+      <span class="symbol">
+        <a href="S3Location$.html"><span class="name">S3Location</span></a>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../index.html#ai.verta.blobs.dataset.package@S3Location" title="Permalink" target="_top">
+        <img src="../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      
+    </li></ol>
+            </div>
+
+        
+
+        
+        </div>
+
+        <div id="inheritedMembers">
+        
+        
+        </div>
+
+        <div id="groupedMembers">
+        <div class="group" name="Ungrouped">
+              <h3>Ungrouped</h3>
+              
+            </div>
+        </div>
+
+      </div>
+
+      <div id="tooltip"></div>
+
+      <div id="footer">  </div>
+
+
+    </body>
+      </html>

@@ -1,0 +1,833 @@
+<!DOCTYPE html >
+<html>
+        <head>
+          <title>client - sttp.client</title>
+          <meta name="description" content="client - sttp.client" />
+          <meta name="keywords" content="client sttp.client" />
+          <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+          
+      <link href="../../lib/template.css" media="screen" type="text/css" rel="stylesheet" />
+      <link href="../../lib/diagrams.css" media="screen" type="text/css" rel="stylesheet" id="diagrams-css" />
+      <script type="text/javascript" src="../../lib/jquery.js" id="jquery-js"></script>
+      <script type="text/javascript" src="../../lib/jquery-ui.js"></script>
+      <script type="text/javascript" src="../../lib/template.js"></script>
+      <script type="text/javascript" src="../../lib/tools.tooltip.js"></script>
+      
+      <script type="text/javascript">
+         if(top === self) {
+            var url = '../../index.html';
+            var hash = 'sttp.client.package';
+            var anchor = window.location.hash;
+            var anchor_opt = '';
+            if (anchor.length >= 1)
+              anchor_opt = '@' + anchor.substring(1);
+            window.location.href = url + '#' + hash + anchor_opt;
+         }
+   	  </script>
+    
+        </head>
+        <body class="value">
+      <div id="definition">
+        <img alt="Package" src="../../lib/package_big.png" />
+        <p id="owner"><a href="../package.html" class="extype" name="sttp">sttp</a></p>
+        <h1>client</h1><span class="permalink">
+      <a href="../../index.html#sttp.client.package" title="Permalink" target="_top">
+        <img src="../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      </div>
+
+      <h4 id="signature" class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">package</span>
+      </span>
+      <span class="symbol">
+        <span class="name">client</span>
+      </span>
+      </h4>
+      
+          <div id="comment" class="fullcommenttop"><div class="toggleContainer block">
+          <span class="toggle">Linear Supertypes</span>
+          <div class="superTypes hiddenContent"><span class="extype" name="sttp.client.SttpApi">SttpApi</span>, <span class="extype" name="sttp.model.UriInterpolator">UriInterpolator</span>, <span class="extype" name="sttp.client.SttpExtensions">SttpExtensions</span>, <span class="extype" name="scala.AnyRef">AnyRef</span>, <span class="extype" name="scala.Any">Any</span></div>
+        </div></div>
+        
+
+      <div id="mbrsel">
+        <div id="textfilter"><span class="pre"></span><span class="input"><input id="mbrsel-input" type="text" accesskey="/" /></span><span class="post"></span></div>
+        <div id="order">
+              <span class="filtertype">Ordering</span>
+              <ol>
+                
+                <li class="alpha in"><span>Alphabetic</span></li>
+                <li class="inherit out"><span>By Inheritance</span></li>
+              </ol>
+            </div>
+        <div id="ancestors">
+                <span class="filtertype">Inherited<br />
+                </span>
+                <ol id="linearization">
+                  <li class="in" name="sttp.client"><span>client</span></li><li class="in" name="sttp.client.SttpApi"><span>SttpApi</span></li><li class="in" name="sttp.model.UriInterpolator"><span>UriInterpolator</span></li><li class="in" name="sttp.client.SttpExtensions"><span>SttpExtensions</span></li><li class="in" name="scala.AnyRef"><span>AnyRef</span></li><li class="in" name="scala.Any"><span>Any</span></li>
+                </ol>
+              </div><div id="ancestors">
+            <span class="filtertype"></span>
+            <ol>
+              <li class="hideall out"><span>Hide All</span></li>
+              <li class="showall in"><span>Show All</span></li>
+            </ol>
+          </div>
+        <div id="visbl">
+            <span class="filtertype">Visibility</span>
+            <ol><li class="public in"><span>Public</span></li><li class="all out"><span>All</span></li></ol>
+          </div>
+      </div>
+
+      <div id="template">
+        <div id="allMembers">
+        
+
+        <div id="types" class="types members">
+              <h3>Type Members</h3>
+              <ol><li name="sttp.client.BodySerializer" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
+      <a id="BodySerializer[B&lt;:&lt;?&gt;]=B=&gt;sttp.client.BasicRequestBody"></a>
+      <a id="BodySerializer[B]:BodySerializer[B]"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">type</span>
+      </span>
+      <span class="symbol">
+        <span class="name">BodySerializer</span><span class="tparams">[<span name="B">B</span>]</span><span class="result"> = (<span class="extype" name="sttp.client.BodySerializer.B">B</span>) ⇒ <span class="extype" name="sttp.client.BasicRequestBody">BasicRequestBody</span></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../index.html#sttp.client.package@BodySerializer[B]=B=&gt;sttp.client.BasicRequestBody" title="Permalink" target="_top">
+        <img src="../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      
+    </li><li name="sttp.client.Empty" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
+      <a id="Empty[X&lt;:&lt;?&gt;]=None.type"></a>
+      <a id="Empty[X]:Empty[X]"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">type</span>
+      </span>
+      <span class="symbol">
+        <span class="name">Empty</span><span class="tparams">[<span name="X">X</span>]</span><span class="result"> = <span class="extype" name="scala.None">None</span>.type</span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../index.html#sttp.client.package@Empty[X]=None.type" title="Permalink" target="_top">
+        <img src="../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      
+    </li><li name="sttp.client.Identity" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
+      <a id="Identity[X]=X"></a>
+      <a id="Identity[X]:Identity[X]"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">type</span>
+      </span>
+      <span class="symbol">
+        <span class="name">Identity</span><span class="tparams">[<span name="X">X</span>]</span><span class="result"> = <span class="extype" name="sttp.client.Identity.X">X</span></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../index.html#sttp.client.package@Identity[X]=X" title="Permalink" target="_top">
+        <img src="../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      
+    </li><li name="sttp.client.NothingT" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
+      <a id="NothingT[X&lt;:&lt;?&gt;]=Nothing"></a>
+      <a id="NothingT[X]:NothingT[X]"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">type</span>
+      </span>
+      <span class="symbol">
+        <span class="name">NothingT</span><span class="tparams">[<span name="X">X</span>]</span><span class="result"> = <span class="extype" name="scala.Nothing">Nothing</span></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../index.html#sttp.client.package@NothingT[X]=Nothing" title="Permalink" target="_top">
+        <img src="../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      
+    </li><li name="sttp.client.PartialRequest" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
+      <a id="PartialRequest[T&lt;:&lt;?&gt;,+S&lt;:&lt;?&gt;]=sttp.client.RequestT[sttp.client.package.Empty,T,S]"></a>
+      <a id="PartialRequest[T,+S]:PartialRequest[T,S]"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">type</span>
+      </span>
+      <span class="symbol">
+        <span class="name">PartialRequest</span><span class="tparams">[<span name="T">T</span>, <span name="S">+S</span>]</span><span class="result"> = <span class="extype" name="sttp.client.RequestT">RequestT</span>[<a href="#Empty[X]=None.type" class="extmbr" name="sttp.client.Empty">Empty</a>, <span class="extype" name="sttp.client.PartialRequest.T">T</span>, <span class="extype" name="sttp.client.PartialRequest.S">S</span>]</span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../index.html#sttp.client.package@PartialRequest[T,+S]=sttp.client.RequestT[sttp.client.package.Empty,T,S]" title="Permalink" target="_top">
+        <img src="../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      
+    </li><li name="sttp.client.Request" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
+      <a id="Request[T,+S]=sttp.client.RequestT[sttp.client.package.Identity,T,S]"></a>
+      <a id="Request[T,+S]:Request[T,S]"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">type</span>
+      </span>
+      <span class="symbol">
+        <span class="name">Request</span><span class="tparams">[<span name="T">T</span>, <span name="S">+S</span>]</span><span class="result"> = <span class="extype" name="sttp.client.RequestT">RequestT</span>[<a href="#Identity[X]=X" class="extmbr" name="sttp.client.Identity">Identity</a>, <span class="extype" name="sttp.client.Request.T">T</span>, <span class="extype" name="sttp.client.Request.S">S</span>]</span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../index.html#sttp.client.package@Request[T,+S]=sttp.client.RequestT[sttp.client.package.Identity,T,S]" title="Permalink" target="_top">
+        <img src="../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      
+    </li><li name="sttp.client.RetryWhen" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
+      <a id="RetryWhen=(sttp.client.package.Request[_,_],Either[Throwable,sttp.client.Response[_]])=&gt;Boolean"></a>
+      <a id="RetryWhen:RetryWhen"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">type</span>
+      </span>
+      <span class="symbol">
+        <span class="name">RetryWhen</span><span class="result"> = (<a href="#Request[T,+S]=sttp.client.RequestT[sttp.client.package.Identity,T,S]" class="extmbr" name="sttp.client.Request">Request</a>[_, _], <span class="extype" name="scala.Either">Either</span>[<span class="extype" name="scala.Throwable">Throwable</span>, <span class="extype" name="sttp.client.Response">Response</span>[_]]) ⇒ <span class="extype" name="scala.Boolean">Boolean</span></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../index.html#sttp.client.package@RetryWhen=(sttp.client.package.Request[_,_],Either[Throwable,sttp.client.Response[_]])=&gt;Boolean" title="Permalink" target="_top">
+        <img src="../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      
+    </li><li name="sttp.model.UriInterpolator.UriContext" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="UriContextextendsAnyRef"></a>
+      <a id="UriContext:UriContext"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier">implicit </span>
+        <span class="kind">class</span>
+      </span>
+      <span class="symbol">
+        <span class="name">UriContext</span><span class="result"> extends <span class="extype" name="scala.AnyRef">AnyRef</span></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../index.html#sttp.client.package@UriContextextendsAnyRef" title="Permalink" target="_top">
+        <img src="../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>UriInterpolator</dd></dl></div>
+    </li></ol>
+            </div>
+
+        
+
+        <div id="values" class="values members">
+              <h3>Value Members</h3>
+              <ol><li name="sttp.client.SttpApi#DefaultReadTimeout" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="DefaultReadTimeout:scala.concurrent.duration.Duration"></a>
+      <a id="DefaultReadTimeout:Duration"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">val</span>
+      </span>
+      <span class="symbol">
+        <span class="name">DefaultReadTimeout</span><span class="result">: <span class="extype" name="scala.concurrent.duration.Duration">Duration</span></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../index.html#sttp.client.package@DefaultReadTimeout:scala.concurrent.duration.Duration" title="Permalink" target="_top">
+        <img src="../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>SttpApi</dd></dl></div>
+    </li><li name="sttp.client.SttpApi#asByteArray" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="asByteArray:sttp.client.ResponseAs[Either[String,Array[Byte]],Nothing]"></a>
+      <a id="asByteArray:ResponseAs[Either[String,Array[Byte]],Nothing]"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">asByteArray</span><span class="result">: <span class="extype" name="sttp.client.ResponseAs">ResponseAs</span>[<span class="extype" name="scala.Either">Either</span>[<span class="extype" name="scala.Predef.String">String</span>, <span class="extype" name="scala.Array">Array</span>[<span class="extype" name="scala.Byte">Byte</span>]], <span class="extype" name="scala.Nothing">Nothing</span>]</span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../index.html#sttp.client.package@asByteArray:sttp.client.ResponseAs[Either[String,Array[Byte]],Nothing]" title="Permalink" target="_top">
+        <img src="../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>SttpApi</dd></dl></div>
+    </li><li name="sttp.client.SttpApi#asByteArrayAlways" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="asByteArrayAlways:sttp.client.ResponseAs[Array[Byte],Nothing]"></a>
+      <a id="asByteArrayAlways:ResponseAs[Array[Byte],Nothing]"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">asByteArrayAlways</span><span class="result">: <span class="extype" name="sttp.client.ResponseAs">ResponseAs</span>[<span class="extype" name="scala.Array">Array</span>[<span class="extype" name="scala.Byte">Byte</span>], <span class="extype" name="scala.Nothing">Nothing</span>]</span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../index.html#sttp.client.package@asByteArrayAlways:sttp.client.ResponseAs[Array[Byte],Nothing]" title="Permalink" target="_top">
+        <img src="../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>SttpApi</dd></dl></div>
+    </li><li name="sttp.client.SttpApi#asEither" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="asEither[L&lt;:&lt;?&gt;,R&lt;:&lt;?&gt;,S&lt;:&lt;?&gt;](onError:&lt;?&gt;,onSuccess:&lt;?&gt;):sttp.client.ResponseAs[Either[L,R],S]"></a>
+      <a id="asEither[L,R,S](ResponseAs[L,S],ResponseAs[R,S]):ResponseAs[Either[L,R],S]"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">asEither</span><span class="tparams">[<span name="L">L</span>, <span name="R">R</span>, <span name="S">S</span>]</span><span class="params">(<span name="onError">onError: <span class="extype" name="sttp.client.ResponseAs">ResponseAs</span>[<span class="extype" name="sttp.client.SttpApi.asEither.L">L</span>, <span class="extype" name="sttp.client.SttpApi.asEither.S">S</span>]</span>, <span name="onSuccess">onSuccess: <span class="extype" name="sttp.client.ResponseAs">ResponseAs</span>[<span class="extype" name="sttp.client.SttpApi.asEither.R">R</span>, <span class="extype" name="sttp.client.SttpApi.asEither.S">S</span>]</span>)</span><span class="result">: <span class="extype" name="sttp.client.ResponseAs">ResponseAs</span>[<span class="extype" name="scala.Either">Either</span>[<span class="extype" name="sttp.client.SttpApi.asEither.L">L</span>, <span class="extype" name="sttp.client.SttpApi.asEither.R">R</span>], <span class="extype" name="sttp.client.SttpApi.asEither.S">S</span>]</span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../index.html#sttp.client.package@asEither[L,R,S](onError:sttp.client.ResponseAs[L,S],onSuccess:sttp.client.ResponseAs[R,S]):sttp.client.ResponseAs[Either[L,R],S]" title="Permalink" target="_top">
+        <img src="../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>SttpApi</dd></dl></div>
+    </li><li name="sttp.client.SttpExtensions#asFile" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="asFile(file:&lt;?&gt;):sttp.client.ResponseAs[Either[String,java.io.File],Nothing]"></a>
+      <a id="asFile(File):ResponseAs[Either[String,File],Nothing]"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">asFile</span><span class="params">(<span name="file">file: <span class="extype" name="java.io.File">File</span></span>)</span><span class="result">: <span class="extype" name="sttp.client.ResponseAs">ResponseAs</span>[<span class="extype" name="scala.Either">Either</span>[<span class="extype" name="scala.Predef.String">String</span>, <span class="extype" name="java.io.File">File</span>], <span class="extype" name="scala.Nothing">Nothing</span>]</span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../index.html#sttp.client.package@asFile(file:java.io.File):sttp.client.ResponseAs[Either[String,java.io.File],Nothing]" title="Permalink" target="_top">
+        <img src="../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>SttpExtensions</dd></dl></div>
+    </li><li name="sttp.client.SttpExtensions#asFileAlways" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="asFileAlways(file:&lt;?&gt;):sttp.client.ResponseAs[java.io.File,Nothing]"></a>
+      <a id="asFileAlways(File):ResponseAs[File,Nothing]"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">asFileAlways</span><span class="params">(<span name="file">file: <span class="extype" name="java.io.File">File</span></span>)</span><span class="result">: <span class="extype" name="sttp.client.ResponseAs">ResponseAs</span>[<span class="extype" name="java.io.File">File</span>, <span class="extype" name="scala.Nothing">Nothing</span>]</span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../index.html#sttp.client.package@asFileAlways(file:java.io.File):sttp.client.ResponseAs[java.io.File,Nothing]" title="Permalink" target="_top">
+        <img src="../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>SttpExtensions</dd></dl></div>
+    </li><li name="sttp.client.SttpApi#asParams" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="asParams(charset:&lt;?&gt;):sttp.client.ResponseAs[Either[String,scala.collection.immutable.Seq[(String,String)]],Nothing]"></a>
+      <a id="asParams(String):ResponseAs[Either[String,Seq[(String,String)]],Nothing]"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">asParams</span><span class="params">(<span name="charset">charset: <span class="extype" name="scala.Predef.String">String</span></span>)</span><span class="result">: <span class="extype" name="sttp.client.ResponseAs">ResponseAs</span>[<span class="extype" name="scala.Either">Either</span>[<span class="extype" name="scala.Predef.String">String</span>, <span class="extype" name="scala.collection.immutable.Seq">Seq</span>[(<span class="extype" name="scala.Predef.String">String</span>, <span class="extype" name="scala.Predef.String">String</span>)]], <span class="extype" name="scala.Nothing">Nothing</span>]</span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../index.html#sttp.client.package@asParams(charset:String):sttp.client.ResponseAs[Either[String,scala.collection.immutable.Seq[(String,String)]],Nothing]" title="Permalink" target="_top">
+        <img src="../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>SttpApi</dd></dl></div>
+    </li><li name="sttp.client.SttpApi#asParams" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="asParams:sttp.client.ResponseAs[Either[String,scala.collection.immutable.Seq[(String,String)]],Nothing]"></a>
+      <a id="asParams:ResponseAs[Either[String,Seq[(String,String)]],Nothing]"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">asParams</span><span class="result">: <span class="extype" name="sttp.client.ResponseAs">ResponseAs</span>[<span class="extype" name="scala.Either">Either</span>[<span class="extype" name="scala.Predef.String">String</span>, <span class="extype" name="scala.collection.immutable.Seq">Seq</span>[(<span class="extype" name="scala.Predef.String">String</span>, <span class="extype" name="scala.Predef.String">String</span>)]], <span class="extype" name="scala.Nothing">Nothing</span>]</span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../index.html#sttp.client.package@asParams:sttp.client.ResponseAs[Either[String,scala.collection.immutable.Seq[(String,String)]],Nothing]" title="Permalink" target="_top">
+        <img src="../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>SttpApi</dd></dl></div>
+    </li><li name="sttp.client.SttpExtensions#asPath" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="asPath(path:&lt;?&gt;):sttp.client.ResponseAs[Either[String,java.nio.file.Path],Nothing]"></a>
+      <a id="asPath(Path):ResponseAs[Either[String,Path],Nothing]"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">asPath</span><span class="params">(<span name="path">path: <span class="extype" name="java.nio.file.Path">Path</span></span>)</span><span class="result">: <span class="extype" name="sttp.client.ResponseAs">ResponseAs</span>[<span class="extype" name="scala.Either">Either</span>[<span class="extype" name="scala.Predef.String">String</span>, <span class="extype" name="java.nio.file.Path">Path</span>], <span class="extype" name="scala.Nothing">Nothing</span>]</span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../index.html#sttp.client.package@asPath(path:java.nio.file.Path):sttp.client.ResponseAs[Either[String,java.nio.file.Path],Nothing]" title="Permalink" target="_top">
+        <img src="../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>SttpExtensions</dd></dl></div>
+    </li><li name="sttp.client.SttpExtensions#asPathAlways" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="asPathAlways(path:&lt;?&gt;):sttp.client.ResponseAs[java.nio.file.Path,Nothing]"></a>
+      <a id="asPathAlways(Path):ResponseAs[Path,Nothing]"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">asPathAlways</span><span class="params">(<span name="path">path: <span class="extype" name="java.nio.file.Path">Path</span></span>)</span><span class="result">: <span class="extype" name="sttp.client.ResponseAs">ResponseAs</span>[<span class="extype" name="java.nio.file.Path">Path</span>, <span class="extype" name="scala.Nothing">Nothing</span>]</span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../index.html#sttp.client.package@asPathAlways(path:java.nio.file.Path):sttp.client.ResponseAs[java.nio.file.Path,Nothing]" title="Permalink" target="_top">
+        <img src="../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>SttpExtensions</dd></dl></div>
+    </li><li name="sttp.client.SttpApi#asStream" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="asStream[S&lt;:&lt;?&gt;]:sttp.client.ResponseAs[Either[String,S],S]"></a>
+      <a id="asStream[S]:ResponseAs[Either[String,S],S]"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">asStream</span><span class="tparams">[<span name="S">S</span>]</span><span class="result">: <span class="extype" name="sttp.client.ResponseAs">ResponseAs</span>[<span class="extype" name="scala.Either">Either</span>[<span class="extype" name="scala.Predef.String">String</span>, <span class="extype" name="sttp.client.SttpApi.asStream.S">S</span>], <span class="extype" name="sttp.client.SttpApi.asStream.S">S</span>]</span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../index.html#sttp.client.package@asStream[S]:sttp.client.ResponseAs[Either[String,S],S]" title="Permalink" target="_top">
+        <img src="../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>SttpApi</dd></dl></div>
+    </li><li name="sttp.client.SttpApi#asStreamAlways" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="asStreamAlways[S&lt;:&lt;?&gt;]:sttp.client.ResponseAs[S,S]"></a>
+      <a id="asStreamAlways[S]:ResponseAs[S,S]"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">asStreamAlways</span><span class="tparams">[<span name="S">S</span>]</span><span class="result">: <span class="extype" name="sttp.client.ResponseAs">ResponseAs</span>[<span class="extype" name="sttp.client.SttpApi.asStreamAlways.S">S</span>, <span class="extype" name="sttp.client.SttpApi.asStreamAlways.S">S</span>]</span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../index.html#sttp.client.package@asStreamAlways[S]:sttp.client.ResponseAs[S,S]" title="Permalink" target="_top">
+        <img src="../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>SttpApi</dd></dl></div>
+    </li><li name="sttp.client.SttpApi#asString" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="asString(charset:&lt;?&gt;):sttp.client.ResponseAs[Either[String,String],Nothing]"></a>
+      <a id="asString(String):ResponseAs[Either[String,String],Nothing]"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">asString</span><span class="params">(<span name="charset">charset: <span class="extype" name="scala.Predef.String">String</span></span>)</span><span class="result">: <span class="extype" name="sttp.client.ResponseAs">ResponseAs</span>[<span class="extype" name="scala.Either">Either</span>[<span class="extype" name="scala.Predef.String">String</span>, <span class="extype" name="scala.Predef.String">String</span>], <span class="extype" name="scala.Nothing">Nothing</span>]</span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../index.html#sttp.client.package@asString(charset:String):sttp.client.ResponseAs[Either[String,String],Nothing]" title="Permalink" target="_top">
+        <img src="../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>SttpApi</dd></dl></div>
+    </li><li name="sttp.client.SttpApi#asString" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="asString:sttp.client.ResponseAs[Either[String,String],Nothing]"></a>
+      <a id="asString:ResponseAs[Either[String,String],Nothing]"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">asString</span><span class="result">: <span class="extype" name="sttp.client.ResponseAs">ResponseAs</span>[<span class="extype" name="scala.Either">Either</span>[<span class="extype" name="scala.Predef.String">String</span>, <span class="extype" name="scala.Predef.String">String</span>], <span class="extype" name="scala.Nothing">Nothing</span>]</span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../index.html#sttp.client.package@asString:sttp.client.ResponseAs[Either[String,String],Nothing]" title="Permalink" target="_top">
+        <img src="../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>SttpApi</dd></dl></div>
+    </li><li name="sttp.client.SttpApi#asStringAlways" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="asStringAlways(charset:&lt;?&gt;):sttp.client.ResponseAs[String,Nothing]"></a>
+      <a id="asStringAlways(String):ResponseAs[String,Nothing]"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">asStringAlways</span><span class="params">(<span name="charset">charset: <span class="extype" name="scala.Predef.String">String</span></span>)</span><span class="result">: <span class="extype" name="sttp.client.ResponseAs">ResponseAs</span>[<span class="extype" name="scala.Predef.String">String</span>, <span class="extype" name="scala.Nothing">Nothing</span>]</span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../index.html#sttp.client.package@asStringAlways(charset:String):sttp.client.ResponseAs[String,Nothing]" title="Permalink" target="_top">
+        <img src="../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>SttpApi</dd></dl></div>
+    </li><li name="sttp.client.SttpApi#asStringAlways" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="asStringAlways:sttp.client.ResponseAs[String,Nothing]"></a>
+      <a id="asStringAlways:ResponseAs[String,Nothing]"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">asStringAlways</span><span class="result">: <span class="extype" name="sttp.client.ResponseAs">ResponseAs</span>[<span class="extype" name="scala.Predef.String">String</span>, <span class="extype" name="scala.Nothing">Nothing</span>]</span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../index.html#sttp.client.package@asStringAlways:sttp.client.ResponseAs[String,Nothing]" title="Permalink" target="_top">
+        <img src="../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>SttpApi</dd></dl></div>
+    </li><li name="sttp.client.SttpApi#basicRequest" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="basicRequest:sttp.client.RequestT[sttp.client.Empty,Either[String,String],Nothing]"></a>
+      <a id="basicRequest:RequestT[Empty,Either[String,String],Nothing]"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">val</span>
+      </span>
+      <span class="symbol">
+        <span class="name">basicRequest</span><span class="result">: <span class="extype" name="sttp.client.RequestT">RequestT</span>[<a href="#Empty[X]=None.type" class="extmbr" name="sttp.client.Empty">Empty</a>, <span class="extype" name="scala.Either">Either</span>[<span class="extype" name="scala.Predef.String">String</span>, <span class="extype" name="scala.Predef.String">String</span>], <span class="extype" name="scala.Nothing">Nothing</span>]</span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../index.html#sttp.client.package@basicRequest:sttp.client.RequestT[sttp.client.Empty,Either[String,String],Nothing]" title="Permalink" target="_top">
+        <img src="../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>SttpApi</dd></dl></div>
+    </li><li name="sttp.client.SttpApi#emptyRequest" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="emptyRequest:sttp.client.RequestT[sttp.client.Empty,Either[String,String],Nothing]"></a>
+      <a id="emptyRequest:RequestT[Empty,Either[String,String],Nothing]"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">val</span>
+      </span>
+      <span class="symbol">
+        <span class="name">emptyRequest</span><span class="result">: <span class="extype" name="sttp.client.RequestT">RequestT</span>[<a href="#Empty[X]=None.type" class="extmbr" name="sttp.client.Empty">Empty</a>, <span class="extype" name="scala.Either">Either</span>[<span class="extype" name="scala.Predef.String">String</span>, <span class="extype" name="scala.Predef.String">String</span>], <span class="extype" name="scala.Nothing">Nothing</span>]</span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../index.html#sttp.client.package@emptyRequest:sttp.client.RequestT[sttp.client.Empty,Either[String,String],Nothing]" title="Permalink" target="_top">
+        <img src="../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>SttpApi</dd></dl></div>
+    </li><li name="sttp.client.SttpApi#fromMetadata" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="fromMetadata[T&lt;:&lt;?&gt;,S&lt;:&lt;?&gt;](f:&lt;?&gt;):sttp.client.ResponseAs[T,S]"></a>
+      <a id="fromMetadata[T,S]((ResponseMetadata)⇒ResponseAs[T,S]):ResponseAs[T,S]"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">fromMetadata</span><span class="tparams">[<span name="T">T</span>, <span name="S">S</span>]</span><span class="params">(<span name="f">f: (<span class="extype" name="sttp.client.ResponseMetadata">ResponseMetadata</span>) ⇒ <span class="extype" name="sttp.client.ResponseAs">ResponseAs</span>[<span class="extype" name="sttp.client.SttpApi.fromMetadata.T">T</span>, <span class="extype" name="sttp.client.SttpApi.fromMetadata.S">S</span>]</span>)</span><span class="result">: <span class="extype" name="sttp.client.ResponseAs">ResponseAs</span>[<span class="extype" name="sttp.client.SttpApi.fromMetadata.T">T</span>, <span class="extype" name="sttp.client.SttpApi.fromMetadata.S">S</span>]</span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../index.html#sttp.client.package@fromMetadata[T,S](f:sttp.client.ResponseMetadata=&gt;sttp.client.ResponseAs[T,S]):sttp.client.ResponseAs[T,S]" title="Permalink" target="_top">
+        <img src="../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>SttpApi</dd></dl></div>
+    </li><li name="sttp.client.SttpApi#ignore" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="ignore:sttp.client.ResponseAs[Unit,Nothing]"></a>
+      <a id="ignore:ResponseAs[Unit,Nothing]"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">ignore</span><span class="result">: <span class="extype" name="sttp.client.ResponseAs">ResponseAs</span>[<span class="extype" name="scala.Unit">Unit</span>, <span class="extype" name="scala.Nothing">Nothing</span>]</span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../index.html#sttp.client.package@ignore:sttp.client.ResponseAs[Unit,Nothing]" title="Permalink" target="_top">
+        <img src="../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>SttpApi</dd></dl></div>
+    </li><li name="sttp.client.SttpApi#multipart" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="multipart[B&lt;:&lt;?&gt;](name:&lt;?&gt;,b:&lt;?&gt;)(implicitevidence$1:&lt;?&gt;):sttp.model.Part[sttp.client.BasicRequestBody]"></a>
+      <a id="multipart[B](String,B)(BodySerializer[B]):Part[BasicRequestBody]"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">multipart</span><span class="tparams">[<span name="B">B</span>]</span><span class="params">(<span name="name">name: <span class="extype" name="scala.Predef.String">String</span></span>, <span name="b">b: <span class="extype" name="sttp.client.SttpApi.multipart.B">B</span></span>)</span><span class="params">(<span class="implicit">implicit </span><span name="arg0">arg0: <a href="#BodySerializer[B]=B=&gt;sttp.client.BasicRequestBody" class="extmbr" name="sttp.client.BodySerializer">BodySerializer</a>[<span class="extype" name="sttp.client.SttpApi.multipart.B">B</span>]</span>)</span><span class="result">: <span class="extype" name="sttp.model.Part">Part</span>[<span class="extype" name="sttp.client.BasicRequestBody">BasicRequestBody</span>]</span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../index.html#sttp.client.package@multipart[B](name:String,b:B)(implicitevidence$1:sttp.client.BodySerializer[B]):sttp.model.Part[sttp.client.BasicRequestBody]" title="Permalink" target="_top">
+        <img src="../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>SttpApi</dd></dl></div>
+    </li><li name="sttp.client.SttpApi#multipart" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="multipart(name:&lt;?&gt;,fs:&lt;?&gt;,encoding:&lt;?&gt;):sttp.model.Part[sttp.client.BasicRequestBody]"></a>
+      <a id="multipart(String,Seq[(String,String)],String):Part[BasicRequestBody]"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">multipart</span><span class="params">(<span name="name">name: <span class="extype" name="scala.Predef.String">String</span></span>, <span name="fs">fs: <span class="extype" name="scala.collection.immutable.Seq">Seq</span>[(<span class="extype" name="scala.Predef.String">String</span>, <span class="extype" name="scala.Predef.String">String</span>)]</span>, <span name="encoding">encoding: <span class="extype" name="scala.Predef.String">String</span></span>)</span><span class="result">: <span class="extype" name="sttp.model.Part">Part</span>[<span class="extype" name="sttp.client.BasicRequestBody">BasicRequestBody</span>]</span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../index.html#sttp.client.package@multipart(name:String,fs:scala.collection.immutable.Seq[(String,String)],encoding:String):sttp.model.Part[sttp.client.BasicRequestBody]" title="Permalink" target="_top">
+        <img src="../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>SttpApi</dd></dl></div>
+    </li><li name="sttp.client.SttpApi#multipart" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="multipart(name:&lt;?&gt;,fs:&lt;?&gt;):sttp.model.Part[sttp.client.BasicRequestBody]"></a>
+      <a id="multipart(String,Seq[(String,String)]):Part[BasicRequestBody]"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">multipart</span><span class="params">(<span name="name">name: <span class="extype" name="scala.Predef.String">String</span></span>, <span name="fs">fs: <span class="extype" name="scala.collection.immutable.Seq">Seq</span>[(<span class="extype" name="scala.Predef.String">String</span>, <span class="extype" name="scala.Predef.String">String</span>)]</span>)</span><span class="result">: <span class="extype" name="sttp.model.Part">Part</span>[<span class="extype" name="sttp.client.BasicRequestBody">BasicRequestBody</span>]</span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../index.html#sttp.client.package@multipart(name:String,fs:scala.collection.immutable.Seq[(String,String)]):sttp.model.Part[sttp.client.BasicRequestBody]" title="Permalink" target="_top">
+        <img src="../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>SttpApi</dd></dl></div>
+    </li><li name="sttp.client.SttpApi#multipart" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="multipart(name:&lt;?&gt;,fs:&lt;?&gt;,encoding:&lt;?&gt;):sttp.model.Part[sttp.client.BasicRequestBody]"></a>
+      <a id="multipart(String,Map[String,String],String):Part[BasicRequestBody]"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">multipart</span><span class="params">(<span name="name">name: <span class="extype" name="scala.Predef.String">String</span></span>, <span name="fs">fs: <span class="extype" name="scala.Predef.Map">Map</span>[<span class="extype" name="scala.Predef.String">String</span>, <span class="extype" name="scala.Predef.String">String</span>]</span>, <span name="encoding">encoding: <span class="extype" name="scala.Predef.String">String</span></span>)</span><span class="result">: <span class="extype" name="sttp.model.Part">Part</span>[<span class="extype" name="sttp.client.BasicRequestBody">BasicRequestBody</span>]</span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../index.html#sttp.client.package@multipart(name:String,fs:Map[String,String],encoding:String):sttp.model.Part[sttp.client.BasicRequestBody]" title="Permalink" target="_top">
+        <img src="../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>SttpApi</dd></dl></div>
+    </li><li name="sttp.client.SttpApi#multipart" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="multipart(name:&lt;?&gt;,fs:&lt;?&gt;):sttp.model.Part[sttp.client.BasicRequestBody]"></a>
+      <a id="multipart(String,Map[String,String]):Part[BasicRequestBody]"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">multipart</span><span class="params">(<span name="name">name: <span class="extype" name="scala.Predef.String">String</span></span>, <span name="fs">fs: <span class="extype" name="scala.Predef.Map">Map</span>[<span class="extype" name="scala.Predef.String">String</span>, <span class="extype" name="scala.Predef.String">String</span>]</span>)</span><span class="result">: <span class="extype" name="sttp.model.Part">Part</span>[<span class="extype" name="sttp.client.BasicRequestBody">BasicRequestBody</span>]</span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../index.html#sttp.client.package@multipart(name:String,fs:Map[String,String]):sttp.model.Part[sttp.client.BasicRequestBody]" title="Permalink" target="_top">
+        <img src="../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>SttpApi</dd></dl></div>
+    </li><li name="sttp.client.SttpApi#multipart" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="multipart(name:&lt;?&gt;,data:&lt;?&gt;):sttp.model.Part[sttp.client.BasicRequestBody]"></a>
+      <a id="multipart(String,InputStream):Part[BasicRequestBody]"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">multipart</span><span class="params">(<span name="name">name: <span class="extype" name="scala.Predef.String">String</span></span>, <span name="data">data: <span class="extype" name="java.io.InputStream">InputStream</span></span>)</span><span class="result">: <span class="extype" name="sttp.model.Part">Part</span>[<span class="extype" name="sttp.client.BasicRequestBody">BasicRequestBody</span>]</span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../index.html#sttp.client.package@multipart(name:String,data:java.io.InputStream):sttp.model.Part[sttp.client.BasicRequestBody]" title="Permalink" target="_top">
+        <img src="../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>SttpApi</dd></dl></div>
+    </li><li name="sttp.client.SttpApi#multipart" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="multipart(name:&lt;?&gt;,data:&lt;?&gt;):sttp.model.Part[sttp.client.BasicRequestBody]"></a>
+      <a id="multipart(String,ByteBuffer):Part[BasicRequestBody]"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">multipart</span><span class="params">(<span name="name">name: <span class="extype" name="scala.Predef.String">String</span></span>, <span name="data">data: <span class="extype" name="java.nio.ByteBuffer">ByteBuffer</span></span>)</span><span class="result">: <span class="extype" name="sttp.model.Part">Part</span>[<span class="extype" name="sttp.client.BasicRequestBody">BasicRequestBody</span>]</span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../index.html#sttp.client.package@multipart(name:String,data:java.nio.ByteBuffer):sttp.model.Part[sttp.client.BasicRequestBody]" title="Permalink" target="_top">
+        <img src="../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>SttpApi</dd></dl></div>
+    </li><li name="sttp.client.SttpApi#multipart" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="multipart(name:&lt;?&gt;,data:&lt;?&gt;):sttp.model.Part[sttp.client.BasicRequestBody]"></a>
+      <a id="multipart(String,Array[Byte]):Part[BasicRequestBody]"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">multipart</span><span class="params">(<span name="name">name: <span class="extype" name="scala.Predef.String">String</span></span>, <span name="data">data: <span class="extype" name="scala.Array">Array</span>[<span class="extype" name="scala.Byte">Byte</span>]</span>)</span><span class="result">: <span class="extype" name="sttp.model.Part">Part</span>[<span class="extype" name="sttp.client.BasicRequestBody">BasicRequestBody</span>]</span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../index.html#sttp.client.package@multipart(name:String,data:Array[Byte]):sttp.model.Part[sttp.client.BasicRequestBody]" title="Permalink" target="_top">
+        <img src="../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>SttpApi</dd></dl></div>
+    </li><li name="sttp.client.SttpApi#multipart" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="multipart(name:&lt;?&gt;,data:&lt;?&gt;,encoding:&lt;?&gt;):sttp.model.Part[sttp.client.BasicRequestBody]"></a>
+      <a id="multipart(String,String,String):Part[BasicRequestBody]"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">multipart</span><span class="params">(<span name="name">name: <span class="extype" name="scala.Predef.String">String</span></span>, <span name="data">data: <span class="extype" name="scala.Predef.String">String</span></span>, <span name="encoding">encoding: <span class="extype" name="scala.Predef.String">String</span></span>)</span><span class="result">: <span class="extype" name="sttp.model.Part">Part</span>[<span class="extype" name="sttp.client.BasicRequestBody">BasicRequestBody</span>]</span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../index.html#sttp.client.package@multipart(name:String,data:String,encoding:String):sttp.model.Part[sttp.client.BasicRequestBody]" title="Permalink" target="_top">
+        <img src="../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>SttpApi</dd></dl></div>
+    </li><li name="sttp.client.SttpApi#multipart" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="multipart(name:&lt;?&gt;,data:&lt;?&gt;):sttp.model.Part[sttp.client.BasicRequestBody]"></a>
+      <a id="multipart(String,String):Part[BasicRequestBody]"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">multipart</span><span class="params">(<span name="name">name: <span class="extype" name="scala.Predef.String">String</span></span>, <span name="data">data: <span class="extype" name="scala.Predef.String">String</span></span>)</span><span class="result">: <span class="extype" name="sttp.model.Part">Part</span>[<span class="extype" name="sttp.client.BasicRequestBody">BasicRequestBody</span>]</span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../index.html#sttp.client.package@multipart(name:String,data:String):sttp.model.Part[sttp.client.BasicRequestBody]" title="Permalink" target="_top">
+        <img src="../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>SttpApi</dd></dl></div>
+    </li><li name="sttp.client.SttpExtensions#multipartFile" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="multipartFile(name:&lt;?&gt;,data:&lt;?&gt;):sttp.model.Part[sttp.client.BasicRequestBody]"></a>
+      <a id="multipartFile(String,Path):Part[BasicRequestBody]"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">multipartFile</span><span class="params">(<span name="name">name: <span class="extype" name="scala.Predef.String">String</span></span>, <span name="data">data: <span class="extype" name="java.nio.file.Path">Path</span></span>)</span><span class="result">: <span class="extype" name="sttp.model.Part">Part</span>[<span class="extype" name="sttp.client.BasicRequestBody">BasicRequestBody</span>]</span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../index.html#sttp.client.package@multipartFile(name:String,data:java.nio.file.Path):sttp.model.Part[sttp.client.BasicRequestBody]" title="Permalink" target="_top">
+        <img src="../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>SttpExtensions</dd></dl></div>
+    </li><li name="sttp.client.SttpExtensions#multipartFile" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="multipartFile(name:&lt;?&gt;,data:&lt;?&gt;):sttp.model.Part[sttp.client.BasicRequestBody]"></a>
+      <a id="multipartFile(String,File):Part[BasicRequestBody]"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">multipartFile</span><span class="params">(<span name="name">name: <span class="extype" name="scala.Predef.String">String</span></span>, <span name="data">data: <span class="extype" name="java.io.File">File</span></span>)</span><span class="result">: <span class="extype" name="sttp.model.Part">Part</span>[<span class="extype" name="sttp.client.BasicRequestBody">BasicRequestBody</span>]</span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../index.html#sttp.client.package@multipartFile(name:String,data:java.io.File):sttp.model.Part[sttp.client.BasicRequestBody]" title="Permalink" target="_top">
+        <img src="../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>SttpExtensions</dd></dl></div>
+    </li><li name="sttp.client.SttpApi#quickRequest" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="quickRequest:sttp.client.RequestT[sttp.client.Empty,String,Nothing]"></a>
+      <a id="quickRequest:RequestT[Empty,String,Nothing]"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">val</span>
+      </span>
+      <span class="symbol">
+        <span class="name">quickRequest</span><span class="result">: <span class="extype" name="sttp.client.RequestT">RequestT</span>[<a href="#Empty[X]=None.type" class="extmbr" name="sttp.client.Empty">Empty</a>, <span class="extype" name="scala.Predef.String">String</span>, <span class="extype" name="scala.Nothing">Nothing</span>]</span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../index.html#sttp.client.package@quickRequest:sttp.client.RequestT[sttp.client.Empty,String,Nothing]" title="Permalink" target="_top">
+        <img src="../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>SttpApi</dd></dl></div>
+    </li></ol>
+            </div>
+
+        
+
+        
+        </div>
+
+        <div id="inheritedMembers">
+        <div class="parent" name="sttp.client.SttpApi">
+              <h3>Inherited from <span class="extype" name="sttp.client.SttpApi">SttpApi</span></h3>
+            </div><div class="parent" name="sttp.model.UriInterpolator">
+              <h3>Inherited from <span class="extype" name="sttp.model.UriInterpolator">UriInterpolator</span></h3>
+            </div><div class="parent" name="sttp.client.SttpExtensions">
+              <h3>Inherited from <span class="extype" name="sttp.client.SttpExtensions">SttpExtensions</span></h3>
+            </div><div class="parent" name="scala.AnyRef">
+              <h3>Inherited from <span class="extype" name="scala.AnyRef">AnyRef</span></h3>
+            </div><div class="parent" name="scala.Any">
+              <h3>Inherited from <span class="extype" name="scala.Any">Any</span></h3>
+            </div>
+        
+        </div>
+
+        <div id="groupedMembers">
+        <div class="group" name="Ungrouped">
+              <h3>Ungrouped</h3>
+              
+            </div>
+        </div>
+
+      </div>
+
+      <div id="tooltip"></div>
+
+      <div id="footer">  </div>
+
+
+    </body>
+      </html>

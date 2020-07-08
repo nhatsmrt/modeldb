@@ -1,0 +1,226 @@
+<!DOCTYPE html >
+<html>
+        <head>
+          <title>repository - ai.verta.repository</title>
+          <meta name="description" content="repository - ai.verta.repository" />
+          <meta name="keywords" content="repository ai.verta.repository" />
+          <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+          
+      <link href="../../../lib/template.css" media="screen" type="text/css" rel="stylesheet" />
+      <link href="../../../lib/diagrams.css" media="screen" type="text/css" rel="stylesheet" id="diagrams-css" />
+      <script type="text/javascript" src="../../../lib/jquery.js" id="jquery-js"></script>
+      <script type="text/javascript" src="../../../lib/jquery-ui.js"></script>
+      <script type="text/javascript" src="../../../lib/template.js"></script>
+      <script type="text/javascript" src="../../../lib/tools.tooltip.js"></script>
+      
+      <script type="text/javascript">
+         if(top === self) {
+            var url = '../../../index.html';
+            var hash = 'ai.verta.repository.package';
+            var anchor = window.location.hash;
+            var anchor_opt = '';
+            if (anchor.length >= 1)
+              anchor_opt = '@' + anchor.substring(1);
+            window.location.href = url + '#' + hash + anchor_opt;
+         }
+   	  </script>
+    
+        </head>
+        <body class="value">
+      <div id="definition">
+        <img alt="Package" src="../../../lib/package_big.png" />
+        <p id="owner"><a href="../../package.html" class="extype" name="ai">ai</a>.<a href="../package.html" class="extype" name="ai.verta">verta</a></p>
+        <h1>repository</h1><span class="permalink">
+      <a href="../../../index.html#ai.verta.repository.package" title="Permalink" target="_top">
+        <img src="../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      </div>
+
+      <h4 id="signature" class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">package</span>
+      </span>
+      <span class="symbol">
+        <span class="name">repository</span>
+      </span>
+      </h4>
+      
+          <div id="comment" class="fullcommenttop"></div>
+        
+
+      <div id="mbrsel">
+        <div id="textfilter"><span class="pre"></span><span class="input"><input id="mbrsel-input" type="text" accesskey="/" /></span><span class="post"></span></div>
+        
+        
+        <div id="visbl">
+            <span class="filtertype">Visibility</span>
+            <ol><li class="public in"><span>Public</span></li><li class="all out"><span>All</span></li></ol>
+          </div>
+      </div>
+
+      <div id="template">
+        <div id="allMembers">
+        
+
+        <div id="types" class="types members">
+              <h3>Type Members</h3>
+              <ol><li name="ai.verta.repository.Commit" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="CommitextendsAnyRef"></a>
+      <a id="Commit:Commit"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">class</span>
+      </span>
+      <span class="symbol">
+        <a href="Commit.html"><span class="name">Commit</span></a><span class="result"> extends <span class="extype" name="scala.AnyRef">AnyRef</span></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../index.html#ai.verta.repository.package@CommitextendsAnyRef" title="Permalink" target="_top">
+        <img src="../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      <p class="shortcomment cmt">Commit within a ModelDB Repository.</p><div class="fullcomment"><div class="comment cmt"><p>Commit within a ModelDB Repository.
+ There should not be a need to instantiate this class directly; please use Repository.getCommit methods
+</p></div></div>
+    </li><li name="ai.verta.repository.Diff" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="DiffextendsAnyRef"></a>
+      <a id="Diff:Diff"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">class</span>
+      </span>
+      <span class="symbol">
+        <a href="Diff.html"><span class="name">Diff</span></a><span class="result"> extends <span class="extype" name="scala.AnyRef">AnyRef</span></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../index.html#ai.verta.repository.package@DiffextendsAnyRef" title="Permalink" target="_top">
+        <img src="../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      <p class="shortcomment cmt">Represent the diff between two commits.</p><div class="fullcomment"><div class="comment cmt"><p>Represent the diff between two commits. This should not be instantiated by user.
+ Please use Commit's diffFrom method to get instances
+</p></div></div>
+    </li><li name="ai.verta.repository.Folder" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="FolderextendsProductwithSerializable"></a>
+      <a id="Folder:Folder"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">case class</span>
+      </span>
+      <span class="symbol">
+        <a href="Folder.html"><span class="name">Folder</span></a><span class="params">(<span name="root">root: <span class="extype" name="scala.Predef.String">String</span></span>, <span name="blobs">blobs: <span class="extype" name="scala.List">List</span>[<span class="extype" name="scala.Predef.String">String</span>]</span>, <span name="subfolders">subfolders: <span class="extype" name="scala.List">List</span>[<span class="extype" name="scala.Predef.String">String</span>]</span>)</span><span class="result"> extends <span class="extype" name="scala.Product">Product</span> with <span class="extype" name="scala.Serializable">Serializable</span></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../index.html#ai.verta.repository.package@FolderextendsProductwithSerializable" title="Permalink" target="_top">
+        <img src="../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      <p class="shortcomment cmt">Represent a folder visited during Commit's walk.</p><div class="fullcomment"><div class="comment cmt"><p>Represent a folder visited during Commit's walk.</p></div><dl class="paramcmts block"><dt class="param">root</dt><dd class="cmt"><p>root path of the folder</p></dd><dt class="param">blobs</dt><dd class="cmt"><p>names of the blobs stored in the folder</p></dd><dt class="param">subfolders</dt><dd class="cmt"><p>names of the subfolders of the folder</p></dd></dl></div>
+    </li><li name="ai.verta.repository.FolderWalker" visbl="pub" data-isabs="true" fullComment="yes" group="Ungrouped">
+      <a id="FolderWalker[+T]extendsAnyRef"></a>
+      <a id="FolderWalker[+T]:FolderWalker[T]"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">trait</span>
+      </span>
+      <span class="symbol">
+        <a href="FolderWalker.html"><span class="name">FolderWalker</span></a><span class="tparams">[<span name="T">+T</span>]</span><span class="result"> extends <span class="extype" name="scala.AnyRef">AnyRef</span></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../index.html#ai.verta.repository.package@FolderWalker[+T]extendsAnyRef" title="Permalink" target="_top">
+        <img src="../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      <p class="shortcomment cmt">The walker runs on every file in that given folder and all of its subfolders.</p><div class="fullcomment"><div class="comment cmt"><p>The walker runs on every file in that given folder and all of its subfolders.</p></div><dl class="paramcmts block"><dt class="tparam">T</dt><dd class="cmt"><p>Type of the returned value over the walk.</p></dd></dl></div>
+    </li><li name="ai.verta.repository.IllegalCommitSavedStateException" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
+      <a id="IllegalCommitSavedStateExceptionextendsExceptionwithProductwithSerializable"></a>
+      <a id="IllegalCommitSavedStateException:IllegalCommitSavedStateException"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier">final </span>
+        <span class="kind">case class</span>
+      </span>
+      <span class="symbol">
+        <a href="IllegalCommitSavedStateException.html"><span class="name">IllegalCommitSavedStateException</span></a><span class="params">(<span name="message">message: <span class="extype" name="scala.Predef.String">String</span> = <span class="symbol">&quot;&quot;</span></span>, <span name="cause">cause: <span class="extype" name="scala.Throwable">Throwable</span> = <span class="symbol">None.orNull</span></span>)</span><span class="result"> extends <span class="extype" name="scala.Exception">Exception</span> with <span class="extype" name="scala.Product">Product</span> with <span class="extype" name="scala.Serializable">Serializable</span></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../index.html#ai.verta.repository.package@IllegalCommitSavedStateExceptionextendsExceptionwithProductwithSerializable" title="Permalink" target="_top">
+        <img src="../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      
+    </li><li name="ai.verta.repository.PathList" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="PathListextendsProductwithSerializable"></a>
+      <a id="PathList:PathList"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">case class</span>
+      </span>
+      <span class="symbol">
+        <a href="PathList.html"><span class="name">PathList</span></a><span class="params">(<span name="components">components: <span class="extype" name="scala.List">List</span>[<span class="extype" name="scala.Predef.String">String</span>]</span>)</span><span class="result"> extends <span class="extype" name="scala.Product">Product</span> with <span class="extype" name="scala.Serializable">Serializable</span></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../index.html#ai.verta.repository.package@PathListextendsProductwithSerializable" title="Permalink" target="_top">
+        <img src="../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      <p class="shortcomment cmt">A class to represent a path in the list of strings format</p><div class="fullcomment"><div class="comment cmt"><p>A class to represent a path in the list of strings format</p></div><dl class="paramcmts block"><dt class="param">components</dt><dd class="cmt"><p>a list of components of the path</p></dd></dl></div>
+    </li><li name="ai.verta.repository.Repository" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="RepositoryextendsAnyRef"></a>
+      <a id="Repository:Repository"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">class</span>
+      </span>
+      <span class="symbol">
+        <a href="Repository.html"><span class="name">Repository</span></a><span class="result"> extends <span class="extype" name="scala.AnyRef">AnyRef</span></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../index.html#ai.verta.repository.package@RepositoryextendsAnyRef" title="Permalink" target="_top">
+        <img src="../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      <p class="shortcomment cmt">ModelDB Repository.</p><div class="fullcomment"><div class="comment cmt"><p>ModelDB Repository.
+ There should not be a need to instantiate this class directly; please use Client's getOrCreateRepository
+</p></div></div>
+    </li></ol>
+            </div>
+
+        
+
+        
+
+        
+
+        
+        </div>
+
+        <div id="inheritedMembers">
+        
+        
+        </div>
+
+        <div id="groupedMembers">
+        <div class="group" name="Ungrouped">
+              <h3>Ungrouped</h3>
+              
+            </div>
+        </div>
+
+      </div>
+
+      <div id="tooltip"></div>
+
+      <div id="footer">  </div>
+
+
+    </body>
+      </html>

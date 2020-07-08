@@ -1,0 +1,1041 @@
+<!DOCTYPE html >
+<html>
+        <head>
+          <title>ExperimentRun - ai.verta.client.entities.ExperimentRun</title>
+          <meta name="description" content="ExperimentRun - ai.verta.client.entities.ExperimentRun" />
+          <meta name="keywords" content="ExperimentRun ai.verta.client.entities.ExperimentRun" />
+          <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+          
+      <link href="../../../../lib/template.css" media="screen" type="text/css" rel="stylesheet" />
+      <link href="../../../../lib/diagrams.css" media="screen" type="text/css" rel="stylesheet" id="diagrams-css" />
+      <script type="text/javascript" src="../../../../lib/jquery.js" id="jquery-js"></script>
+      <script type="text/javascript" src="../../../../lib/jquery-ui.js"></script>
+      <script type="text/javascript" src="../../../../lib/template.js"></script>
+      <script type="text/javascript" src="../../../../lib/tools.tooltip.js"></script>
+      
+      <script type="text/javascript">
+         if(top === self) {
+            var url = '../../../../index.html';
+            var hash = 'ai.verta.client.entities.ExperimentRun';
+            var anchor = window.location.hash;
+            var anchor_opt = '';
+            if (anchor.length >= 1)
+              anchor_opt = '@' + anchor.substring(1);
+            window.location.href = url + '#' + hash + anchor_opt;
+         }
+   	  </script>
+    
+        </head>
+        <body class="type">
+      <div id="definition">
+        <img alt="Class" src="../../../../lib/class_big.png" />
+        <p id="owner"><a href="../../../package.html" class="extype" name="ai">ai</a>.<a href="../../package.html" class="extype" name="ai.verta">verta</a>.<a href="../package.html" class="extype" name="ai.verta.client">client</a>.<a href="package.html" class="extype" name="ai.verta.client.entities">entities</a></p>
+        <h1>ExperimentRun</h1><h3><span class="morelinks"><div>Related Doc:
+            <a href="package.html" class="extype" name="ai.verta.client.entities">package entities</a>
+          </div></span></h3><span class="permalink">
+      <a href="../../../../index.html#ai.verta.client.entities.ExperimentRun" title="Permalink" target="_top">
+        <img src="../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      </div>
+
+      <h4 id="signature" class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">class</span>
+      </span>
+      <span class="symbol">
+        <span class="name">ExperimentRun</span><span class="result"> extends <a href="Taggable.html" class="extype" name="ai.verta.client.entities.Taggable">Taggable</a></span>
+      </span>
+      </h4>
+      
+          <div id="comment" class="fullcommenttop"><div class="comment cmt"><p>Represents a machine learning Experiment Run.</p><p> This class provides read/write functionality for Experiment Run metadata.</p><p> There should not be a need to instantiate this class directly; please use experiment run's getOrCreateExperimentRun.
+</p></div><div class="toggleContainer block">
+          <span class="toggle">Linear Supertypes</span>
+          <div class="superTypes hiddenContent"><a href="Taggable.html" class="extype" name="ai.verta.client.entities.Taggable">Taggable</a>, <span class="extype" name="scala.AnyRef">AnyRef</span>, <span class="extype" name="scala.Any">Any</span></div>
+        </div></div>
+        
+
+      <div id="mbrsel">
+        <div id="textfilter"><span class="pre"></span><span class="input"><input id="mbrsel-input" type="text" accesskey="/" /></span><span class="post"></span></div>
+        <div id="order">
+              <span class="filtertype">Ordering</span>
+              <ol>
+                
+                <li class="alpha in"><span>Alphabetic</span></li>
+                <li class="inherit out"><span>By Inheritance</span></li>
+              </ol>
+            </div>
+        <div id="ancestors">
+                <span class="filtertype">Inherited<br />
+                </span>
+                <ol id="linearization">
+                  <li class="in" name="ai.verta.client.entities.ExperimentRun"><span>ExperimentRun</span></li><li class="in" name="ai.verta.client.entities.Taggable"><span>Taggable</span></li><li class="in" name="scala.AnyRef"><span>AnyRef</span></li><li class="in" name="scala.Any"><span>Any</span></li>
+                </ol>
+              </div><div id="ancestors">
+            <span class="filtertype"></span>
+            <ol>
+              <li class="hideall out"><span>Hide All</span></li>
+              <li class="showall in"><span>Show All</span></li>
+            </ol>
+          </div>
+        <div id="visbl">
+            <span class="filtertype">Visibility</span>
+            <ol><li class="public in"><span>Public</span></li><li class="all out"><span>All</span></li></ol>
+          </div>
+      </div>
+
+      <div id="template">
+        <div id="allMembers">
+        <div id="constructors" class="members">
+              <h3>Instance Constructors</h3>
+              <ol><li name="ai.verta.client.entities.ExperimentRun#&lt;init&gt;" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
+      <a id="&lt;init&gt;(clientSet:ai.verta.swagger.client.ClientSet,expt:ai.verta.client.entities.Experiment,run:ai.verta.swagger._public.modeldb.model.ModeldbExperimentRun):ai.verta.client.entities.ExperimentRun"></a>
+      <a id="&lt;init&gt;:ExperimentRun"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">new</span>
+      </span>
+      <span class="symbol">
+        <span class="name">ExperimentRun</span><span class="params">(<span name="clientSet">clientSet: <a href="../../swagger/client/ClientSet.html" class="extype" name="ai.verta.swagger.client.ClientSet">ClientSet</a></span>, <span name="expt">expt: <a href="Experiment.html" class="extype" name="ai.verta.client.entities.Experiment">Experiment</a></span>, <span name="run">run: <a href="../../swagger/_public/modeldb/model/ModeldbExperimentRun.html" class="extype" name="ai.verta.swagger._public.modeldb.model.ModeldbExperimentRun">ModeldbExperimentRun</a></span>)</span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../index.html#ai.verta.client.entities.ExperimentRun@&lt;init&gt;(clientSet:ai.verta.swagger.client.ClientSet,expt:ai.verta.client.entities.Experiment,run:ai.verta.swagger._public.modeldb.model.ModeldbExperimentRun):ai.verta.client.entities.ExperimentRun" title="Permalink" target="_top">
+        <img src="../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      
+    </li></ol>
+            </div>
+
+        
+
+        
+
+        <div id="values" class="values members">
+              <h3>Value Members</h3>
+              <ol><li name="scala.AnyRef#!=" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="!=(x$1:Any):Boolean"></a>
+      <a id="!=(Any):Boolean"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier">final </span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span title="gt4s: $bang$eq" class="name">!=</span><span class="params">(<span name="arg0">arg0: <span class="extype" name="scala.Any">Any</span></span>)</span><span class="result">: <span class="extype" name="scala.Boolean">Boolean</span></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../index.html#ai.verta.client.entities.ExperimentRun@!=(x$1:Any):Boolean" title="Permalink" target="_top">
+        <img src="../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>AnyRef → Any</dd></dl></div>
+    </li><li name="scala.AnyRef###" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="##():Int"></a>
+      <a id="##():Int"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier">final </span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span title="gt4s: $hash$hash" class="name">##</span><span class="params">()</span><span class="result">: <span class="extype" name="scala.Int">Int</span></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../index.html#ai.verta.client.entities.ExperimentRun@##():Int" title="Permalink" target="_top">
+        <img src="../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>AnyRef → Any</dd></dl></div>
+    </li><li name="scala.AnyRef#==" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="==(x$1:Any):Boolean"></a>
+      <a id="==(Any):Boolean"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier">final </span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span title="gt4s: $eq$eq" class="name">==</span><span class="params">(<span name="arg0">arg0: <span class="extype" name="scala.Any">Any</span></span>)</span><span class="result">: <span class="extype" name="scala.Boolean">Boolean</span></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../index.html#ai.verta.client.entities.ExperimentRun@==(x$1:Any):Boolean" title="Permalink" target="_top">
+        <img src="../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>AnyRef → Any</dd></dl></div>
+    </li><li name="ai.verta.client.entities.ExperimentRun#addTags" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="addTags(tags:List[String])(implicitec:scala.concurrent.ExecutionContext):scala.util.Try[Unit]"></a>
+      <a id="addTags(List[String])(ExecutionContext):Try[Unit]"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">addTags</span><span class="params">(<span name="tags">tags: <span class="extype" name="scala.List">List</span>[<span class="extype" name="scala.Predef.String">String</span>]</span>)</span><span class="params">(<span class="implicit">implicit </span><span name="ec">ec: <span class="extype" name="scala.concurrent.ExecutionContext">ExecutionContext</span></span>)</span><span class="result">: <span class="extype" name="scala.util.Try">Try</span>[<span class="extype" name="scala.Unit">Unit</span>]</span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../index.html#ai.verta.client.entities.ExperimentRun@addTags(tags:List[String])(implicitec:scala.concurrent.ExecutionContext):scala.util.Try[Unit]" title="Permalink" target="_top">
+        <img src="../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      <p class="shortcomment cmt">Logs multiple tags to this Experiment Run</p><div class="fullcomment"><div class="comment cmt"><p>Logs multiple tags to this Experiment Run</p></div><dl class="paramcmts block"><dt class="param">tags</dt><dd class="cmt"><p>tags</p></dd><dt>returns</dt><dd class="cmt"><p>whether the attempt succeeds</p></dd></dl><dl class="attributes block"> <dt>Definition Classes</dt><dd><a href="" class="extype" name="ai.verta.client.entities.ExperimentRun">ExperimentRun</a> → <a href="Taggable.html" class="extype" name="ai.verta.client.entities.Taggable">Taggable</a></dd></dl></div>
+    </li><li name="scala.Any#asInstanceOf" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="asInstanceOf[T0]:T0"></a>
+      <a id="asInstanceOf[T0]:T0"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier">final </span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">asInstanceOf</span><span class="tparams">[<span name="T0">T0</span>]</span><span class="result">: <span class="extype" name="scala.Any.asInstanceOf.T0">T0</span></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../index.html#ai.verta.client.entities.ExperimentRun@asInstanceOf[T0]:T0" title="Permalink" target="_top">
+        <img src="../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>Any</dd></dl></div>
+    </li><li name="ai.verta.client.entities.ExperimentRun#attributes" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="attributes()(implicitec:scala.concurrent.ExecutionContext):ai.verta.client.entities.subobjects.Attributes"></a>
+      <a id="attributes()(ExecutionContext):Attributes"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">attributes</span><span class="params">()</span><span class="params">(<span class="implicit">implicit </span><span name="ec">ec: <span class="extype" name="scala.concurrent.ExecutionContext">ExecutionContext</span></span>)</span><span class="result">: <a href="subobjects/Attributes.html" class="extype" name="ai.verta.client.entities.subobjects.Attributes">Attributes</a></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../index.html#ai.verta.client.entities.ExperimentRun@attributes()(implicitec:scala.concurrent.ExecutionContext):ai.verta.client.entities.subobjects.Attributes" title="Permalink" target="_top">
+        <img src="../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      <p class="shortcomment cmt">Return a map-like object of type Attributes, representing the attributes associated with ExperimentRun.</p><div class="fullcomment"><div class="comment cmt"><p>Return a map-like object of type Attributes, representing the attributes associated with ExperimentRun.
+ Provide an alternative interface to get/log attributes methods</p></div><dl class="paramcmts block"><dt>returns</dt><dd class="cmt"><p>the attributes map</p></dd></dl></div>
+    </li><li name="ai.verta.client.entities.ExperimentRun#clientSet" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
+      <a id="clientSet:ai.verta.swagger.client.ClientSet"></a>
+      <a id="clientSet:ClientSet"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">val</span>
+      </span>
+      <span class="symbol">
+        <span class="name">clientSet</span><span class="result">: <a href="../../swagger/client/ClientSet.html" class="extype" name="ai.verta.swagger.client.ClientSet">ClientSet</a></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../index.html#ai.verta.client.entities.ExperimentRun@clientSet:ai.verta.swagger.client.ClientSet" title="Permalink" target="_top">
+        <img src="../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      
+    </li><li name="scala.AnyRef#clone" visbl="prt" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="clone():Object"></a>
+      <a id="clone():AnyRef"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">clone</span><span class="params">()</span><span class="result">: <span class="extype" name="scala.AnyRef">AnyRef</span></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../index.html#ai.verta.client.entities.ExperimentRun@clone():Object" title="Permalink" target="_top">
+        <img src="../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Attributes</dt><dd>protected[<a href="../../../../java$lang.html" class="extype" name="java.lang">java.lang</a>] </dd><dt>Definition Classes</dt><dd>AnyRef</dd><dt>Annotations</dt><dd>
+                <span class="name">@throws</span><span class="args">(<span>
+      
+      <span class="defval" name="classOf[java.lang.CloneNotSupportedException]">...</span>
+    </span>)</span>
+              
+        </dd></dl></div>
+    </li><li name="ai.verta.client.entities.ExperimentRun#delTags" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="delTags(tags:List[String])(implicitec:scala.concurrent.ExecutionContext):scala.util.Try[Unit]"></a>
+      <a id="delTags(List[String])(ExecutionContext):Try[Unit]"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">delTags</span><span class="params">(<span name="tags">tags: <span class="extype" name="scala.List">List</span>[<span class="extype" name="scala.Predef.String">String</span>]</span>)</span><span class="params">(<span class="implicit">implicit </span><span name="ec">ec: <span class="extype" name="scala.concurrent.ExecutionContext">ExecutionContext</span></span>)</span><span class="result">: <span class="extype" name="scala.util.Try">Try</span>[<span class="extype" name="scala.Unit">Unit</span>]</span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../index.html#ai.verta.client.entities.ExperimentRun@delTags(tags:List[String])(implicitec:scala.concurrent.ExecutionContext):scala.util.Try[Unit]" title="Permalink" target="_top">
+        <img src="../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      <p class="shortcomment cmt">Delete multiple tags of this Experiment Run.</p><div class="fullcomment"><div class="comment cmt"><p>Delete multiple tags of this Experiment Run.
+ If the run does not have any tag in the list, that tag will be ignored</p></div><dl class="paramcmts block"><dt class="param">tags</dt><dd class="cmt"><p>tags</p></dd><dt>returns</dt><dd class="cmt"><p>whether the attempt succeeds</p></dd></dl><dl class="attributes block"> <dt>Definition Classes</dt><dd><a href="" class="extype" name="ai.verta.client.entities.ExperimentRun">ExperimentRun</a> → <a href="Taggable.html" class="extype" name="ai.verta.client.entities.Taggable">Taggable</a></dd></dl></div>
+    </li><li name="scala.AnyRef#eq" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="eq(x$1:AnyRef):Boolean"></a>
+      <a id="eq(AnyRef):Boolean"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier">final </span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">eq</span><span class="params">(<span name="arg0">arg0: <span class="extype" name="scala.AnyRef">AnyRef</span></span>)</span><span class="result">: <span class="extype" name="scala.Boolean">Boolean</span></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../index.html#ai.verta.client.entities.ExperimentRun@eq(x$1:AnyRef):Boolean" title="Permalink" target="_top">
+        <img src="../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>AnyRef</dd></dl></div>
+    </li><li name="scala.AnyRef#equals" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="equals(x$1:Any):Boolean"></a>
+      <a id="equals(Any):Boolean"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">equals</span><span class="params">(<span name="arg0">arg0: <span class="extype" name="scala.Any">Any</span></span>)</span><span class="result">: <span class="extype" name="scala.Boolean">Boolean</span></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../index.html#ai.verta.client.entities.ExperimentRun@equals(x$1:Any):Boolean" title="Permalink" target="_top">
+        <img src="../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>AnyRef → Any</dd></dl></div>
+    </li><li name="ai.verta.client.entities.ExperimentRun#expt" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
+      <a id="expt:ai.verta.client.entities.Experiment"></a>
+      <a id="expt:Experiment"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">val</span>
+      </span>
+      <span class="symbol">
+        <span class="name">expt</span><span class="result">: <a href="Experiment.html" class="extype" name="ai.verta.client.entities.Experiment">Experiment</a></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../index.html#ai.verta.client.entities.ExperimentRun@expt:ai.verta.client.entities.Experiment" title="Permalink" target="_top">
+        <img src="../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      
+    </li><li name="scala.AnyRef#finalize" visbl="prt" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="finalize():Unit"></a>
+      <a id="finalize():Unit"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">finalize</span><span class="params">()</span><span class="result">: <span class="extype" name="scala.Unit">Unit</span></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../index.html#ai.verta.client.entities.ExperimentRun@finalize():Unit" title="Permalink" target="_top">
+        <img src="../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Attributes</dt><dd>protected[<a href="../../../../java$lang.html" class="extype" name="java.lang">java.lang</a>] </dd><dt>Definition Classes</dt><dd>AnyRef</dd><dt>Annotations</dt><dd>
+                <span class="name">@throws</span><span class="args">(<span>
+      
+      <span class="symbol">classOf[java.lang.Throwable]</span>
+    </span>)</span>
+              
+        </dd></dl></div>
+    </li><li name="ai.verta.client.entities.ExperimentRun#getArtifact" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="getArtifact(key:String)(implicitec:scala.concurrent.ExecutionContext):scala.util.Try[java.io.ByteArrayInputStream]"></a>
+      <a id="getArtifact(String)(ExecutionContext):Try[ByteArrayInputStream]"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">getArtifact</span><span class="params">(<span name="key">key: <span class="extype" name="scala.Predef.String">String</span></span>)</span><span class="params">(<span class="implicit">implicit </span><span name="ec">ec: <span class="extype" name="scala.concurrent.ExecutionContext">ExecutionContext</span></span>)</span><span class="result">: <span class="extype" name="scala.util.Try">Try</span>[<span class="extype" name="java.io.ByteArrayInputStream">ByteArrayInputStream</span>]</span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../index.html#ai.verta.client.entities.ExperimentRun@getArtifact(key:String)(implicitec:scala.concurrent.ExecutionContext):scala.util.Try[java.io.ByteArrayInputStream]" title="Permalink" target="_top">
+        <img src="../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      <p class="shortcomment cmt">Gets an artifact in the form of a stream of bytes to this Experiment Run</p><div class="fullcomment"><div class="comment cmt"><p>Gets an artifact in the form of a stream of bytes to this Experiment Run</p></div><dl class="paramcmts block"><dt class="param">key</dt><dd class="cmt"><p>Name of the artifact</p></dd><dt>returns</dt><dd class="cmt"><p>The output stream</p></dd></dl></div>
+    </li><li name="ai.verta.client.entities.ExperimentRun#getArtifactObj" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="getArtifactObj(key:String)(implicitec:scala.concurrent.ExecutionContext):scala.util.Try[Object]"></a>
+      <a id="getArtifactObj(String)(ExecutionContext):Try[AnyRef]"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">getArtifactObj</span><span class="params">(<span name="key">key: <span class="extype" name="scala.Predef.String">String</span></span>)</span><span class="params">(<span class="implicit">implicit </span><span name="ec">ec: <span class="extype" name="scala.concurrent.ExecutionContext">ExecutionContext</span></span>)</span><span class="result">: <span class="extype" name="scala.util.Try">Try</span>[<span class="extype" name="scala.AnyRef">AnyRef</span>]</span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../index.html#ai.verta.client.entities.ExperimentRun@getArtifactObj(key:String)(implicitec:scala.concurrent.ExecutionContext):scala.util.Try[Object]" title="Permalink" target="_top">
+        <img src="../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      <p class="shortcomment cmt">Gets the artifact with name key from this Experiment Run</p><div class="fullcomment"><div class="comment cmt"><p>Gets the artifact with name key from this Experiment Run</p></div><dl class="paramcmts block"><dt class="param">key</dt><dd class="cmt"><p>Name of the artifact</p></dd><dt>returns</dt><dd class="cmt"><p>Serializable artifact object</p></dd></dl></div>
+    </li><li name="ai.verta.client.entities.ExperimentRun#getAttribute" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="getAttribute(key:String)(implicitec:scala.concurrent.ExecutionContext):scala.util.Try[Option[ai.verta.client.entities.utils.ValueType]]"></a>
+      <a id="getAttribute(String)(ExecutionContext):Try[Option[ValueType]]"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">getAttribute</span><span class="params">(<span name="key">key: <span class="extype" name="scala.Predef.String">String</span></span>)</span><span class="params">(<span class="implicit">implicit </span><span name="ec">ec: <span class="extype" name="scala.concurrent.ExecutionContext">ExecutionContext</span></span>)</span><span class="result">: <span class="extype" name="scala.util.Try">Try</span>[<span class="extype" name="scala.Option">Option</span>[<a href="utils/ValueType.html" class="extype" name="ai.verta.client.entities.utils.ValueType">ValueType</a>]]</span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../index.html#ai.verta.client.entities.ExperimentRun@getAttribute(key:String)(implicitec:scala.concurrent.ExecutionContext):scala.util.Try[Option[ai.verta.client.entities.utils.ValueType]]" title="Permalink" target="_top">
+        <img src="../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      <p class="shortcomment cmt">Gets the attribute with name key from this Experiment Run</p><div class="fullcomment"><div class="comment cmt"><p>Gets the attribute with name key from this Experiment Run</p></div><dl class="paramcmts block"><dt class="param">key</dt><dd class="cmt"><p>Name of the attribute</p></dd><dt>returns</dt><dd class="cmt"><p>Value of the attribute (String, Int, or Double)</p></dd></dl></div>
+    </li><li name="ai.verta.client.entities.ExperimentRun#getAttributes" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="getAttributes(keys:List[String])(implicitec:scala.concurrent.ExecutionContext):scala.util.Try[Map[String,ai.verta.client.entities.utils.ValueType]]"></a>
+      <a id="getAttributes(List[String])(ExecutionContext):Try[Map[String,ValueType]]"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">getAttributes</span><span class="params">(<span name="keys">keys: <span class="extype" name="scala.List">List</span>[<span class="extype" name="scala.Predef.String">String</span>] = <span class="symbol">Nil</span></span>)</span><span class="params">(<span class="implicit">implicit </span><span name="ec">ec: <span class="extype" name="scala.concurrent.ExecutionContext">ExecutionContext</span></span>)</span><span class="result">: <span class="extype" name="scala.util.Try">Try</span>[<span class="extype" name="scala.Predef.Map">Map</span>[<span class="extype" name="scala.Predef.String">String</span>, <a href="utils/ValueType.html" class="extype" name="ai.verta.client.entities.utils.ValueType">ValueType</a>]]</span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../index.html#ai.verta.client.entities.ExperimentRun@getAttributes(keys:List[String])(implicitec:scala.concurrent.ExecutionContext):scala.util.Try[Map[String,ai.verta.client.entities.utils.ValueType]]" title="Permalink" target="_top">
+        <img src="../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      <p class="shortcomment cmt">Gets multiple attributes from this Experiment Run</p><div class="fullcomment"><div class="comment cmt"><p>Gets multiple attributes from this Experiment Run</p></div><dl class="paramcmts block"><dt class="param">keys</dt><dd class="cmt"><p>Names of the attributes. If not passed, get all attributes.</p></dd><dt>returns</dt><dd class="cmt"><p>Values of the attributes (String, Int, or Double)</p></dd></dl></div>
+    </li><li name="scala.AnyRef#getClass" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="getClass():Class[_]"></a>
+      <a id="getClass():Class[_]"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier">final </span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">getClass</span><span class="params">()</span><span class="result">: <span class="extype" name="java.lang.Class">Class</span>[_]</span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../index.html#ai.verta.client.entities.ExperimentRun@getClass():Class[_]" title="Permalink" target="_top">
+        <img src="../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>AnyRef → Any</dd></dl></div>
+    </li><li name="ai.verta.client.entities.ExperimentRun#getCommit" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="getCommit()(implicitec:scala.concurrent.ExecutionContext):scala.util.Try[ai.verta.client.entities.ExperimentRunCommit]"></a>
+      <a id="getCommit()(ExecutionContext):Try[ExperimentRunCommit]"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">getCommit</span><span class="params">()</span><span class="params">(<span class="implicit">implicit </span><span name="ec">ec: <span class="extype" name="scala.concurrent.ExecutionContext">ExecutionContext</span></span>)</span><span class="result">: <span class="extype" name="scala.util.Try">Try</span>[<a href="ExperimentRunCommit.html" class="extype" name="ai.verta.client.entities.ExperimentRunCommit">ExperimentRunCommit</a>]</span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../index.html#ai.verta.client.entities.ExperimentRun@getCommit()(implicitec:scala.concurrent.ExecutionContext):scala.util.Try[ai.verta.client.entities.ExperimentRunCommit]" title="Permalink" target="_top">
+        <img src="../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      <p class="shortcomment cmt">Gets the Commit associated with this Experiment Run</p><div class="fullcomment"><div class="comment cmt"><p>Gets the Commit associated with this Experiment Run</p></div><dl class="paramcmts block"><dt>returns</dt><dd class="cmt"><p>ExperimentRunCommit instance, containing the commit and key-path map.</p></dd></dl></div>
+    </li><li name="ai.verta.client.entities.ExperimentRun#getHyperparameter" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="getHyperparameter(key:String)(implicitec:scala.concurrent.ExecutionContext):scala.util.Try[Option[ai.verta.client.entities.utils.ValueType]]"></a>
+      <a id="getHyperparameter(String)(ExecutionContext):Try[Option[ValueType]]"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">getHyperparameter</span><span class="params">(<span name="key">key: <span class="extype" name="scala.Predef.String">String</span></span>)</span><span class="params">(<span class="implicit">implicit </span><span name="ec">ec: <span class="extype" name="scala.concurrent.ExecutionContext">ExecutionContext</span></span>)</span><span class="result">: <span class="extype" name="scala.util.Try">Try</span>[<span class="extype" name="scala.Option">Option</span>[<a href="utils/ValueType.html" class="extype" name="ai.verta.client.entities.utils.ValueType">ValueType</a>]]</span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../index.html#ai.verta.client.entities.ExperimentRun@getHyperparameter(key:String)(implicitec:scala.concurrent.ExecutionContext):scala.util.Try[Option[ai.verta.client.entities.utils.ValueType]]" title="Permalink" target="_top">
+        <img src="../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      <p class="shortcomment cmt">Gets the hyperparameter with name key from this Experiment Run</p><div class="fullcomment"><div class="comment cmt"><p>Gets the hyperparameter with name key from this Experiment Run</p></div><dl class="paramcmts block"><dt class="param">key</dt><dd class="cmt"><p>Name of the hyperparameter</p></dd><dt>returns</dt><dd class="cmt"><p>Value of the hyperparameter</p></dd></dl></div>
+    </li><li name="ai.verta.client.entities.ExperimentRun#getHyperparameters" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="getHyperparameters()(implicitec:scala.concurrent.ExecutionContext):scala.util.Try[Map[String,ai.verta.client.entities.utils.ValueType]]"></a>
+      <a id="getHyperparameters()(ExecutionContext):Try[Map[String,ValueType]]"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">getHyperparameters</span><span class="params">()</span><span class="params">(<span class="implicit">implicit </span><span name="ec">ec: <span class="extype" name="scala.concurrent.ExecutionContext">ExecutionContext</span></span>)</span><span class="result">: <span class="extype" name="scala.util.Try">Try</span>[<span class="extype" name="scala.Predef.Map">Map</span>[<span class="extype" name="scala.Predef.String">String</span>, <a href="utils/ValueType.html" class="extype" name="ai.verta.client.entities.utils.ValueType">ValueType</a>]]</span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../index.html#ai.verta.client.entities.ExperimentRun@getHyperparameters()(implicitec:scala.concurrent.ExecutionContext):scala.util.Try[Map[String,ai.verta.client.entities.utils.ValueType]]" title="Permalink" target="_top">
+        <img src="../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      <p class="shortcomment cmt">Gets all hyperparameters from this Experiment Run</p><div class="fullcomment"><div class="comment cmt"><p>Gets all hyperparameters from this Experiment Run</p></div><dl class="paramcmts block"><dt>returns</dt><dd class="cmt"><p>Names and values of all hyperparameters</p></dd></dl></div>
+    </li><li name="ai.verta.client.entities.ExperimentRun#getMetric" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="getMetric(key:String)(implicitec:scala.concurrent.ExecutionContext):scala.util.Try[Option[ai.verta.client.entities.utils.ValueType]]"></a>
+      <a id="getMetric(String)(ExecutionContext):Try[Option[ValueType]]"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">getMetric</span><span class="params">(<span name="key">key: <span class="extype" name="scala.Predef.String">String</span></span>)</span><span class="params">(<span class="implicit">implicit </span><span name="ec">ec: <span class="extype" name="scala.concurrent.ExecutionContext">ExecutionContext</span></span>)</span><span class="result">: <span class="extype" name="scala.util.Try">Try</span>[<span class="extype" name="scala.Option">Option</span>[<a href="utils/ValueType.html" class="extype" name="ai.verta.client.entities.utils.ValueType">ValueType</a>]]</span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../index.html#ai.verta.client.entities.ExperimentRun@getMetric(key:String)(implicitec:scala.concurrent.ExecutionContext):scala.util.Try[Option[ai.verta.client.entities.utils.ValueType]]" title="Permalink" target="_top">
+        <img src="../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      <p class="shortcomment cmt">Gets the metric with name key from this Experiment Run</p><div class="fullcomment"><div class="comment cmt"><p>Gets the metric with name key from this Experiment Run</p></div><dl class="paramcmts block"><dt class="param">key</dt><dd class="cmt"><p>Name of the metric</p></dd><dt>returns</dt><dd class="cmt"><p>Value of the metric</p></dd></dl></div>
+    </li><li name="ai.verta.client.entities.ExperimentRun#getMetrics" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="getMetrics()(implicitec:scala.concurrent.ExecutionContext):scala.util.Try[Map[String,ai.verta.client.entities.utils.ValueType]]"></a>
+      <a id="getMetrics()(ExecutionContext):Try[Map[String,ValueType]]"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">getMetrics</span><span class="params">()</span><span class="params">(<span class="implicit">implicit </span><span name="ec">ec: <span class="extype" name="scala.concurrent.ExecutionContext">ExecutionContext</span></span>)</span><span class="result">: <span class="extype" name="scala.util.Try">Try</span>[<span class="extype" name="scala.Predef.Map">Map</span>[<span class="extype" name="scala.Predef.String">String</span>, <a href="utils/ValueType.html" class="extype" name="ai.verta.client.entities.utils.ValueType">ValueType</a>]]</span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../index.html#ai.verta.client.entities.ExperimentRun@getMetrics()(implicitec:scala.concurrent.ExecutionContext):scala.util.Try[Map[String,ai.verta.client.entities.utils.ValueType]]" title="Permalink" target="_top">
+        <img src="../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      <p class="shortcomment cmt">Gets all metrics from this Experiment Run</p><div class="fullcomment"><div class="comment cmt"><p>Gets all metrics from this Experiment Run</p></div><dl class="paramcmts block"><dt>returns</dt><dd class="cmt"><p>Names and values of all metrics</p></dd></dl></div>
+    </li><li name="ai.verta.client.entities.ExperimentRun#getObservation" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="getObservation(key:String)(implicitec:scala.concurrent.ExecutionContext):scala.util.Try[List[(java.time.LocalDateTime,ai.verta.client.entities.utils.ValueType)]]"></a>
+      <a id="getObservation(String)(ExecutionContext):Try[List[(LocalDateTime,ValueType)]]"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">getObservation</span><span class="params">(<span name="key">key: <span class="extype" name="scala.Predef.String">String</span></span>)</span><span class="params">(<span class="implicit">implicit </span><span name="ec">ec: <span class="extype" name="scala.concurrent.ExecutionContext">ExecutionContext</span></span>)</span><span class="result">: <span class="extype" name="scala.util.Try">Try</span>[<span class="extype" name="scala.collection.immutable.List">List</span>[(<span class="extype" name="java.time.LocalDateTime">LocalDateTime</span>, <a href="utils/ValueType.html" class="extype" name="ai.verta.client.entities.utils.ValueType">ValueType</a>)]]</span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../index.html#ai.verta.client.entities.ExperimentRun@getObservation(key:String)(implicitec:scala.concurrent.ExecutionContext):scala.util.Try[List[(java.time.LocalDateTime,ai.verta.client.entities.utils.ValueType)]]" title="Permalink" target="_top">
+        <img src="../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      <p class="shortcomment cmt">Gets the observation series with name key from this Experiment Run</p><div class="fullcomment"><div class="comment cmt"><p>Gets the observation series with name key from this Experiment Run</p></div><dl class="paramcmts block"><dt class="param">key</dt><dd class="cmt"><p>Name of observation series</p></dd><dt>returns</dt><dd class="cmt"><p>Values of observation series</p></dd></dl></div>
+    </li><li name="ai.verta.client.entities.ExperimentRun#getObservations" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="getObservations()(implicitec:scala.concurrent.ExecutionContext):scala.util.Try[scala.collection.immutable.Map[String,List[(java.time.LocalDateTime,ai.verta.client.entities.utils.ValueType)]]]"></a>
+      <a id="getObservations()(ExecutionContext):Try[Map[String,List[(LocalDateTime,ValueType)]]]"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">getObservations</span><span class="params">()</span><span class="params">(<span class="implicit">implicit </span><span name="ec">ec: <span class="extype" name="scala.concurrent.ExecutionContext">ExecutionContext</span></span>)</span><span class="result">: <span class="extype" name="scala.util.Try">Try</span>[<span class="extype" name="scala.collection.immutable.Map">Map</span>[<span class="extype" name="scala.Predef.String">String</span>, <span class="extype" name="scala.collection.immutable.List">List</span>[(<span class="extype" name="java.time.LocalDateTime">LocalDateTime</span>, <a href="utils/ValueType.html" class="extype" name="ai.verta.client.entities.utils.ValueType">ValueType</a>)]]]</span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../index.html#ai.verta.client.entities.ExperimentRun@getObservations()(implicitec:scala.concurrent.ExecutionContext):scala.util.Try[scala.collection.immutable.Map[String,List[(java.time.LocalDateTime,ai.verta.client.entities.utils.ValueType)]]]" title="Permalink" target="_top">
+        <img src="../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      <p class="shortcomment cmt">Gets all observations from this Experiment Run.</p><div class="fullcomment"><div class="comment cmt"><p>Gets all observations from this Experiment Run.</p></div><dl class="paramcmts block"><dt>returns</dt><dd class="cmt"><p>Names and values of all observation series</p></dd></dl></div>
+    </li><li name="ai.verta.client.entities.ExperimentRun#getTags" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="getTags()(implicitec:scala.concurrent.ExecutionContext):scala.util.Try[List[String]]"></a>
+      <a id="getTags()(ExecutionContext):Try[List[String]]"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">getTags</span><span class="params">()</span><span class="params">(<span class="implicit">implicit </span><span name="ec">ec: <span class="extype" name="scala.concurrent.ExecutionContext">ExecutionContext</span></span>)</span><span class="result">: <span class="extype" name="scala.util.Try">Try</span>[<span class="extype" name="scala.List">List</span>[<span class="extype" name="scala.Predef.String">String</span>]]</span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../index.html#ai.verta.client.entities.ExperimentRun@getTags()(implicitec:scala.concurrent.ExecutionContext):scala.util.Try[List[String]]" title="Permalink" target="_top">
+        <img src="../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      <p class="shortcomment cmt">Gets all tags from this Experiment Run</p><div class="fullcomment"><div class="comment cmt"><p>Gets all tags from this Experiment Run</p></div><dl class="paramcmts block"><dt>returns</dt><dd class="cmt"><p>list of all the tags of this run, if succeeds</p></dd></dl><dl class="attributes block"> <dt>Definition Classes</dt><dd><a href="" class="extype" name="ai.verta.client.entities.ExperimentRun">ExperimentRun</a> → <a href="Taggable.html" class="extype" name="ai.verta.client.entities.Taggable">Taggable</a></dd></dl></div>
+    </li><li name="scala.AnyRef#hashCode" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="hashCode():Int"></a>
+      <a id="hashCode():Int"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">hashCode</span><span class="params">()</span><span class="result">: <span class="extype" name="scala.Int">Int</span></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../index.html#ai.verta.client.entities.ExperimentRun@hashCode():Int" title="Permalink" target="_top">
+        <img src="../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>AnyRef → Any</dd></dl></div>
+    </li><li name="ai.verta.client.entities.ExperimentRun#hyperparameters" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="hyperparameters()(implicitec:scala.concurrent.ExecutionContext):ai.verta.client.entities.subobjects.Hyperparameters"></a>
+      <a id="hyperparameters()(ExecutionContext):Hyperparameters"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">hyperparameters</span><span class="params">()</span><span class="params">(<span class="implicit">implicit </span><span name="ec">ec: <span class="extype" name="scala.concurrent.ExecutionContext">ExecutionContext</span></span>)</span><span class="result">: <a href="subobjects/Hyperparameters.html" class="extype" name="ai.verta.client.entities.subobjects.Hyperparameters">Hyperparameters</a></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../index.html#ai.verta.client.entities.ExperimentRun@hyperparameters()(implicitec:scala.concurrent.ExecutionContext):ai.verta.client.entities.subobjects.Hyperparameters" title="Permalink" target="_top">
+        <img src="../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      <p class="shortcomment cmt">Return a map-like object of type Hyperparameters, representing the hyperparameters associated with ExperimentRun.</p><div class="fullcomment"><div class="comment cmt"><p>Return a map-like object of type Hyperparameters, representing the hyperparameters associated with ExperimentRun.
+ Provide an alternative interface to get/log hyperparameters</p></div><dl class="paramcmts block"><dt>returns</dt><dd class="cmt"><p>the hyperparameters map</p></dd></dl></div>
+    </li><li name="scala.Any#isInstanceOf" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="isInstanceOf[T0]:Boolean"></a>
+      <a id="isInstanceOf[T0]:Boolean"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier">final </span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">isInstanceOf</span><span class="tparams">[<span name="T0">T0</span>]</span><span class="result">: <span class="extype" name="scala.Boolean">Boolean</span></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../index.html#ai.verta.client.entities.ExperimentRun@isInstanceOf[T0]:Boolean" title="Permalink" target="_top">
+        <img src="../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>Any</dd></dl></div>
+    </li><li name="ai.verta.client.entities.ExperimentRun#logArtifact" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="logArtifact(key:String,stream:java.io.InputStream)(implicitec:scala.concurrent.ExecutionContext):scala.util.Try[Unit]"></a>
+      <a id="logArtifact(String,InputStream)(ExecutionContext):Try[Unit]"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">logArtifact</span><span class="params">(<span name="key">key: <span class="extype" name="scala.Predef.String">String</span></span>, <span name="stream">stream: <span class="extype" name="java.io.InputStream">InputStream</span></span>)</span><span class="params">(<span class="implicit">implicit </span><span name="ec">ec: <span class="extype" name="scala.concurrent.ExecutionContext">ExecutionContext</span></span>)</span><span class="result">: <span class="extype" name="scala.util.Try">Try</span>[<span class="extype" name="scala.Unit">Unit</span>]</span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../index.html#ai.verta.client.entities.ExperimentRun@logArtifact(key:String,stream:java.io.InputStream)(implicitec:scala.concurrent.ExecutionContext):scala.util.Try[Unit]" title="Permalink" target="_top">
+        <img src="../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      <p class="shortcomment cmt">Logs an artifact in the form of a stream of bytes to this Experiment Run</p><div class="fullcomment"><div class="comment cmt"><p>Logs an artifact in the form of a stream of bytes to this Experiment Run</p></div><dl class="paramcmts block"><dt class="param">key</dt><dd class="cmt"><p>Name of the artifact</p></dd><dt class="param">stream</dt><dd class="cmt"><p>Input stream</p></dd></dl></div>
+    </li><li name="ai.verta.client.entities.ExperimentRun#logArtifactObj" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="logArtifactObj[T&lt;:java.io.Serializable](key:String,obj:T)(implicitec:scala.concurrent.ExecutionContext):scala.util.Try[Unit]"></a>
+      <a id="logArtifactObj[T&lt;:Serializable](String,T)(ExecutionContext):Try[Unit]"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">logArtifactObj</span><span class="tparams">[<span name="T">T &lt;: <span class="extype" name="java.io.Serializable">Serializable</span></span>]</span><span class="params">(<span name="key">key: <span class="extype" name="scala.Predef.String">String</span></span>, <span name="obj">obj: <span class="extype" name="ai.verta.client.entities.ExperimentRun.logArtifactObj.T">T</span></span>)</span><span class="params">(<span class="implicit">implicit </span><span name="ec">ec: <span class="extype" name="scala.concurrent.ExecutionContext">ExecutionContext</span></span>)</span><span class="result">: <span class="extype" name="scala.util.Try">Try</span>[<span class="extype" name="scala.Unit">Unit</span>]</span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../index.html#ai.verta.client.entities.ExperimentRun@logArtifactObj[T&lt;:java.io.Serializable](key:String,obj:T)(implicitec:scala.concurrent.ExecutionContext):scala.util.Try[Unit]" title="Permalink" target="_top">
+        <img src="../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      <p class="shortcomment cmt">Logs an serializable artifact object to this Experiment Run</p><div class="fullcomment"><div class="comment cmt"><p>Logs an serializable artifact object to this Experiment Run</p></div><dl class="paramcmts block"><dt class="param">key</dt><dd class="cmt"><p>Name of the artifact</p></dd><dt class="param">obj</dt><dd class="cmt"><p>Serializable object</p></dd></dl></div>
+    </li><li name="ai.verta.client.entities.ExperimentRun#logAttribute" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="logAttribute(key:String,value:ai.verta.client.entities.utils.ValueType)(implicitec:scala.concurrent.ExecutionContext):scala.util.Try[Unit]"></a>
+      <a id="logAttribute(String,ValueType)(ExecutionContext):Try[Unit]"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">logAttribute</span><span class="params">(<span name="key">key: <span class="extype" name="scala.Predef.String">String</span></span>, <span name="value">value: <a href="utils/ValueType.html" class="extype" name="ai.verta.client.entities.utils.ValueType">ValueType</a></span>)</span><span class="params">(<span class="implicit">implicit </span><span name="ec">ec: <span class="extype" name="scala.concurrent.ExecutionContext">ExecutionContext</span></span>)</span><span class="result">: <span class="extype" name="scala.util.Try">Try</span>[<span class="extype" name="scala.Unit">Unit</span>]</span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../index.html#ai.verta.client.entities.ExperimentRun@logAttribute(key:String,value:ai.verta.client.entities.utils.ValueType)(implicitec:scala.concurrent.ExecutionContext):scala.util.Try[Unit]" title="Permalink" target="_top">
+        <img src="../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      <p class="shortcomment cmt">Logs an attribute to this Experiment Run.</p><div class="fullcomment"><div class="comment cmt"><p>Logs an attribute to this Experiment Run.</p></div><dl class="paramcmts block"><dt class="param">key</dt><dd class="cmt"><p>Name of the attribute</p></dd><dt class="param">value</dt><dd class="cmt"><p>Value of the attribute. Could be String, Int, or Double</p></dd></dl></div>
+    </li><li name="ai.verta.client.entities.ExperimentRun#logAttributes" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="logAttributes(vals:Map[String,ai.verta.client.entities.utils.ValueType])(implicitec:scala.concurrent.ExecutionContext):scala.util.Try[Unit]"></a>
+      <a id="logAttributes(Map[String,ValueType])(ExecutionContext):Try[Unit]"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">logAttributes</span><span class="params">(<span name="vals">vals: <span class="extype" name="scala.Predef.Map">Map</span>[<span class="extype" name="scala.Predef.String">String</span>, <a href="utils/ValueType.html" class="extype" name="ai.verta.client.entities.utils.ValueType">ValueType</a>]</span>)</span><span class="params">(<span class="implicit">implicit </span><span name="ec">ec: <span class="extype" name="scala.concurrent.ExecutionContext">ExecutionContext</span></span>)</span><span class="result">: <span class="extype" name="scala.util.Try">Try</span>[<span class="extype" name="scala.Unit">Unit</span>]</span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../index.html#ai.verta.client.entities.ExperimentRun@logAttributes(vals:Map[String,ai.verta.client.entities.utils.ValueType])(implicitec:scala.concurrent.ExecutionContext):scala.util.Try[Unit]" title="Permalink" target="_top">
+        <img src="../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      <p class="shortcomment cmt">Logs potentially multiple attributes to this Experiment Run</p><div class="fullcomment"><div class="comment cmt"><p>Logs potentially multiple attributes to this Experiment Run</p></div><dl class="paramcmts block"><dt class="param">vals</dt><dd class="cmt"><p>Attributes name and value (String, Int, or Double)</p></dd></dl></div>
+    </li><li name="ai.verta.client.entities.ExperimentRun#logCommit" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="logCommit(commit:ai.verta.repository.Commit,keyPaths:Option[Map[String,String]])(implicitec:scala.concurrent.ExecutionContext):scala.util.Try[Unit]"></a>
+      <a id="logCommit(Commit,Option[Map[String,String]])(ExecutionContext):Try[Unit]"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">logCommit</span><span class="params">(<span name="commit">commit: <a href="../../repository/Commit.html" class="extype" name="ai.verta.repository.Commit">Commit</a></span>, <span name="keyPaths">keyPaths: <span class="extype" name="scala.Option">Option</span>[<span class="extype" name="scala.Predef.Map">Map</span>[<span class="extype" name="scala.Predef.String">String</span>, <span class="extype" name="scala.Predef.String">String</span>]] = <span class="symbol">None</span></span>)</span><span class="params">(<span class="implicit">implicit </span><span name="ec">ec: <span class="extype" name="scala.concurrent.ExecutionContext">ExecutionContext</span></span>)</span><span class="result">: <span class="extype" name="scala.util.Try">Try</span>[<span class="extype" name="scala.Unit">Unit</span>]</span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../index.html#ai.verta.client.entities.ExperimentRun@logCommit(commit:ai.verta.repository.Commit,keyPaths:Option[Map[String,String]])(implicitec:scala.concurrent.ExecutionContext):scala.util.Try[Unit]" title="Permalink" target="_top">
+        <img src="../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      <p class="shortcomment cmt">Associate a Commit with this Experiment Run</p><div class="fullcomment"><div class="comment cmt"><p>Associate a Commit with this Experiment Run</p></div><dl class="paramcmts block"><dt class="param">commit</dt><dd class="cmt"><p>Verta commit</p></dd><dt class="param">keyPaths</dt><dd class="cmt"><p>(optional) A mapping between descriptive keys and paths of particular interest within commit. This can be useful for, say, highlighting a particular file as the training dataset used for this Experiment Run.</p></dd><dt>returns</dt><dd class="cmt"><p>whether the log attempt succeeds</p></dd></dl></div>
+    </li><li name="ai.verta.client.entities.ExperimentRun#logHyperparameter" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="logHyperparameter(key:String,value:ai.verta.client.entities.utils.ValueType)(implicitec:scala.concurrent.ExecutionContext):scala.util.Try[Unit]"></a>
+      <a id="logHyperparameter(String,ValueType)(ExecutionContext):Try[Unit]"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">logHyperparameter</span><span class="params">(<span name="key">key: <span class="extype" name="scala.Predef.String">String</span></span>, <span name="value">value: <a href="utils/ValueType.html" class="extype" name="ai.verta.client.entities.utils.ValueType">ValueType</a></span>)</span><span class="params">(<span class="implicit">implicit </span><span name="ec">ec: <span class="extype" name="scala.concurrent.ExecutionContext">ExecutionContext</span></span>)</span><span class="result">: <span class="extype" name="scala.util.Try">Try</span>[<span class="extype" name="scala.Unit">Unit</span>]</span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../index.html#ai.verta.client.entities.ExperimentRun@logHyperparameter(key:String,value:ai.verta.client.entities.utils.ValueType)(implicitec:scala.concurrent.ExecutionContext):scala.util.Try[Unit]" title="Permalink" target="_top">
+        <img src="../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      <p class="shortcomment cmt">Logs a hyperparameter to this Experiment Run</p><div class="fullcomment"><div class="comment cmt"><p>Logs a hyperparameter to this Experiment Run</p></div><dl class="paramcmts block"><dt class="param">key</dt><dd class="cmt"><p>Name of the hyperparameter</p></dd><dt class="param">value</dt><dd class="cmt"><p>Value of the hyperparameter (String, Double, or (Big)Int)</p></dd></dl></div>
+    </li><li name="ai.verta.client.entities.ExperimentRun#logHyperparameters" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="logHyperparameters(vals:Map[String,ai.verta.client.entities.utils.ValueType])(implicitec:scala.concurrent.ExecutionContext):scala.util.Try[Unit]"></a>
+      <a id="logHyperparameters(Map[String,ValueType])(ExecutionContext):Try[Unit]"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">logHyperparameters</span><span class="params">(<span name="vals">vals: <span class="extype" name="scala.Predef.Map">Map</span>[<span class="extype" name="scala.Predef.String">String</span>, <a href="utils/ValueType.html" class="extype" name="ai.verta.client.entities.utils.ValueType">ValueType</a>]</span>)</span><span class="params">(<span class="implicit">implicit </span><span name="ec">ec: <span class="extype" name="scala.concurrent.ExecutionContext">ExecutionContext</span></span>)</span><span class="result">: <span class="extype" name="scala.util.Try">Try</span>[<span class="extype" name="scala.Unit">Unit</span>]</span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../index.html#ai.verta.client.entities.ExperimentRun@logHyperparameters(vals:Map[String,ai.verta.client.entities.utils.ValueType])(implicitec:scala.concurrent.ExecutionContext):scala.util.Try[Unit]" title="Permalink" target="_top">
+        <img src="../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      <p class="shortcomment cmt">Logs potentially multiple hyperparameters to this Experiment Run</p><div class="fullcomment"><div class="comment cmt"><p>Logs potentially multiple hyperparameters to this Experiment Run</p></div><dl class="paramcmts block"><dt class="param">vals</dt><dd class="cmt"><p>Hyperparameters</p></dd></dl></div>
+    </li><li name="ai.verta.client.entities.ExperimentRun#logMetric" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="logMetric(key:String,value:ai.verta.client.entities.utils.ValueType)(implicitec:scala.concurrent.ExecutionContext):scala.util.Try[Unit]"></a>
+      <a id="logMetric(String,ValueType)(ExecutionContext):Try[Unit]"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">logMetric</span><span class="params">(<span name="key">key: <span class="extype" name="scala.Predef.String">String</span></span>, <span name="value">value: <a href="utils/ValueType.html" class="extype" name="ai.verta.client.entities.utils.ValueType">ValueType</a></span>)</span><span class="params">(<span class="implicit">implicit </span><span name="ec">ec: <span class="extype" name="scala.concurrent.ExecutionContext">ExecutionContext</span></span>)</span><span class="result">: <span class="extype" name="scala.util.Try">Try</span>[<span class="extype" name="scala.Unit">Unit</span>]</span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../index.html#ai.verta.client.entities.ExperimentRun@logMetric(key:String,value:ai.verta.client.entities.utils.ValueType)(implicitec:scala.concurrent.ExecutionContext):scala.util.Try[Unit]" title="Permalink" target="_top">
+        <img src="../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      <p class="shortcomment cmt">Logs a metric to this Experiment Run
+ If the metadatum of interest might recur, logObservation() should be used instead</p><div class="fullcomment"><div class="comment cmt"><p>Logs a metric to this Experiment Run
+ If the metadatum of interest might recur, logObservation() should be used instead</p></div><dl class="paramcmts block"><dt class="param">key</dt><dd class="cmt"><p>Name of the metric</p></dd><dt class="param">value</dt><dd class="cmt"><p>Value of the metric</p></dd></dl></div>
+    </li><li name="ai.verta.client.entities.ExperimentRun#logMetrics" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
+      <a id="logMetrics(vals:Map[String,ai.verta.client.entities.utils.ValueType])(implicitec:scala.concurrent.ExecutionContext):scala.util.Try[Unit]"></a>
+      <a id="logMetrics(Map[String,ValueType])(ExecutionContext):Try[Unit]"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">logMetrics</span><span class="params">(<span name="vals">vals: <span class="extype" name="scala.Predef.Map">Map</span>[<span class="extype" name="scala.Predef.String">String</span>, <a href="utils/ValueType.html" class="extype" name="ai.verta.client.entities.utils.ValueType">ValueType</a>]</span>)</span><span class="params">(<span class="implicit">implicit </span><span name="ec">ec: <span class="extype" name="scala.concurrent.ExecutionContext">ExecutionContext</span></span>)</span><span class="result">: <span class="extype" name="scala.util.Try">Try</span>[<span class="extype" name="scala.Unit">Unit</span>]</span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../index.html#ai.verta.client.entities.ExperimentRun@logMetrics(vals:Map[String,ai.verta.client.entities.utils.ValueType])(implicitec:scala.concurrent.ExecutionContext):scala.util.Try[Unit]" title="Permalink" target="_top">
+        <img src="../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      <p class="shortcomment cmt">Logs potentially multiple metrics to this Experiment Run.</p>
+    </li><li name="ai.verta.client.entities.ExperimentRun#logObservation" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="logObservation(key:String,value:ai.verta.client.entities.utils.ValueType,timestamp:java.time.LocalDateTime)(implicitec:scala.concurrent.ExecutionContext):scala.util.Try[Unit]"></a>
+      <a id="logObservation(String,ValueType,LocalDateTime)(ExecutionContext):Try[Unit]"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">logObservation</span><span class="params">(<span name="key">key: <span class="extype" name="scala.Predef.String">String</span></span>, <span name="value">value: <a href="utils/ValueType.html" class="extype" name="ai.verta.client.entities.utils.ValueType">ValueType</a></span>, <span name="timestamp">timestamp: <span class="extype" name="java.time.LocalDateTime">LocalDateTime</span> = <span class="symbol">null</span></span>)</span><span class="params">(<span class="implicit">implicit </span><span name="ec">ec: <span class="extype" name="scala.concurrent.ExecutionContext">ExecutionContext</span></span>)</span><span class="result">: <span class="extype" name="scala.util.Try">Try</span>[<span class="extype" name="scala.Unit">Unit</span>]</span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../index.html#ai.verta.client.entities.ExperimentRun@logObservation(key:String,value:ai.verta.client.entities.utils.ValueType,timestamp:java.time.LocalDateTime)(implicitec:scala.concurrent.ExecutionContext):scala.util.Try[Unit]" title="Permalink" target="_top">
+        <img src="../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      <p class="shortcomment cmt">Logs an observation to this Experiment Run</p><div class="fullcomment"><div class="comment cmt"><p>Logs an observation to this Experiment Run</p></div><dl class="paramcmts block"><dt class="param">key</dt><dd class="cmt"><p>Name of the observation</p></dd><dt class="param">value</dt><dd class="cmt"><p>Value of the observation</p></dd><dt class="param">timestamp</dt><dd class="cmt"><p>Unix timestamp. If not provided, the current time will be used.</p></dd></dl></div>
+    </li><li name="ai.verta.client.entities.ExperimentRun#metrics" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="metrics()(implicitec:scala.concurrent.ExecutionContext):ai.verta.client.entities.subobjects.Metrics"></a>
+      <a id="metrics()(ExecutionContext):Metrics"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">metrics</span><span class="params">()</span><span class="params">(<span class="implicit">implicit </span><span name="ec">ec: <span class="extype" name="scala.concurrent.ExecutionContext">ExecutionContext</span></span>)</span><span class="result">: <a href="subobjects/Metrics.html" class="extype" name="ai.verta.client.entities.subobjects.Metrics">Metrics</a></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../index.html#ai.verta.client.entities.ExperimentRun@metrics()(implicitec:scala.concurrent.ExecutionContext):ai.verta.client.entities.subobjects.Metrics" title="Permalink" target="_top">
+        <img src="../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      <p class="shortcomment cmt">Return a map-like object of type Metrics, representing the metrics associated with ExperimentRun
+ Provide an alternative interface to get/log metrics</p><div class="fullcomment"><div class="comment cmt"><p>Return a map-like object of type Metrics, representing the metrics associated with ExperimentRun
+ Provide an alternative interface to get/log metrics</p></div><dl class="paramcmts block"><dt>returns</dt><dd class="cmt"><p>the metrics map</p></dd></dl></div>
+    </li><li name="scala.AnyRef#ne" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="ne(x$1:AnyRef):Boolean"></a>
+      <a id="ne(AnyRef):Boolean"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier">final </span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">ne</span><span class="params">(<span name="arg0">arg0: <span class="extype" name="scala.AnyRef">AnyRef</span></span>)</span><span class="result">: <span class="extype" name="scala.Boolean">Boolean</span></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../index.html#ai.verta.client.entities.ExperimentRun@ne(x$1:AnyRef):Boolean" title="Permalink" target="_top">
+        <img src="../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>AnyRef</dd></dl></div>
+    </li><li name="scala.AnyRef#notify" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="notify():Unit"></a>
+      <a id="notify():Unit"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier">final </span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">notify</span><span class="params">()</span><span class="result">: <span class="extype" name="scala.Unit">Unit</span></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../index.html#ai.verta.client.entities.ExperimentRun@notify():Unit" title="Permalink" target="_top">
+        <img src="../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>AnyRef</dd></dl></div>
+    </li><li name="scala.AnyRef#notifyAll" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="notifyAll():Unit"></a>
+      <a id="notifyAll():Unit"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier">final </span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">notifyAll</span><span class="params">()</span><span class="result">: <span class="extype" name="scala.Unit">Unit</span></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../index.html#ai.verta.client.entities.ExperimentRun@notifyAll():Unit" title="Permalink" target="_top">
+        <img src="../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>AnyRef</dd></dl></div>
+    </li><li name="ai.verta.client.entities.ExperimentRun#run" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
+      <a id="run:ai.verta.swagger._public.modeldb.model.ModeldbExperimentRun"></a>
+      <a id="run:ModeldbExperimentRun"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">val</span>
+      </span>
+      <span class="symbol">
+        <span class="name">run</span><span class="result">: <a href="../../swagger/_public/modeldb/model/ModeldbExperimentRun.html" class="extype" name="ai.verta.swagger._public.modeldb.model.ModeldbExperimentRun">ModeldbExperimentRun</a></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../index.html#ai.verta.client.entities.ExperimentRun@run:ai.verta.swagger._public.modeldb.model.ModeldbExperimentRun" title="Permalink" target="_top">
+        <img src="../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      
+    </li><li name="scala.AnyRef#synchronized" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="synchronized[T0](x$1:=&gt;T0):T0"></a>
+      <a id="synchronized[T0](⇒T0):T0"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier">final </span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">synchronized</span><span class="tparams">[<span name="T0">T0</span>]</span><span class="params">(<span name="arg0">arg0: ⇒ <span class="extype" name="java.lang.AnyRef.synchronized.T0">T0</span></span>)</span><span class="result">: <span class="extype" name="java.lang.AnyRef.synchronized.T0">T0</span></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../index.html#ai.verta.client.entities.ExperimentRun@synchronized[T0](x$1:=&gt;T0):T0" title="Permalink" target="_top">
+        <img src="../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>AnyRef</dd></dl></div>
+    </li><li name="ai.verta.client.entities.ExperimentRun#tags" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="tags()(implicitec:scala.concurrent.ExecutionContext):ai.verta.client.entities.subobjects.Tags"></a>
+      <a id="tags()(ExecutionContext):Tags"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">tags</span><span class="params">()</span><span class="params">(<span class="implicit">implicit </span><span name="ec">ec: <span class="extype" name="scala.concurrent.ExecutionContext">ExecutionContext</span></span>)</span><span class="result">: <a href="subobjects/Tags.html" class="extype" name="ai.verta.client.entities.subobjects.Tags">Tags</a></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../index.html#ai.verta.client.entities.ExperimentRun@tags()(implicitec:scala.concurrent.ExecutionContext):ai.verta.client.entities.subobjects.Tags" title="Permalink" target="_top">
+        <img src="../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      <p class="shortcomment cmt">Return a set-like object of type Tags, representing the tags associated with ExperimentRun
+ Provide an alternative interface to get/del/add Tags methods</p><div class="fullcomment"><div class="comment cmt"><p>Return a set-like object of type Tags, representing the tags associated with ExperimentRun
+ Provide an alternative interface to get/del/add Tags methods</p></div><dl class="paramcmts block"><dt>returns</dt><dd class="cmt"><p>the tags set</p></dd></dl></div>
+    </li><li name="scala.AnyRef#toString" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="toString():String"></a>
+      <a id="toString():String"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">toString</span><span class="params">()</span><span class="result">: <span class="extype" name="java.lang.String">String</span></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../index.html#ai.verta.client.entities.ExperimentRun@toString():String" title="Permalink" target="_top">
+        <img src="../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>AnyRef → Any</dd></dl></div>
+    </li><li name="scala.AnyRef#wait" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="wait():Unit"></a>
+      <a id="wait():Unit"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier">final </span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">wait</span><span class="params">()</span><span class="result">: <span class="extype" name="scala.Unit">Unit</span></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../index.html#ai.verta.client.entities.ExperimentRun@wait():Unit" title="Permalink" target="_top">
+        <img src="../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>AnyRef</dd><dt>Annotations</dt><dd>
+                <span class="name">@throws</span><span class="args">(<span>
+      
+      <span class="defval" name="classOf[java.lang.InterruptedException]">...</span>
+    </span>)</span>
+              
+        </dd></dl></div>
+    </li><li name="scala.AnyRef#wait" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="wait(x$1:Long,x$2:Int):Unit"></a>
+      <a id="wait(Long,Int):Unit"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier">final </span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">wait</span><span class="params">(<span name="arg0">arg0: <span class="extype" name="scala.Long">Long</span></span>, <span name="arg1">arg1: <span class="extype" name="scala.Int">Int</span></span>)</span><span class="result">: <span class="extype" name="scala.Unit">Unit</span></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../index.html#ai.verta.client.entities.ExperimentRun@wait(x$1:Long,x$2:Int):Unit" title="Permalink" target="_top">
+        <img src="../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>AnyRef</dd><dt>Annotations</dt><dd>
+                <span class="name">@throws</span><span class="args">(<span>
+      
+      <span class="defval" name="classOf[java.lang.InterruptedException]">...</span>
+    </span>)</span>
+              
+        </dd></dl></div>
+    </li><li name="scala.AnyRef#wait" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="wait(x$1:Long):Unit"></a>
+      <a id="wait(Long):Unit"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier">final </span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">wait</span><span class="params">(<span name="arg0">arg0: <span class="extype" name="scala.Long">Long</span></span>)</span><span class="result">: <span class="extype" name="scala.Unit">Unit</span></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../index.html#ai.verta.client.entities.ExperimentRun@wait(x$1:Long):Unit" title="Permalink" target="_top">
+        <img src="../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>AnyRef</dd><dt>Annotations</dt><dd>
+                <span class="name">@throws</span><span class="args">(<span>
+      
+      <span class="defval" name="classOf[java.lang.InterruptedException]">...</span>
+    </span>)</span>
+              
+        </dd></dl></div>
+    </li></ol>
+            </div>
+
+        
+
+        
+        </div>
+
+        <div id="inheritedMembers">
+        <div class="parent" name="ai.verta.client.entities.Taggable">
+              <h3>Inherited from <a href="Taggable.html" class="extype" name="ai.verta.client.entities.Taggable">Taggable</a></h3>
+            </div><div class="parent" name="scala.AnyRef">
+              <h3>Inherited from <span class="extype" name="scala.AnyRef">AnyRef</span></h3>
+            </div><div class="parent" name="scala.Any">
+              <h3>Inherited from <span class="extype" name="scala.Any">Any</span></h3>
+            </div>
+        
+        </div>
+
+        <div id="groupedMembers">
+        <div class="group" name="Ungrouped">
+              <h3>Ungrouped</h3>
+              
+            </div>
+        </div>
+
+      </div>
+
+      <div id="tooltip"></div>
+
+      <div id="footer">  </div>
+
+
+    </body>
+      </html>
