@@ -78,6 +78,22 @@ class ModelVersion(_ModelDBEntity):
         print("Created new ModelVersion: {}".format(model_version.name))
         return model_version
 
+    def update(self, labels):
+        SetModelVersionMessage = _ModelVersionService.SetModelVersion
+        registered_model_id = self._msg.registered_model_id
+
+        model_version_msg = self._msg.clone()
+        model_version_msg.labels = labels # Update the labels
+        msg = SetModelVersionMessage(model_version=model_version_msg)
+        response = self._conn.make_proto_request("PUT",
+                                                 "/api/v1/lifecycle/registered_models/{}/versions/{}".format(registered_model_id, self.id),
+                                                 body=msg)
+
+        model_version = self._conn.must_proto_response(response, SetModelVersionMessage.Response).model_version
+
+        print("Updated labels of ModelVersion: {}".format(model_version.name))
+        return model_version
+
     def set_model(self, model, overwrite=False):
         # similar to ExperimentRun.log_artifact
         raise NotImplementedError
