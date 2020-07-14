@@ -2,7 +2,7 @@
 
 from __future__ import print_function
 
-from .entity import _ModelDBEntity
+from .._tracking.entity import _ModelDBEntity
 
 from .._protos.public.registry import RegistryService_pb2 as _ModelVersionService
 from .._protos.public.common import CommonService_pb2 as _CommonCommonService
@@ -12,9 +12,9 @@ from .._internal_utils import (
 )
 
 
-class ModelVersion(_ModelDBEntity):
+class RegisteredModelVersion(_ModelDBEntity):
     def __init__(self, conn, conf, msg):
-        super(ModelVersion, self).__init__(conn, conf, _ModelVersionService, "model_version", msg)
+        super(RegisteredModelVersion, self).__init__(conn, conf, _ModelVersionService, "model_version", msg)
 
     def __repr__(self):
         raise NotImplementedError
@@ -38,10 +38,9 @@ class ModelVersion(_ModelDBEntity):
         raise NotImplementedError
 
     @classmethod
-    def _get_proto_by_name(cls, conn, name, registered_model):
+    def _get_proto_by_name(cls, conn, name, registered_model_id):
         Message = _ModelVersionService.FindModelVersionRequest
         RegisteredModelIDMessage = _ModelVersionService.RegisteredModelIdentification
-        registered_model_id = registered_model.id
 
         predicates = [
             _CommonCommonService.KeyValueQuery(key="version",
@@ -54,16 +53,16 @@ class ModelVersion(_ModelDBEntity):
         proto_response = conn.make_proto_request("POST", endpoint, msg)
         response = conn.must_proto_response(proto_response, Message.Response)
 
-        if response.total_records == 0:
+        if not response.model_versions:
             raise ValueError("ModelVersion with version name {} does not exists".format(name))
 
         return response.model_versions[0] # should only have 1 entry here, as name/version is unique
 
     @classmethod
-    def _create_proto_internal(cls, conn, ctx, name, desc=None, tags=None, attrs=None, date_created=None, **kwargs):
+    def _create_proto_internal(cls, conn, ctx, name, desc=None, tags=None, attrs=None, date_created=None, registered_model_id=None):
+        # ctx is always None here
         ModelVersionMessage = _ModelVersionService.ModelVersion
         SetModelVersionMessage = _ModelVersionService.SetModelVersion
-        registered_model_id = ctx.registered_model.id
 
         model_version_msg = ModelVersionMessage(version=name, description=desc, registered_model_id=registered_model_id,
                                                 time_created=date_created, time_updated=date_created)
