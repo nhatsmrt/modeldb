@@ -12,9 +12,6 @@ from .._internal_utils import _utils, _artifact_utils
 from ..external import six
 import requests
 import time
-import os
-import pathlib2
-import shutil
 
 
 class RegisteredModelVersion(_ModelDBEntity):
@@ -28,10 +25,6 @@ class RegisteredModelVersion(_ModelDBEntity):
     def name(self):
         self._refresh_cache()
         return self._msg.version
-
-    @property
-    def has_model(self):
-        return self._msg.model.key is not None
 
     @classmethod
     def _generate_default_name(cls):
@@ -81,66 +74,21 @@ class RegisteredModelVersion(_ModelDBEntity):
         return model_version
 
     def set_model(self, model, overwrite=False):
-        self._refresh_cache()
-        if self.has_model and not overwrite:
-            raise ValueError("model already exists; consider setting overwrite=True")
-
         if isinstance(model, six.string_types):  # filepath
             serialized_model = open(model, 'rb')  # file handle
         else:
-            serialized_model, method, _ = _artifact_utils.serialize_model(model)  # bytestream
+            serialized_model, _, _ = _artifact_utils.serialize_model(model)  # bytestream
 
-        try:
-            extension = _artifact_utils.get_file_ext(serialized_model)
-        except (TypeError, ValueError):
-            extension = _artifact_utils.ext_from_method(method)
+        # TODO: update `ModelVersion.model` field with artifact message
 
-        # Create artifact message and update ModelVersion's message:
-        self._msg.model.CopyFrom(self._create_artifact_msg("model", serialized_model, artifact_type=_CommonCommonService.ArtifactTypeEnum.MODEL, extension=extension))
-        self._update_model_version()
-
-        # Upload the artifact to ModelDB:
         self._upload_artifact(
             "model", serialized_model,
             _CommonCommonService.ArtifactTypeEnum.MODEL,
         )
 
     def add_asset(self, key, asset, overwrite=False):
-        if key == "model":
-            raise ValueError("The key `model` is reserved for model. Please use `set_model`")
-
-        self._refresh_cache()
-        same_key_ind = -1
-
-        for i in range(len(self._msg.assets)):
-            artifact = self._msg.assets[i]
-            if artifact.key == key:
-                if not overwrite:
-                    raise ValueError("The key has been set; consider setting overwrite=True")
-                else:
-                    same_key_ind = i
-                break
-
-        artifact_type = _CommonCommonService.ArtifactTypeEnum.BLOB
-
-        if isinstance(asset, six.string_types):  # filepath
-            artifact_stream = open(asset, 'rb')  # file handle
-        else:
-            artifact_stream, method = _artifact_utils.ensure_bytestream(asset)  # bytestream
-
-        try:
-            extension = _artifact_utils.get_file_ext(artifact_stream)
-        except (TypeError, ValueError):
-            extension = _artifact_utils.ext_from_method(method)
-
-        artifact_msg = self._create_artifact_msg(key, artifact_stream, artifact_type=artifact_type, extension=extension)
-        if same_key_ind == -1:
-            self._msg.assets.append(artifact_msg)
-        else:
-            self._msg.assets[same_key_ind] = artifact_msg
-
-        self._update_model_version()
-        self._upload_artifact(key, artifact_stream, artifact_type=artifact_type)
+        # similar to ExperimentRun.log_artifact
+        raise NotImplementedError
 
     def del_asset(self, key):
         raise NotImplementedError
@@ -174,7 +122,7 @@ class RegisteredModelVersion(_ModelDBEntity):
         _utils.raise_for_http_error(response)
         return _utils.json_to_proto(response.json(), Message.Response)
 
-    def _upload_artifact(self, key, file_handle, artifact_type, part_size=64*(10**6)):
+    def _upload_artifact(self, key, artifact_type, file_handle, part_size=64*(10**6)):
         file_handle.seek(0)
 
         # check if multipart upload ok
@@ -247,40 +195,3 @@ class RegisteredModelVersion(_ModelDBEntity):
             _utils.raise_for_http_error(response)
 
         print("upload complete")
-
-    def _update_model_version(self):
-        Message = _ModelVersionService.SetModelVersion
-        endpoint = "/api/v1/registry/{}/versions/{}".format(self._msg.registered_model_id, self.id)
-
-        response = self._conn.make_proto_request("PUT", endpoint, body=self._msg)
-        self._conn.must_proto_response(response, Message.Response)
-        self._clear_cache()
-
-    def _create_artifact_msg(self, key, artifact_stream, artifact_type, extension=None):
-        # calculate checksum
-        artifact_hash = _artifact_utils.calc_sha256(artifact_stream)
-        artifact_stream.seek(0)
-
-        # determine basename
-        #     The key might already contain the file extension, thanks to our hard-coded deployment
-        #     keys e.g. "model.pkl" and "model_api.json".
-        if extension is None:
-            basename = key
-        elif key.endswith(os.extsep + extension):
-            basename = key
-        else:
-            basename = key + os.extsep + extension
-
-        # build upload path from checksum and basename
-        artifact_path = os.path.join(artifact_hash, basename)
-
-        # TODO: support VERTA_ARTIFACT_DIR
-
-        # log key to ModelDB
-        artifact_msg = _CommonCommonService.Artifact(key=key,
-                                               path=artifact_path,
-                                               path_only=False,
-                                               artifact_type=artifact_type,
-                                               filename_extension=extension)
-
-        return artifact_msg
