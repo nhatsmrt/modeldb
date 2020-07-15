@@ -180,7 +180,6 @@ class RegisteredModelVersion(_ModelDBEntity):
                 model_version_id=self.id,
                 key=key
             )
-            msg.repository_id.repo_id = self._repo.id
             data = _utils.proto_to_json(msg)
             response = _utils.make_request("POST", url, self._conn, json=data)
             _utils.raise_for_http_error(response)
