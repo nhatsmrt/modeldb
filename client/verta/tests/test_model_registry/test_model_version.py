@@ -5,6 +5,8 @@ from .. import utils
 import verta.dataset
 import verta.environment
 
+from sklearn.linear_model import LogisticRegression
+
 
 class TestModelVersion:
     def test_get_by_name(self, registered_model):
@@ -29,3 +31,18 @@ class TestModelVersion:
 
         if registered_model:
             utils.delete_registered_model(registered_model.id, client._conn)
+
+    def test_set_model(self, registered_model):
+        model_version = registered_model.get_or_create_version(name="my version")
+        log_reg_model = LogisticRegression()
+        model_version.set_model(log_reg_model, True)
+
+        model_version._refresh_cache()
+        assert model_version._msg.model.key == "model"
+
+    def test_add_asset(self, registered_model):
+        model_version = registered_model.get_or_create_version(name="my version")
+        log_reg_model = LogisticRegression()
+        model_version.add_asset("some-asset", log_reg_model)
+
+        model_version.add_asset("some-asset", log_reg_model)
