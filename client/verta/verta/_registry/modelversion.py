@@ -7,7 +7,7 @@ from .._tracking.entity import _ModelDBEntity
 from .._protos.public.registry import RegistryService_pb2 as _ModelVersionService
 from .._protos.public.common import CommonService_pb2 as _CommonCommonService
 
-from .._internal_utils import _utils
+from .._internal_utils import _utils, _artifact_utils
 
 from ..external import six
 import requests
@@ -74,8 +74,17 @@ class RegisteredModelVersion(_ModelDBEntity):
         return model_version
 
     def set_model(self, model, overwrite=False):
-        # similar to ExperimentRun.log_artifact
-        raise NotImplementedError
+        if isinstance(model, six.string_types):  # filepath
+            serialized_model = open(model, 'rb')  # file handle
+        else:
+            serialized_model, _, _ = _artifact_utils.serialize_model(model)  # bytestream
+
+        # TODO: update `ModelVersion.model` field with artifact message
+
+        self._upload_artifact(
+            "model", serialized_model,
+            _CommonCommonService.ArtifactTypeEnum.MODEL,
+        )
 
     def add_asset(self, key, asset, overwrite=False):
         # similar to ExperimentRun.log_artifact
