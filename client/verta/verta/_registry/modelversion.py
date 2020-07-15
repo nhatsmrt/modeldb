@@ -41,15 +41,13 @@ class RegisteredModelVersion(_ModelDBEntity):
     @classmethod
     def _get_proto_by_name(cls, conn, name, registered_model_id):
         Message = _ModelVersionService.FindModelVersionRequest
-        IDMessage = _ModelVersionService.RegisteredModelIdentification
-
         predicates = [
             _CommonCommonService.KeyValueQuery(key="version",
                                                value=_utils.python_to_val_proto(name),
                                                operator=_CommonCommonService.OperatorEnum.EQ)
         ]
         endpoint = "/api/v1/registry/{}/versions/find".format(registered_model_id)
-        msg = Message(id=IDMessage(registered_model_id=registered_model_id), predicates=predicates)
+        msg = Message(predicates=predicates)
 
         proto_response = conn.make_proto_request("POST", endpoint, body=msg)
         response = conn.maybe_proto_response(proto_response, Message.Response)
@@ -61,10 +59,10 @@ class RegisteredModelVersion(_ModelDBEntity):
         return response.model_versions[0]
 
     @classmethod
-    def _create_proto_internal(cls, conn, ctx, name, desc=None, tags=None, labels=None, attrs=None, date_created=None, registered_model_id=None):
-        # ctx is always None here
+    def _create_proto_internal(cls, conn, ctx, name, desc=None, tags=None, labels=None, attrs=None, date_created=None):
         ModelVersionMessage = _ModelVersionService.ModelVersion
         SetModelVersionMessage = _ModelVersionService.SetModelVersion
+        registered_model_id = ctx.registered_model.id
 
         model_version_msg = ModelVersionMessage(version=name, description=desc, registered_model_id=registered_model_id,
                                                 labels=labels, time_created=date_created, time_updated=date_created)
