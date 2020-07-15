@@ -110,12 +110,16 @@ class RegisteredModelVersion(_ModelDBEntity):
             raise ValueError("The key `model` is reserved for model. Please use `set_model`")
 
         self._refresh_cache()
-        if not overwrite:
-            print(self._msg.assets)
-            for artifact in self._msg.assets:
-                print(artifact.key, key)
-                if artifact.key == key:
+        same_key_ind = -1
+
+        for i in range(len(self._msg.assets)):
+            artifact = self._msg.assets[i]
+            if artifact.key == key:
+                if not overwrite:
                     raise ValueError("The key has been set; consider setting overwrite=True")
+                else:
+                    same_key_ind = i
+                break
 
         artifact_type = _CommonCommonService.ArtifactTypeEnum.BLOB
 
@@ -129,7 +133,12 @@ class RegisteredModelVersion(_ModelDBEntity):
         except (TypeError, ValueError):
             extension = _artifact_utils.ext_from_method(method)
 
-        self._msg.assets.append(self._create_artifact_msg(key, artifact_stream, artifact_type=_CommonCommonService.ArtifactTypeEnum.MODEL, extension=extension))
+        artifact_msg = self._create_artifact_msg(key, artifact_stream, artifact_type=artifact_type, extension=extension)
+        if same_key_ind == -1:
+            self._msg.assets.append(artifact_msg)
+        else:
+            self._msg.assets[same_key_ind] = artifact_msg
+
         self._update_model_version()
         self._upload_artifact(key, artifact_stream, artifact_type=artifact_type)
 
