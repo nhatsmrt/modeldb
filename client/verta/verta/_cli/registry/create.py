@@ -55,5 +55,5 @@ def create_model_version(ctx, model_name, version_name, label, model, artifact, 
 
     model_version = registered_model.get_or_create_version(name=version_name, labels=list(label))
     # label has already been added
-    ctx.invoke(update_model_version, model_name=model_name, version_name=version_name, model=model, artifact=artifact, workspace=workspace)
+    ctx.forward(update_model_version, label=())
 
