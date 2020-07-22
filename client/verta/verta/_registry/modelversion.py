@@ -428,7 +428,7 @@ class RegisteredModelVersion(_ModelDBEntity):
         self._update()
 
     def _update(self):
-        response = self._conn.make_proto_request("PUT", "/api/v1/registry/{}/versions/{}".format(self._msg.registered_model_id, self.id),
+        response = self._conn.make_proto_request("PUT", "/api/v1/registry/model_versions/{}".format(self.id),
                                                  body=self._msg)
         Message = _ModelVersionService.SetModelVersion
         if isinstance(self._conn.maybe_proto_response(response, Message.Response), NoneProtoResponse):
