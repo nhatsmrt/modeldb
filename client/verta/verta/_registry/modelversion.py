@@ -83,7 +83,7 @@ class RegisteredModelVersion(_ModelDBEntity):
                                                value=_utils.python_to_val_proto(name),
                                                operator=_CommonCommonService.OperatorEnum.EQ)
         ]
-        endpoint = "/api/v1/registry/{}/versions/find".format(registered_model_id)
+        endpoint = "/api/v1/registry/registered_models/{}/model_versions/find".format(registered_model_id)
         msg = Message(predicates=predicates)
 
         proto_response = conn.make_proto_request("POST", endpoint, body=msg)
