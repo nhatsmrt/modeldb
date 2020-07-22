@@ -70,7 +70,7 @@ class RegisteredModelVersion(_ModelDBEntity):
     @classmethod
     def _get_proto_by_id(cls, conn, id):
         Message = _ModelVersionService.GetModelVersionRequest
-        endpoint = "/api/v1/registry/registered_model_versions/{}".format(id)
+        endpoint = "/api/v1/registry/model_versions/{}".format(id)
         response = conn.make_proto_request("GET", endpoint)
 
         return conn.maybe_proto_response(response, Message.Response).model_version
@@ -105,7 +105,7 @@ class RegisteredModelVersion(_ModelDBEntity):
                                                 description=desc, labels=tags,
                                                 time_created=date_created, time_updated=date_created,
                                                 experiment_run_id=experiment_run_id)
-        endpoint = "/api/v1/registry/{}/versions".format(registered_model_id)
+        endpoint = "/api/v1/registry/registered_models/{}/model_versions".format(registered_model_id)
         response = conn.make_proto_request("POST", endpoint, body=model_version_msg)
         model_version = conn.must_proto_response(response, SetModelVersionMessage.Response).model_version
 
@@ -428,7 +428,7 @@ class RegisteredModelVersion(_ModelDBEntity):
         self._update()
 
     def _update(self):
-        response = self._conn.make_proto_request("PUT", "/api/v1/registry/model_versions/{}".format(self.id),
+        response = self._conn.make_proto_request("PUT", "/api/v1/registry/registered_model/{}/model_versions/{}".format(self.registered_model_id, self.id),
                                                  body=self._msg)
         Message = _ModelVersionService.SetModelVersion
         if isinstance(self._conn.maybe_proto_response(response, Message.Response), NoneProtoResponse):
