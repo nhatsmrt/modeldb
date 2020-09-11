@@ -47,8 +47,9 @@ trait Dataset extends Blob {
       if (componentToLocalPath.componentToLocalPathMap.isEmpty)
         Failure(new NoSuchElementException("Components not found."))
       else {
+        // parallelize download attempt
         val downloadAttempts =
-          componentToLocalPath.componentToLocalPathMap.map(pair => pair._2 -> downloadComponent(pair._1, pair._2))
+          componentToLocalPath.componentToLocalPathMap.par.map(pair => pair._2 -> downloadComponent(pair._1, pair._2))
 
         Try(downloadAttempts.mapValues(_.get)) match {
           case Success(downloadAttempts) => {
