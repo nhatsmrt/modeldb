@@ -1,7 +1,5 @@
 package ai.verta.modeldb.cron_jobs;
 
-import static ai.verta.modeldb.authservice.AuthServiceChannel.isBackgroundUtilsCall;
-
 import ai.verta.common.ModelDBResourceEnum.ModelDBServiceResourceTypes;
 import ai.verta.common.WorkspaceTypeEnum;
 import ai.verta.modeldb.DatasetVisibilityEnum;
@@ -22,12 +20,17 @@ import ai.verta.modeldb.entities.versioning.RepositoryEntity;
 import ai.verta.modeldb.entities.versioning.TagsEntity;
 import ai.verta.modeldb.metadata.IDTypeEnum;
 import ai.verta.modeldb.utils.ModelDBHibernateUtil;
+import ai.verta.modeldb.utils.ModelDBUtils;
+import ai.verta.modeldb.versioning.VersioningUtils;
+import com.google.rpc.Code;
+import io.grpc.StatusRuntimeException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.TimerTask;
 import java.util.stream.Collectors;
+import javax.persistence.OptimisticLockException;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.hibernate.Session;
@@ -54,30 +57,63 @@ public class DeleteEntitiesCron extends TimerTask {
   public void run() {
     LOGGER.info("DeleteEntitiesCron wakeup");
 
-    isBackgroundUtilsCall = true;
+    ModelDBUtils.registeredBackgroundUtilsCount();
     try (Session session = ModelDBHibernateUtil.getSessionFactory().openSession()) {
       // Update project timestamp
-      deleteProjects(session);
+      try {
+        deleteProjects(session);
+      } catch (OptimisticLockException ex) {
+        deleteProjects(session);
+      }
 
       // Update experiment timestamp
-      deleteExperiments(session);
-
-      // Update experimentRun timestamp
-      deleteExperimentRuns(session);
+      try {
+        deleteExperiments(session);
+      } catch (OptimisticLockException ex) {
+        deleteExperiments(session);
+      }
 
       // Update dataset timestamp
-      deleteDatasets(session);
+      try {
+        deleteDatasets(session);
+      } catch (OptimisticLockException ex) {
+        deleteDatasets(session);
+      }
 
       // Update datasetVersion timestamp
-      deleteDatasetVersions(session);
+      try {
+        deleteDatasetVersions(session);
+      } catch (OptimisticLockException ex) {
+        deleteDatasetVersions(session);
+      }
 
       // Update repository timestamp
-      deleteRepositories(session);
+      try {
+        deleteRepositories(session);
+      } catch (OptimisticLockException ex) {
+        deleteRepositories(session);
+      }
+
+      // Update experimentRun timestamp
+      try {
+        deleteExperimentRuns(session);
+      } catch (OptimisticLockException ex) {
+        deleteExperimentRuns(session);
+      }
     } catch (Exception ex) {
-      ex.printStackTrace();
-      LOGGER.error("DeleteEntitiesCron Exception: ", ex);
+      if (ex instanceof StatusRuntimeException) {
+        StatusRuntimeException exception = (StatusRuntimeException) ex;
+        if (exception.getStatus().getCode().value() == Code.PERMISSION_DENIED_VALUE) {
+          LOGGER.error("DeleteEntitiesCron Exception: {}", ex.getMessage());
+        } else {
+          LOGGER.error("DeleteEntitiesCron Exception: ", ex);
+        }
+      } else {
+        LOGGER.error("DeleteEntitiesCron Exception: ", ex);
+      }
+    } finally {
+      ModelDBUtils.unregisteredBackgroundUtilsCount();
     }
-    isBackgroundUtilsCall = false;
     LOGGER.info("DeleteEntitiesCron finish tasks and reschedule");
   }
 
@@ -107,29 +143,41 @@ public class DeleteEntitiesCron extends TimerTask {
       for (ProjectEntity projectEntity : projectEntities) {
         projectIds.add(projectEntity.getId());
       }
-      deleteRoleBindingsForProjects(projectEntities);
+      try {
+        deleteRoleBindingsForProjects(projectEntities);
+      } catch (Exception ex) {
+        LOGGER.error(
+            "DeleteEntitiesCron : deleteProjects : deleteRoleBindingsForProjects : Exception: {}",
+            ex.getMessage());
+      }
 
       Transaction transaction = session.beginTransaction();
-      String updateDeletedStatusExperimentQueryString =
-          new StringBuilder("UPDATE ")
-              .append(ExperimentEntity.class.getSimpleName())
-              .append(" exp ")
-              .append("SET exp.")
-              .append(ModelDBConstants.DELETED)
-              .append(" = :deleted ")
-              .append(" WHERE exp.")
-              .append(ModelDBConstants.PROJECT_ID)
-              .append(" IN (:projectIds)")
-              .toString();
-      Query deletedExperimentQuery = session.createQuery(updateDeletedStatusExperimentQueryString);
-      deletedExperimentQuery.setParameter("deleted", true);
-      deletedExperimentQuery.setParameter("projectIds", projectIds);
-      deletedExperimentQuery.executeUpdate();
+      try {
+        String updateDeletedStatusExperimentQueryString =
+            new StringBuilder("UPDATE ")
+                .append(ExperimentEntity.class.getSimpleName())
+                .append(" exp ")
+                .append("SET exp.")
+                .append(ModelDBConstants.DELETED)
+                .append(" = :deleted ")
+                .append(" WHERE exp.")
+                .append(ModelDBConstants.PROJECT_ID)
+                .append(" IN (:projectIds)")
+                .toString();
+        Query deletedExperimentQuery =
+            session.createQuery(updateDeletedStatusExperimentQueryString);
+        deletedExperimentQuery.setParameter("deleted", true);
+        deletedExperimentQuery.setParameter("projectIds", projectIds);
+        deletedExperimentQuery.executeUpdate();
 
-      for (ProjectEntity projectEntity : projectEntities) {
-        session.delete(projectEntity);
+        for (ProjectEntity projectEntity : projectEntities) {
+          session.delete(projectEntity);
+        }
+      } catch (Exception ex) {
+        LOGGER.error("DeleteEntitiesCron : deleteProjects : Exception: ", ex);
+      } finally {
+        transaction.commit();
       }
-      transaction.commit();
     }
 
     LOGGER.debug("Project Deleted successfully : Deleted projects count {}", projectIds.size());
@@ -212,30 +260,42 @@ public class DeleteEntitiesCron extends TimerTask {
       for (ExperimentEntity experimentEntity : experimentEntities) {
         experimentIds.add(experimentEntity.getId());
       }
-      deleteRoleBindingsForExperiments(experimentEntities);
+
+      try {
+        deleteRoleBindingsForExperiments(experimentEntities);
+      } catch (Exception ex) {
+        LOGGER.error(
+            "DeleteEntitiesCron : deleteExperiments : deleteRoleBindingsForExperiments : Exception: {}",
+            ex.getMessage());
+      }
 
       Transaction transaction = session.beginTransaction();
-      String updateDeletedStatusExperimentRunQueryString =
-          new StringBuilder("UPDATE ")
-              .append(ExperimentRunEntity.class.getSimpleName())
-              .append(" expr ")
-              .append("SET expr.")
-              .append(ModelDBConstants.DELETED)
-              .append(" = :deleted ")
-              .append(" WHERE expr.")
-              .append(ModelDBConstants.EXPERIMENT_ID)
-              .append(" IN (:experimentIds)")
-              .toString();
-      Query deletedExperimentRunQuery =
-          session.createQuery(updateDeletedStatusExperimentRunQueryString);
-      deletedExperimentRunQuery.setParameter("deleted", true);
-      deletedExperimentRunQuery.setParameter("experimentIds", experimentIds);
-      deletedExperimentRunQuery.executeUpdate();
+      try {
+        String updateDeletedStatusExperimentRunQueryString =
+            new StringBuilder("UPDATE ")
+                .append(ExperimentRunEntity.class.getSimpleName())
+                .append(" expr ")
+                .append("SET expr.")
+                .append(ModelDBConstants.DELETED)
+                .append(" = :deleted ")
+                .append(" WHERE expr.")
+                .append(ModelDBConstants.EXPERIMENT_ID)
+                .append(" IN (:experimentIds)")
+                .toString();
+        Query deletedExperimentRunQuery =
+            session.createQuery(updateDeletedStatusExperimentRunQueryString);
+        deletedExperimentRunQuery.setParameter("deleted", true);
+        deletedExperimentRunQuery.setParameter("experimentIds", experimentIds);
+        deletedExperimentRunQuery.executeUpdate();
 
-      for (ExperimentEntity experimentEntity : experimentEntities) {
-        session.delete(experimentEntity);
+        for (ExperimentEntity experimentEntity : experimentEntities) {
+          session.delete(experimentEntity);
+        }
+      } catch (Exception ex) {
+        LOGGER.error("DeleteEntitiesCron : deleteExperiments : Exception:", ex);
+      } finally {
+        transaction.commit();
       }
-      transaction.commit();
     }
 
     LOGGER.debug(
@@ -281,18 +341,30 @@ public class DeleteEntitiesCron extends TimerTask {
       for (ExperimentRunEntity experimentRunEntity : experimentRunEntities) {
         experimentRunIds.add(experimentRunEntity.getId());
       }
-      deleteRoleBindingsForExperimentRuns(experimentRunEntities);
+      try {
+        deleteRoleBindingsForExperimentRuns(experimentRunEntities);
+      } catch (Exception ex) {
+        LOGGER.error(
+            "DeleteEntitiesCron : deleteExperimentRuns : deleteRoleBindingsForExperimentRuns : Exception: {}",
+            ex.getMessage());
+      }
 
       Transaction transaction = session.beginTransaction();
-      // Delete the ExperimentRun comments
-      if (!experimentRunIds.isEmpty()) {
-        removeEntityComments(session, experimentRunIds, ExperimentRunEntity.class.getSimpleName());
-      }
+      try {
+        // Delete the ExperimentRun comments
+        if (!experimentRunIds.isEmpty()) {
+          removeEntityComments(
+              session, experimentRunIds, ExperimentRunEntity.class.getSimpleName());
+        }
 
-      for (ExperimentRunEntity experimentRunEntity : experimentRunEntities) {
-        session.delete(experimentRunEntity);
+        for (ExperimentRunEntity experimentRunEntity : experimentRunEntities) {
+          session.delete(experimentRunEntity);
+        }
+      } catch (Exception ex) {
+        LOGGER.error("DeleteEntitiesCron : deleteExperimentRuns : Exception:", ex);
+      } finally {
+        transaction.commit();
       }
-      transaction.commit();
     }
 
     LOGGER.debug(
@@ -363,30 +435,41 @@ public class DeleteEntitiesCron extends TimerTask {
       for (DatasetEntity datasetEntity : datasetEntities) {
         datasetIds.add(datasetEntity.getId());
       }
-      deleteRoleBindingsForDatasets(datasetEntities);
+      try {
+        deleteRoleBindingsForDatasets(datasetEntities);
+      } catch (Exception ex) {
+        LOGGER.error(
+            "DeleteEntitiesCron : deleteDatasets : deleteRoleBindingsForDatasets : Exception: {}",
+            ex.getMessage());
+      }
 
       Transaction transaction = session.beginTransaction();
-      String updateDeletedStatusDatasetVersionQueryString =
-          new StringBuilder("UPDATE ")
-              .append(DatasetVersionEntity.class.getSimpleName())
-              .append(" dv ")
-              .append("SET dv.")
-              .append(ModelDBConstants.DELETED)
-              .append(" = :deleted ")
-              .append(" WHERE dv.")
-              .append(ModelDBConstants.DATASET_ID)
-              .append(" IN (:datasetIds)")
-              .toString();
-      Query deletedDatasetVersionQuery =
-          session.createQuery(updateDeletedStatusDatasetVersionQueryString);
-      deletedDatasetVersionQuery.setParameter("deleted", true);
-      deletedDatasetVersionQuery.setParameter("datasetIds", datasetIds);
-      deletedDatasetVersionQuery.executeUpdate();
+      try {
+        String updateDeletedStatusDatasetVersionQueryString =
+            new StringBuilder("UPDATE ")
+                .append(DatasetVersionEntity.class.getSimpleName())
+                .append(" dv ")
+                .append("SET dv.")
+                .append(ModelDBConstants.DELETED)
+                .append(" = :deleted ")
+                .append(" WHERE dv.")
+                .append(ModelDBConstants.DATASET_ID)
+                .append(" IN (:datasetIds)")
+                .toString();
+        Query deletedDatasetVersionQuery =
+            session.createQuery(updateDeletedStatusDatasetVersionQueryString);
+        deletedDatasetVersionQuery.setParameter("deleted", true);
+        deletedDatasetVersionQuery.setParameter("datasetIds", datasetIds);
+        deletedDatasetVersionQuery.executeUpdate();
 
-      for (DatasetEntity datasetEntity : datasetEntities) {
-        session.delete(datasetEntity);
+        for (DatasetEntity datasetEntity : datasetEntities) {
+          session.delete(datasetEntity);
+        }
+      } catch (Exception ex) {
+        LOGGER.error("DeleteEntitiesCron : deleteDatasets : Exception:", ex);
+      } finally {
+        transaction.commit();
       }
-      transaction.commit();
     }
     LOGGER.debug("Dataset Deleted successfully : Deleted datasets count {}", datasetIds.isEmpty());
   }
@@ -507,14 +590,25 @@ public class DeleteEntitiesCron extends TimerTask {
     LOGGER.debug("DatasetVersion delete query: {}", datasetVersionDeleteQuery.getQueryString());
     List<DatasetVersionEntity> datasetVersionEntities = datasetVersionDeleteQuery.list();
 
-    // Remove all role bindings
-    deleteRoleBindingsForDatasetVersions(datasetVersionEntities);
+    try {
+      // Remove all role bindings
+      deleteRoleBindingsForDatasetVersions(datasetVersionEntities);
+    } catch (Exception ex) {
+      LOGGER.error(
+          "DeleteEntitiesCron : deleteDatasetVersions : deleteRoleBindingsForDatasetVersions : Exception: {}",
+          ex.getMessage());
+    }
 
     Transaction transaction = session.beginTransaction();
-    for (DatasetVersionEntity datasetVersionEntity : datasetVersionEntities) {
-      session.delete(datasetVersionEntity);
+    try {
+      for (DatasetVersionEntity datasetVersionEntity : datasetVersionEntities) {
+        session.delete(datasetVersionEntity);
+      }
+    } catch (Exception ex) {
+      LOGGER.error("DeleteEntitiesCron : deleteDatasetVersions : Exception:", ex);
+    } finally {
+      transaction.commit();
     }
-    transaction.commit();
     LOGGER.debug(
         "DatasetVersion Deleted successfully : Deleted datasetVersions count {}",
         datasetVersionEntities.size());
@@ -562,75 +656,100 @@ public class DeleteEntitiesCron extends TimerTask {
 
     if (!repositoryEntities.isEmpty()) {
       for (RepositoryEntity repository : repositoryEntities) {
-        deleteRoleBindingsOfRepositories(Collections.singletonList(repository));
-
-        Transaction transaction = session.beginTransaction();
-
-        String deleteTagsHql =
-            new StringBuilder("DELETE " + TagsEntity.class.getSimpleName() + " te where te.id.")
-                .append(ModelDBConstants.REPOSITORY_ID)
-                .append(" = :repoId ")
-                .toString();
-        Query deleteTagsQuery = session.createQuery(deleteTagsHql);
-        deleteTagsQuery.setParameter("repoId", repository.getId());
-        deleteTagsQuery.executeUpdate();
-
-        deleteLabels(
-            session, String.valueOf(repository.getId()), IDTypeEnum.IDType.VERSIONING_REPOSITORY);
-
-        String getRepositoryBranchesHql =
-            new StringBuilder("From ")
-                .append(BranchEntity.class.getSimpleName())
-                .append(" br where br.id.")
-                .append(ModelDBConstants.REPOSITORY_ID)
-                .append(" = :repoId ")
-                .toString();
-        Query query = session.createQuery(getRepositoryBranchesHql);
-        query.setParameter("repoId", repository.getId());
-        List<BranchEntity> branchEntities = query.list();
-
-        List<String> branches =
-            branchEntities.stream()
-                .map(branchEntity -> branchEntity.getId().getBranch())
-                .collect(Collectors.toList());
-
-        if (!branches.isEmpty()) {
-          String deleteBranchesHQL =
-              "DELETE FROM "
-                  + BranchEntity.class.getSimpleName()
-                  + " br where br.id.repository_id = :repositoryId AND br.id.branch IN (:branches)";
-          Query deleteBranchQuery = session.createQuery(deleteBranchesHQL);
-          deleteBranchQuery.setParameter("repositoryId", repository.getId());
-          deleteBranchQuery.setParameterList("branches", branches);
-          deleteBranchQuery.executeUpdate();
+        try {
+          deleteRoleBindingsOfRepositories(Collections.singletonList(repository));
+        } catch (Exception ex) {
+          LOGGER.error(
+              "DeleteEntitiesCron : deleteRepositories : deleteRoleBindingsOfRepositories : Exception: {}",
+              ex.getMessage());
         }
 
-        StringBuilder commitQueryBuilder =
-            new StringBuilder(
-                "SELECT cm FROM "
-                    + CommitEntity.class.getSimpleName()
-                    + " cm LEFT JOIN cm.repository repo WHERE repo.id = :repoId ");
-        Query<CommitEntity> commitEntityQuery =
-            session.createQuery(
-                commitQueryBuilder.append(" ORDER BY cm.date_created DESC").toString());
-        commitEntityQuery.setParameter("repoId", repository.getId());
-        List<CommitEntity> commitEntities = commitEntityQuery.list();
+        Transaction transaction = session.beginTransaction();
+        try {
+          String deleteTagsHql =
+              new StringBuilder("DELETE " + TagsEntity.class.getSimpleName() + " te where te.id.")
+                  .append(ModelDBConstants.REPOSITORY_ID)
+                  .append(" = :repoId ")
+                  .toString();
+          Query deleteTagsQuery = session.createQuery(deleteTagsHql);
+          deleteTagsQuery.setParameter("repoId", repository.getId());
+          deleteTagsQuery.executeUpdate();
 
-        commitEntities.forEach(
-            commitEntity -> {
-              if (commitEntity.getRepository().contains(repository)) {
-                commitEntity.getRepository().remove(repository);
-                if (commitEntity.getRepository().isEmpty()) {
-                  deleteLabels(
-                      session, commitEntity.getCommit_hash(), IDTypeEnum.IDType.VERSIONING_COMMIT);
-                  session.delete(commitEntity);
-                } else {
-                  session.update(commitEntity);
+          deleteLabels(
+              session, String.valueOf(repository.getId()), IDTypeEnum.IDType.VERSIONING_REPOSITORY);
+
+          String getRepositoryBranchesHql =
+              new StringBuilder("From ")
+                  .append(BranchEntity.class.getSimpleName())
+                  .append(" br where br.id.")
+                  .append(ModelDBConstants.REPOSITORY_ID)
+                  .append(" = :repoId ")
+                  .toString();
+          Query query = session.createQuery(getRepositoryBranchesHql);
+          query.setParameter("repoId", repository.getId());
+          List<BranchEntity> branchEntities = query.list();
+
+          List<String> branches =
+              branchEntities.stream()
+                  .map(branchEntity -> branchEntity.getId().getBranch())
+                  .collect(Collectors.toList());
+
+          if (!branches.isEmpty()) {
+            String deleteBranchesHQL =
+                "DELETE FROM "
+                    + BranchEntity.class.getSimpleName()
+                    + " br where br.id.repository_id = :repositoryId AND br.id.branch IN (:branches)";
+            Query deleteBranchQuery = session.createQuery(deleteBranchesHQL);
+            deleteBranchQuery.setParameter("repositoryId", repository.getId());
+            deleteBranchQuery.setParameterList("branches", branches);
+            deleteBranchQuery.executeUpdate();
+          }
+
+          StringBuilder commitQueryBuilder =
+              new StringBuilder(
+                  "SELECT cm FROM "
+                      + CommitEntity.class.getSimpleName()
+                      + " cm LEFT JOIN cm.repository repo WHERE repo.id = :repoId ");
+          Query<CommitEntity> commitEntityQuery =
+              session.createQuery(
+                  commitQueryBuilder.append(" ORDER BY cm.date_created DESC").toString());
+          commitEntityQuery.setParameter("repoId", repository.getId());
+          List<CommitEntity> commitEntities = commitEntityQuery.list();
+
+          commitEntities.forEach(
+              commitEntity -> {
+                if (commitEntity.getRepository().contains(repository)) {
+                  commitEntity.getRepository().remove(repository);
+                  if (commitEntity.getRepository().isEmpty()) {
+                    if (repository.isDataset()) {
+                      String compositeId =
+                          VersioningUtils.getVersioningCompositeId(
+                              repository.getId(),
+                              commitEntity.getCommit_hash(),
+                              Collections.singletonList(
+                                  ModelDBConstants.DEFAULT_VERSIONING_BLOB_LOCATION));
+                      deleteLabels(
+                          session, compositeId, IDTypeEnum.IDType.VERSIONING_REPO_COMMIT_BLOB);
+                      deleteAttribute(session, compositeId);
+                    } else {
+                      deleteLabels(
+                          session,
+                          commitEntity.getCommit_hash(),
+                          IDTypeEnum.IDType.VERSIONING_COMMIT);
+                    }
+                    deleteTagEntities(session, repository.getId(), commitEntity.getCommit_hash());
+                    session.delete(commitEntity);
+                  } else {
+                    session.update(commitEntity);
+                  }
                 }
-              }
-            });
-        session.delete(repository);
-        transaction.commit();
+              });
+          session.delete(repository);
+        } catch (Exception ex) {
+          LOGGER.error("DeleteEntitiesCron : deleteRepositories : Exception: ", ex);
+        } finally {
+          transaction.commit();
+        }
       }
     }
     LOGGER.debug(
@@ -638,7 +757,7 @@ public class DeleteEntitiesCron extends TimerTask {
         repositoryEntities.size());
   }
 
-  private void deleteLabels(Session session, Object entityHash, IDTypeEnum.IDType idType) {
+  public static void deleteLabels(Session session, Object entityHash, IDTypeEnum.IDType idType) {
     String deleteLabelsQueryString =
         new StringBuilder("DELETE LabelsMappingEntity lm where lm.id.")
             .append(ModelDBConstants.ENTITY_HASH)
@@ -651,6 +770,33 @@ public class DeleteEntitiesCron extends TimerTask {
     deleteLabelsQuery.setParameter("entityHash", entityHash);
     deleteLabelsQuery.setParameter("entityType", idType.getNumber());
     deleteLabelsQuery.executeUpdate();
+  }
+
+  public static void deleteAttribute(Session session, String entityHash) {
+    String deleteAllAttributes =
+        new StringBuilder("delete from AttributeEntity at WHERE at.")
+            .append(ModelDBConstants.ENTITY_HASH)
+            .append(" = :entityHash")
+            .append(" AND at.entity_name ")
+            .append(" = :entityName")
+            .toString();
+    Query deleteLabelsQuery = session.createQuery(deleteAllAttributes);
+    deleteLabelsQuery.setParameter("entityHash", entityHash);
+    deleteLabelsQuery.setParameter("entityName", ModelDBConstants.BLOB);
+    deleteLabelsQuery.executeUpdate();
+  }
+
+  private static void deleteTagEntities(Session session, Long repoId, String commitHash) {
+    String getTagsHql =
+        "From TagsEntity te where te.id."
+            + ModelDBConstants.REPOSITORY_ID
+            + " = :repoId "
+            + " AND te.commit_hash = :commitHash";
+    Query<TagsEntity> getTagsQuery = session.createQuery(getTagsHql, TagsEntity.class);
+    getTagsQuery.setParameter("repoId", repoId);
+    getTagsQuery.setParameter("commitHash", commitHash);
+    List<TagsEntity> tagsEntities = getTagsQuery.list();
+    tagsEntities.forEach(session::delete);
   }
 
   private void deleteRoleBindingsOfRepositories(List<RepositoryEntity> allowedResources) {

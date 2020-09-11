@@ -201,6 +201,66 @@ class TestS3:
         dataset = verta.dataset.S3("s3://{}".format(bucket))
         assert set(dataset.list_paths()) == expected_paths
 
+    def test_concat(self):
+        dataset1 = verta.dataset.S3("s3://verta-starter/")
+        dataset2 = verta.dataset.S3("s3://verta-versioned-bucket/")
+        components = dataset1.list_components() + dataset2.list_components()
+        components = list(sorted(components, key=lambda component: component.path))
+
+        dataset = dataset1 + dataset2
+        assert dataset.list_components() == components
+
+        # commutative
+        dataset = dataset2 + dataset1
+        assert dataset.list_components() == components
+
+        # assignment
+        dataset1 += dataset2
+        assert dataset1.list_components() == components
+
+    def test_concat_intersect_error(self):
+        dataset1 = verta.dataset.S3("s3://verta-starter/")
+        dataset2 = verta.dataset.S3("s3://verta-starter/census-test.csv")
+
+        with pytest.raises(ValueError):
+            dataset1 + dataset2  # pylint: disable=pointless-statement
+
+        # commutative
+        with pytest.raises(ValueError):
+            dataset2 + dataset1  # pylint: disable=pointless-statement
+
+        # assignment
+        with pytest.raises(ValueError):
+            dataset1 += dataset2
+
+    def test_concat_type_mismatch_error(self):
+        dataset1 = verta.dataset.S3("s3://verta-starter/")
+        dataset2 = verta.dataset.Path("modelapi_hypothesis/")
+
+        with pytest.raises(TypeError):
+            dataset1 + dataset2  # pylint: disable=pointless-statement
+
+    def test_add(self):
+        path1 = "s3://verta-starter/census-train.csv"
+        path2 = "s3://verta-starter/census-test.csv"
+
+        dataset = verta.dataset.S3(path1)
+        dataset.add(path2)
+
+        # as if we had added two separate blobs together
+        dataset1 = verta.dataset.S3(path1)
+        dataset2 = verta.dataset.S3(path2)
+        components = dataset1.list_components() + dataset2.list_components()
+        components = list(sorted(components, key=lambda component: component.path))
+
+        assert dataset.list_components() == components
+
+    def test_add_intersect_error(self):
+        dataset = verta.dataset.S3("s3://verta-starter/")
+
+        with pytest.raises(ValueError):
+            dataset.add("s3://verta-starter/census-test.csv")
+
 
 class TestPath:
     def test_dirpath(self):
@@ -258,6 +318,128 @@ class TestPath:
 
         dataset = verta.dataset.Path(data_dir)
         assert set(dataset.list_paths()) == expected_paths
+
+    @pytest.mark.parametrize(
+        "paths, base_path",
+        [
+            # single path
+            ([["../tests/modelapi_hypothesis"], ".."]),
+            ([["../tests/modelapi_hypothesis"], "../tests"]),
+            ([["../tests/modelapi_hypothesis"], "../tests/modelapi_hypothesis"]),
+            ([["../tests/modelapi_hypothesis/"], "../tests/modelapi_hypothesis"]),
+            # multiple paths
+            ([["../tests/modelapi_hypothesis", "../setup.py"], ".."]),
+            ([["../setup.py", "../tests/modelapi_hypothesis"], ".."]),
+            ([["../tests/modelapi_hypothesis", "../tests/conftest.py"], "../tests"]),
+        ]
+    )
+    def test_base_path(self, paths, base_path):
+        filepaths = _file_utils.flatten_file_trees(paths)
+        expected_paths = set(
+            os.path.relpath(path, base_path)
+            for path in filepaths
+        )
+
+        dataset = verta.dataset.Path(paths, base_path)
+        assert set(dataset.list_paths()) == expected_paths
+
+    @pytest.mark.parametrize(
+        "paths, base_path",
+        [
+            # single path
+            ([["../tests/modelapi_hypothesis"], "foo"]),
+            ([["../tests/modelapi_hypothesis"], "../foo"]),
+            ([["../tests/modelapi_hypothesis"], "../tests/modelapi_"]),
+            # multiple unrelated paths
+            ([["../tests/modelapi_hypothesis", "conftest.py"], ".."]),
+            ([["conftest.py", "../tests/modelapi_hypothesis"], ".."]),
+            ([["modelapi_hypothesis", "test_versioning"], "modelapi_hypothesis"]),
+        ]
+    )
+    def test_invalid_base_path_error(self, paths, base_path):
+        with pytest.raises(ValueError):
+            verta.dataset.Path(paths, base_path)
+
+    def test_concat(self):
+        dataset1 = verta.dataset.Path("modelapi_hypothesis/")
+        dataset2 = verta.dataset.Path("test_versioning/")
+        components = dataset1.list_components() + dataset2.list_components()
+        components = list(sorted(components, key=lambda component: component.path))
+
+        dataset = dataset1 + dataset2
+        assert dataset.list_components() == components
+
+        # commutative
+        dataset = dataset2 + dataset1
+        assert dataset.list_components() == components
+
+        # assignment
+        dataset1 += dataset2
+        assert dataset1.list_components() == components
+
+    def test_concat_intersect_error(self):
+        dataset1 = verta.dataset.Path("test_versioning/")
+        dataset2 = verta.dataset.Path("test_versioning/test_dataset.py")
+
+        with pytest.raises(ValueError):
+            dataset1 + dataset2  # pylint: disable=pointless-statement
+
+        # commutative
+        with pytest.raises(ValueError):
+            dataset2 + dataset1  # pylint: disable=pointless-statement
+
+        # assignment
+        with pytest.raises(ValueError):
+            dataset1 += dataset2
+
+    def test_concat_base_path(self):
+        dataset1 = verta.dataset.Path(
+            "modelapi_hypothesis/",
+            base_path="modelapi_hypothesis/",
+        )
+        dataset2 = verta.dataset.Path(
+            "test_versioning/",
+            base_path="test_versioning/",
+        )
+        components = dataset1.list_components() + dataset2.list_components()
+        components = list(sorted(components, key=lambda component: component.path))
+
+        dataset = dataset1 + dataset2
+        assert dataset.list_components() == components
+
+    def test_concat_base_path_intersect_error(self):
+        dataset1 = verta.dataset.Path(
+            "./__init__.py",
+            base_path=".",
+        )
+        dataset2 = verta.dataset.Path(
+            "test_versioning/__init__.py",
+            base_path="test_versioning",
+        )
+
+        with pytest.raises(ValueError):
+            dataset1 + dataset2  # pylint: disable=pointless-statement
+
+    def test_add(self):
+        path1 = "test_versioning/test_code.py"
+        path2 = "test_versioning/test_dataset.py"
+
+        dataset = verta.dataset.Path(path1)
+        dataset.add(path2)
+
+        # as if we had added two separate blobs together
+        dataset1 = verta.dataset.Path(path1)
+        dataset2 = verta.dataset.Path(path2)
+        components = dataset1.list_components() + dataset2.list_components()
+        components = list(sorted(components, key=lambda component: component.path))
+
+        assert dataset.list_components() == components
+
+    def test_add_intersect_error(self):
+        dataset = verta.dataset.Path("test_versioning/")
+
+        with pytest.raises(ValueError):
+            dataset.add("test_versioning/test_dataset.py")
 
 
 @pytest.mark.usefixtures("with_boto3", "in_tempdir")
@@ -396,6 +578,57 @@ class TestS3ManagedVersioning:
         assert os.path.isdir(dirpath)
         assert_dirs_match(dirpath, reference_dir)
 
+    def test_concat(self, commit):
+        s3 = pytest.importorskip("boto3").client('s3')
+
+        bucket1 = "verta-starter"
+        key1 = "models/model.pkl"
+        bucket2 = "verta-versioned-bucket"
+        key2 = "tiny-files/tiny2.bin"
+
+        # create dir for reference files
+        reference_dir = "reference"
+        filepath1 = os.path.join(reference_dir, bucket1, key1)
+        pathlib2.Path(filepath1).parent.mkdir(parents=True, exist_ok=True)
+        filepath2 = os.path.join(reference_dir, bucket2, key2)
+        pathlib2.Path(filepath2).parent.mkdir(parents=True, exist_ok=True)
+
+        # download files directly from S3 for reference
+        s3.download_file(bucket1, key1, filepath1)
+        s3.download_file(bucket2, key2, filepath2)
+
+        # create and concatenate datasets
+        dataset1 = verta.dataset.S3(
+            "s3://{}/{}".format(bucket1, key1),
+            enable_mdb_versioning=True,
+        )
+        dataset2 = verta.dataset.S3(
+            "s3://{}/{}".format(bucket2, key2),
+            enable_mdb_versioning=True,
+        )
+        dataset = dataset1 + dataset2
+
+        blob_path = "data"
+        commit.update(blob_path, dataset)
+        commit.save("Version data.")
+        dataset = commit.get(blob_path)
+
+        dirpath = dataset.download()
+        assert_dirs_match(dirpath, reference_dir)
+
+    def test_concat_arg_mismatch_error(self):
+        dataset1 = verta.dataset.S3(
+            "s3://verta-starter/",
+            enable_mdb_versioning=True,
+        )
+        dataset2 = verta.dataset.S3(
+            "s3://verta-versioned-bucket/",
+            enable_mdb_versioning=False,
+        )
+
+        with pytest.raises(ValueError):
+            dataset1 + dataset2  # pylint: disable=pointless-statement
+
 
 @pytest.mark.usefixtures("in_tempdir")
 class TestPathManagedVersioning:
@@ -446,7 +679,7 @@ class TestPathManagedVersioning:
         dataset = verta.dataset.Path(dirname, enable_mdb_versioning=True)
         commit.update(blob_path, dataset)
         commit.save("Version data.")
-        os.rename(dirname, reference_dir)  # move sources to avoid collision
+        shutil.move(dirname, reference_dir)  # move sources to avoid collision
         dataset = commit.get(blob_path)
 
         # download to implicit path
@@ -576,3 +809,84 @@ class TestPathManagedVersioning:
         destination_dir = os.path.join(_dataset.DEFAULT_DOWNLOAD_DIR, reference_dir)
         assert os.path.isdir(destination_dir)
         assert_dirs_match(destination_dir, reference_dir)
+
+    def test_base_path(self, commit):
+        reference_dir = "tiny-files/"
+        os.mkdir(reference_dir)
+        # three .file files in tiny-files/
+        for filename in ["tiny{}.file".format(i) for i in range(3)]:
+            with open(os.path.join(reference_dir, filename), 'wb') as f:
+                f.write(os.urandom(2**16))
+
+        sub_dir = "bin/"
+        os.mkdir(os.path.join(reference_dir, sub_dir))
+        # three .bin files in tiny-files/bin/
+        for filename in ["tiny{}.bin".format(i) for i in range(3)]:
+            with open(os.path.join(reference_dir, sub_dir, filename), 'wb') as f:
+                f.write(os.urandom(2**16))
+
+        # commit dataset blob
+        blob_path = "data"
+        dataset = verta.dataset.Path(
+            reference_dir, base_path=reference_dir,
+            enable_mdb_versioning=True,
+        )
+        commit.update(blob_path, dataset)
+        commit.save("Version data.")
+        dataset = commit.get(blob_path)
+
+        # `reference_dir` was dropped as base path, so KeyError
+        with pytest.raises(KeyError):
+            dataset.download(reference_dir)
+
+        dirpath = dataset.download()
+        assert os.path.abspath(dirpath) != os.path.abspath(reference_dir)
+        assert_dirs_match(dirpath, reference_dir)
+
+    def test_concat(self, commit):
+        reference_dir = "tiny-files/"
+        os.mkdir(reference_dir)
+        # two .file files in tiny-files/
+        for filename in ["tiny{}.file".format(i) for i in range(2)]:
+            with open(os.path.join(reference_dir, filename), 'wb') as f:
+                f.write(os.urandom(2**16))
+
+        # create and concatenate datasets
+        dataset1 = verta.dataset.Path(
+            "tiny-files/tiny0.file",
+            enable_mdb_versioning=True,
+        )
+        dataset2 = verta.dataset.Path(
+            "tiny-files/tiny1.file",
+            enable_mdb_versioning=True,
+        )
+        dataset = dataset1 + dataset2
+
+        blob_path = "data"
+        commit.update(blob_path, dataset)
+        commit.save("Version data.")
+        dataset = commit.get(blob_path)
+
+        dirpath = dataset.download()
+        dirpath = os.path.join(dirpath, reference_dir)  # "tiny-files/" nested in new dir
+        assert_dirs_match(dirpath, reference_dir)
+
+    def test_concat_arg_mismatch_error(self):
+        reference_dir = "tiny-files/"
+        os.mkdir(reference_dir)
+        # two .file files in tiny-files/
+        for filename in ["tiny{}.file".format(i) for i in range(2)]:
+            with open(os.path.join(reference_dir, filename), 'wb') as f:
+                f.write(os.urandom(2**16))
+
+        dataset1 = verta.dataset.Path(
+            "tiny-files/tiny0.file",
+            enable_mdb_versioning=True,
+        )
+        dataset2 = verta.dataset.Path(
+            "tiny-files/tiny1.file",
+            enable_mdb_versioning=False,
+        )
+
+        with pytest.raises(ValueError):
+            dataset1 + dataset2  # pylint: disable=pointless-statement

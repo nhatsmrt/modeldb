@@ -2,16 +2,16 @@ package ai.verta.modeldb.utils;
 
 import ai.verta.common.Artifact;
 import ai.verta.common.EntitiesEnum.EntitiesTypes;
+import ai.verta.common.KeyValueQuery;
+import ai.verta.common.OperatorEnum;
 import ai.verta.common.ValueTypeEnum;
 import ai.verta.common.WorkspaceTypeEnum.WorkspaceType;
 import ai.verta.modeldb.App;
 import ai.verta.modeldb.CollaboratorUserInfo;
 import ai.verta.modeldb.CollaboratorUserInfo.Builder;
 import ai.verta.modeldb.GetHydratedProjects;
-import ai.verta.modeldb.KeyValueQuery;
 import ai.verta.modeldb.ModelDBConstants;
 import ai.verta.modeldb.ModelDBException;
-import ai.verta.modeldb.OperatorEnum;
 import ai.verta.modeldb.UpdateProjectName;
 import ai.verta.modeldb.authservice.AuthService;
 import ai.verta.modeldb.authservice.RoleService;
@@ -35,6 +35,7 @@ import com.google.protobuf.Value;
 import com.google.protobuf.util.JsonFormat;
 import com.google.rpc.Code;
 import com.google.rpc.Status;
+import com.mysql.cj.exceptions.CJCommunicationsException;
 import com.mysql.cj.jdbc.exceptions.CommunicationsException;
 import io.grpc.StatusRuntimeException;
 import io.grpc.protobuf.StatusProto;
@@ -48,6 +49,7 @@ import java.net.SocketException;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
@@ -71,16 +73,21 @@ public class ModelDBUtils {
 
   public static Map<String, Object> readYamlProperties(String filePath) throws IOException {
     LOGGER.info("Reading File {} as YAML", filePath);
-    String telepresenceRoot = System.getenv("TELEPRESENCE_ROOT");
-    if (telepresenceRoot != null) {
-      filePath = telepresenceRoot + filePath;
-    }
+    filePath = appendOptionalTelepresencePath(filePath);
     InputStream inputStream = new FileInputStream(new File(filePath));
     Yaml yaml = new Yaml();
     @SuppressWarnings("unchecked")
     Map<String, Object> prop = (Map<String, Object>) yaml.load(inputStream);
     LOGGER.debug("YAML map {}", prop);
     return prop;
+  }
+
+  public static String appendOptionalTelepresencePath(String filePath) {
+    String telepresenceRoot = System.getenv("TELEPRESENCE_ROOT");
+    if (telepresenceRoot != null) {
+      filePath = telepresenceRoot + filePath;
+    }
+    return filePath;
   }
 
   public static String getStringFromProtoObject(MessageOrBuilder object)
@@ -437,6 +444,7 @@ public class ModelDBUtils {
       Throwable throwable = findRootCause(e);
       // Condition 'throwable != null' covered by below condition 'throwable instanceof
       // SocketException'
+      StackTraceElement[] stack = e.getStackTrace();
       if (throwable instanceof SocketException) {
         String errorMessage = "Database Connection not found: ";
         LOGGER.info(errorMessage + "{}", e.getMessage());
@@ -447,7 +455,7 @@ public class ModelDBUtils {
                 .addDetails(Any.pack(defaultInstance))
                 .build();
       } else if (e instanceof ModelDBException) {
-        LOGGER.warn("Exception occurred: {}", e.getMessage());
+        LOGGER.warn("Exception occurred:{} {}", e.getClass(), e.getMessage());
         ModelDBException ModelDBException = (ModelDBException) e;
         status =
             Status.newBuilder()
@@ -456,6 +464,8 @@ public class ModelDBUtils {
                 .addDetails(Any.pack(defaultInstance))
                 .build();
       } else {
+        LOGGER.error(
+            "Stacktrace with {} elements for {} {}", stack.length, e.getClass(), e.getMessage());
         status =
             Status.newBuilder()
                 .setCode(Code.INTERNAL_VALUE)
@@ -463,8 +473,6 @@ public class ModelDBUtils {
                 .addDetails(Any.pack(defaultInstance))
                 .build();
       }
-      StackTraceElement[] stack = e.getStackTrace();
-      LOGGER.error("Stacktrace with {} elements for {}", stack.length, e.getMessage());
       int n = 0;
       boolean isLongStack = stack.length > STACKTRACE_LENGTH;
       if (isLongStack) {
@@ -486,13 +494,25 @@ public class ModelDBUtils {
   public static boolean needToRetry(Exception ex) {
     Throwable communicationsException = findCommunicationsFailedCause(ex);
     if ((communicationsException.getCause() instanceof CommunicationsException)
-        || (communicationsException.getCause() instanceof SocketException)) {
+        || (communicationsException.getCause() instanceof SocketException)
+        || (communicationsException.getCause() instanceof CJCommunicationsException)) {
       LOGGER.warn(communicationsException.getMessage());
+      LOGGER.warn(
+          "Detected communication exception of type {}",
+          communicationsException.getCause().getClass());
       if (ModelDBHibernateUtil.checkDBConnection()) {
+        LOGGER.info("Resetting session Factory");
+
         ModelDBHibernateUtil.resetSessionFactory();
+        LOGGER.info("Resetted session Factory");
+      } else {
+        LOGGER.warn("DB could not be reached");
       }
       return true;
     }
+    LOGGER.warn(
+        "Detected exception of type {}, which is not categorized as retryable",
+        communicationsException.getCause().getClass());
     return false;
   }
 
@@ -502,7 +522,8 @@ public class ModelDBUtils {
     }
     Throwable rootCause = throwable;
     while (rootCause.getCause() != null
-        && !(rootCause.getCause() instanceof CommunicationsException
+        && !(rootCause.getCause() instanceof CJCommunicationsException
+            || rootCause.getCause() instanceof CommunicationsException
             || rootCause.getCause() instanceof SocketException)) {
       rootCause = rootCause.getCause();
     }
@@ -510,8 +531,8 @@ public class ModelDBUtils {
   }
 
   /**
-   * If so throws an error if the workspace type is USER and the workspaceId and userID do not
-   * match. Is a NO-OP if userinfo is null.
+   * Throws an error if the workspace type is USER and the workspaceId and userID do not match. Is a
+   * NO-OP if userinfo is null.
    */
   public static void checkPersonalWorkspace(
       UserInfo userInfo,
@@ -538,15 +559,24 @@ public class ModelDBUtils {
     return String.join("/", locations);
   }
 
+  public static List<String> getLocationWithSplitSlashOperator(String locationsString) {
+    return Arrays.asList(locationsString.split("/"));
+  }
+
+  public static String getJoinedLocation(List<String> location) {
+    return String.join("#", location);
+  }
+
   public interface RetryCallInterface<T> {
     T retryCall(boolean retry);
   }
 
   public static Object retryOrThrowException(
       StatusRuntimeException ex, boolean retry, RetryCallInterface<?> retryCallInterface) {
-    String errorMessage = "UAC Service unavailable : " + ex.getMessage();
-    LOGGER.warn(errorMessage, ex);
+    String errorMessage = ex.getMessage();
+    LOGGER.warn(errorMessage);
     if (ex.getStatus().getCode().value() == Code.UNAVAILABLE_VALUE) {
+      errorMessage = "UAC Service unavailable : " + errorMessage;
       if (retry && retryCallInterface != null) {
         try {
           App app = App.getInstance();
@@ -568,5 +598,76 @@ public class ModelDBUtils {
       throw StatusProto.toStatusRuntimeException(status);
     }
     throw ex;
+  }
+
+  public static void initializeBackgroundUtilsCount() {
+    int backgroundUtilsCount = 0;
+    try {
+      if (System.getProperty(ModelDBConstants.BACKGROUND_UTILS_COUNT) == null) {
+        LOGGER.trace("Initialize runningBackgroundUtilsCount : {}", backgroundUtilsCount);
+        System.setProperty(
+            ModelDBConstants.BACKGROUND_UTILS_COUNT, Integer.toString(backgroundUtilsCount));
+      }
+      LOGGER.trace(
+          "Found runningBackgroundUtilsCount while initialization: {}",
+          getRegisteredBackgroundUtilsCount());
+    } catch (NullPointerException ex) {
+      LOGGER.trace("NullPointerException while initialize runningBackgroundUtilsCount");
+      System.setProperty(
+          ModelDBConstants.BACKGROUND_UTILS_COUNT, Integer.toString(backgroundUtilsCount));
+    }
+  }
+
+  /**
+   * If service want to call other verta service internally then should to registered those service
+   * here with count
+   */
+  public static void registeredBackgroundUtilsCount() {
+    int backgroundUtilsCount = 0;
+    if (System.getProperty(ModelDBConstants.BACKGROUND_UTILS_COUNT) != null) {
+      backgroundUtilsCount = getRegisteredBackgroundUtilsCount();
+    }
+    backgroundUtilsCount = backgroundUtilsCount + 1;
+    LOGGER.trace("After registered runningBackgroundUtilsCount : {}", backgroundUtilsCount);
+    System.setProperty(
+        ModelDBConstants.BACKGROUND_UTILS_COUNT, Integer.toString(backgroundUtilsCount));
+  }
+
+  public static void unregisteredBackgroundUtilsCount() {
+    int backgroundUtilsCount = 0;
+    if (System.getProperty(ModelDBConstants.BACKGROUND_UTILS_COUNT) != null) {
+      backgroundUtilsCount = getRegisteredBackgroundUtilsCount();
+      backgroundUtilsCount = backgroundUtilsCount - 1;
+    }
+    LOGGER.trace("After unregistered runningBackgroundUtilsCount : {}", backgroundUtilsCount);
+    System.setProperty(
+        ModelDBConstants.BACKGROUND_UTILS_COUNT, Integer.toString(backgroundUtilsCount));
+  }
+
+  public static Integer getRegisteredBackgroundUtilsCount() {
+    try {
+      Integer backgroundUtilsCount =
+          Integer.parseInt(System.getProperty(ModelDBConstants.BACKGROUND_UTILS_COUNT));
+      LOGGER.trace("get runningBackgroundUtilsCount : {}", backgroundUtilsCount);
+      return backgroundUtilsCount;
+    } catch (NullPointerException ex) {
+      LOGGER.trace("NullPointerException while get runningBackgroundUtilsCount");
+      System.setProperty(ModelDBConstants.BACKGROUND_UTILS_COUNT, Integer.toString(0));
+      return 0;
+    }
+  }
+
+  public static boolean isEnvSet(String envVar) {
+    String envVarVal = System.getenv(envVar);
+    return envVarVal != null && !envVarVal.isEmpty();
+  }
+
+  public static void validateEntityNameWithColonAndSlash(String name) throws ModelDBException {
+    if (name != null
+        && !name.isEmpty()
+        && (name.contains(":") || name.contains("/") || name.contains("\\"))) {
+      throw new ModelDBException(
+          "Name can not contain ':' or '/' or '\\\\'", Code.INVALID_ARGUMENT);
+    }
   }
 }

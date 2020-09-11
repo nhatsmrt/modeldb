@@ -2,7 +2,9 @@ package ai.verta.modeldb.project;
 
 import ai.verta.common.Artifact;
 import ai.verta.common.KeyValue;
+import ai.verta.common.KeyValueQuery;
 import ai.verta.common.ModelDBResourceEnum.ModelDBServiceResourceTypes;
+import ai.verta.common.OperatorEnum;
 import ai.verta.common.ValueTypeEnum;
 import ai.verta.common.WorkspaceTypeEnum.WorkspaceType;
 import ai.verta.modeldb.App;
@@ -10,11 +12,9 @@ import ai.verta.modeldb.CodeVersion;
 import ai.verta.modeldb.Experiment;
 import ai.verta.modeldb.ExperimentRun;
 import ai.verta.modeldb.FindProjects;
-import ai.verta.modeldb.KeyValueQuery;
 import ai.verta.modeldb.ModelDBConstants;
 import ai.verta.modeldb.ModelDBException;
 import ai.verta.modeldb.ModelDBMessages;
-import ai.verta.modeldb.OperatorEnum;
 import ai.verta.modeldb.Project;
 import ai.verta.modeldb.ProjectVisibility;
 import ai.verta.modeldb.authservice.AuthService;
@@ -655,7 +655,7 @@ public class ProjectDAORdbImpl implements ProjectDAO {
 
   @Override
   public Project deepCopyProjectForUser(String srcProjectID, UserInfo newOwner)
-      throws InvalidProtocolBufferException {
+      throws InvalidProtocolBufferException, ModelDBException {
     // if no project id specified , default to the one captured from config.yaml
     // TODO: extend the starter project to be set of projects, so parameterizing this function makes
     // sense

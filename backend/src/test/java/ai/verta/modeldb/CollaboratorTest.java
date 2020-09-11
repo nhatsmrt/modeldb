@@ -693,7 +693,6 @@ public class CollaboratorTest {
     CreateDataset createDatasetRequest =
         CreateDataset.newBuilder()
             .setName("rental_TEXT_train_data.csv")
-            .setDatasetType(DatasetTypeEnum.DatasetType.RAW)
             .setDatasetVisibility(DatasetVisibilityEnum.DatasetVisibility.PUBLIC)
             .build();
     CreateDataset.Response createDatasetResponse =
@@ -709,7 +708,7 @@ public class CollaboratorTest {
             createDatasetResponse.getDataset(), CollaboratorType.READ_WRITE);
 
     AddCollaboratorRequest.Response response =
-        collaboratorServiceStub.addOrUpdateDatasetCollaborator(addCollaboratorRequest);
+        collaboratorServiceStub.addOrUpdateRepositoryCollaborator(addCollaboratorRequest);
     LOGGER.info("Collaborator added in server : " + response.getStatus());
     assertTrue(response.getStatus());
 
@@ -735,7 +734,6 @@ public class CollaboratorTest {
     CreateDataset createDatasetRequest =
         CreateDataset.newBuilder()
             .setName("rental_TEXT_train_data.csv")
-            .setDatasetType(DatasetTypeEnum.DatasetType.RAW)
             .setDatasetVisibility(DatasetVisibilityEnum.DatasetVisibility.PUBLIC)
             .build();
     CreateDataset.Response createDatasetResponse =
@@ -756,12 +754,15 @@ public class CollaboratorTest {
 
     List<String> sharedUsers = new ArrayList<>();
     AddCollaboratorRequest addCollaboratorRequest =
-        addCollaboratorRequestDataset(
-            dataset, shareWithUserInfo.getEmail(), CollaboratorType.READ_WRITE);
+        addCollaboratorRequestUser(
+            dataset.getId(),
+            shareWithUserInfo.getEmail(),
+            CollaboratorType.READ_WRITE,
+            "Please refer shared project for your invention");
     sharedUsers.add(authService.getVertaIdFromUserInfo(shareWithUserInfo));
 
     AddCollaboratorRequest.Response addCollaboratorResponse =
-        collaboratorServiceStub.addOrUpdateDatasetCollaborator(addCollaboratorRequest);
+        collaboratorServiceStub.addOrUpdateRepositoryCollaborator(addCollaboratorRequest);
     LOGGER.info("Collaborator added in server : " + addCollaboratorResponse.getStatus());
     assertTrue(addCollaboratorResponse.getStatus());
 
@@ -776,14 +777,14 @@ public class CollaboratorTest {
     sharedUsers.add("github|87654321");
 
     addCollaboratorResponse =
-        collaboratorServiceStub.addOrUpdateDatasetCollaborator(addCollaboratorRequest);
+        collaboratorServiceStub.addOrUpdateRepositoryCollaborator(addCollaboratorRequest);
     LOGGER.info("Collaborator added in server : " + addCollaboratorResponse.getStatus());
     assertTrue(addCollaboratorResponse.getStatus());*/
 
     GetCollaborator getCollaboratorRequest =
         GetCollaborator.newBuilder().setEntityId(dataset.getId()).build();
     GetCollaborator.Response getCollaboratorResponse =
-        collaboratorServiceStub.getDatasetCollaborators(getCollaboratorRequest);
+        collaboratorServiceStub.getRepositoryCollaborators(getCollaboratorRequest);
 
     List<GetCollaboratorResponse> sharedUserList = getCollaboratorResponse.getSharedUsersList();
     LOGGER.info(
@@ -820,7 +821,6 @@ public class CollaboratorTest {
     CreateDataset createDatasetRequest =
         CreateDataset.newBuilder()
             .setName("rental_TEXT_train_data.csv")
-            .setDatasetType(DatasetTypeEnum.DatasetType.RAW)
             .setDatasetVisibility(DatasetVisibilityEnum.DatasetVisibility.PUBLIC)
             .build();
     CreateDataset.Response createDatasetResponse =
@@ -844,11 +844,11 @@ public class CollaboratorTest {
             dataset, shareWithUserInfo.getEmail(), CollaboratorType.READ_WRITE);
 
     AddCollaboratorRequest.Response addCollaboratorResponse =
-        collaboratorServiceStub.addOrUpdateDatasetCollaborator(addCollaboratorRequest);
+        collaboratorServiceStub.addOrUpdateRepositoryCollaborator(addCollaboratorRequest);
     LOGGER.info("Collaborator added in server : " + addCollaboratorResponse.getStatus());
     assertTrue(addCollaboratorResponse.getStatus());
 
-    RemoveCollaborator removeDatasetCollaborator =
+    RemoveCollaborator removeRepositoryCollaborator =
         RemoveCollaborator.newBuilder()
             .setAuthzEntityType(EntitiesTypes.USER)
             .setEntityId(dataset.getId())
@@ -857,7 +857,7 @@ public class CollaboratorTest {
             .build();
 
     RemoveCollaborator.Response response =
-        collaboratorServiceStub.removeDatasetCollaborator(removeDatasetCollaborator);
+        collaboratorServiceStub.removeRepositoryCollaborator(removeRepositoryCollaborator);
 
     LOGGER.info("Collaborator remove in server : " + response.getStatus());
     assertTrue(response.getStatus());
@@ -885,7 +885,6 @@ public class CollaboratorTest {
       CreateDataset createDatasetRequest =
           CreateDataset.newBuilder()
               .setName("rental_TEXT_train_data" + index + ".csv")
-              .setDatasetType(DatasetTypeEnum.DatasetType.RAW)
               .setDatasetVisibility(DatasetVisibilityEnum.DatasetVisibility.PUBLIC)
               .build();
       CreateDataset.Response createDatasetResponse =
@@ -903,7 +902,7 @@ public class CollaboratorTest {
             datasetIds, CollaboratorType.READ_WRITE, authClientInterceptor);
 
     AddCollaboratorRequest.Response response =
-        collaboratorServiceStub.addOrUpdateDatasetCollaborator(addCollaboratorRequest);
+        collaboratorServiceStub.addOrUpdateRepositoryCollaborator(addCollaboratorRequest);
     LOGGER.info("Collaborator added in server : " + response.getStatus());
     assertTrue(response.getStatus());
 
@@ -911,7 +910,7 @@ public class CollaboratorTest {
         addCollaboratorRequestProjectInterceptor(
             datasetIds.subList(1, 4), CollaboratorType.READ_ONLY, authClientInterceptor);
 
-    response = collaboratorServiceStub.addOrUpdateDatasetCollaborator(addCollaboratorRequest);
+    response = collaboratorServiceStub.addOrUpdateRepositoryCollaborator(addCollaboratorRequest);
     LOGGER.info("Collaborator added in server : " + response.getStatus());
     assertTrue(response.getStatus());
 

@@ -2,11 +2,12 @@ package ai.verta.modeldb;
 
 import ai.verta.modeldb.advancedService.AdvancedServiceImpl;
 import ai.verta.modeldb.artifactStore.ArtifactStoreDAO;
+import ai.verta.modeldb.artifactStore.ArtifactStoreDAODisabled;
 import ai.verta.modeldb.artifactStore.ArtifactStoreDAORdbImpl;
 import ai.verta.modeldb.artifactStore.storageservice.ArtifactStoreService;
-import ai.verta.modeldb.artifactStore.storageservice.S3Service;
 import ai.verta.modeldb.artifactStore.storageservice.nfs.FileStorageProperties;
 import ai.verta.modeldb.artifactStore.storageservice.nfs.NFSService;
+import ai.verta.modeldb.artifactStore.storageservice.s3.S3Service;
 import ai.verta.modeldb.authservice.AuthService;
 import ai.verta.modeldb.authservice.AuthServiceUtils;
 import ai.verta.modeldb.authservice.PublicAuthServiceUtils;
@@ -123,14 +124,18 @@ public class App implements ApplicationContextAware {
   // S3 Artifact store
   private String cloudAccessKey = null;
   private String cloudSecretKey = null;
+  private String minioEndpoint = null;
+  private String awsRegion = null;
 
-  // NFS Artifact store
-  private Boolean pickNFSHostFromConfig = null;
-  private String nfsServerHost = null;
-  private String nfsUrlProtocol = null;
+  // Artifact store
+  private boolean disabledArtifactStore = false;
+  private Boolean pickArtifactStoreHostFromConfig = null;
+  private String artifactStoreServerHost = null;
+  private String artifactStoreUrlProtocol = null;
   private String storeArtifactEndpoint = null;
   private String getArtifactEndpoint = null;
   private String storeTypePathPrefix = null;
+  private boolean s3presignedURLEnabled = true;
 
   // Database connection details
   private Map<String, Object> databasePropMap;
@@ -146,6 +151,8 @@ public class App implements ApplicationContextAware {
 
   private Boolean traceEnabled = false;
   private static TracingServerInterceptor tracingInterceptor;
+  private boolean populateConnectionsBasedOnPrivileges = false;
+  private RoleService roleService;
 
   // metric for prometheus monitoring
   private static final Gauge up =
@@ -180,6 +187,15 @@ public class App implements ApplicationContextAware {
     TomcatServletWebServerFactory factory = new TomcatServletWebServerFactory();
     factory.addConnectorCustomizers(gracefulShutdown);
     return factory;
+  }
+
+  @Bean
+  public S3Service getS3Service() throws ModelDBException {
+    String bucketName = System.getProperty(ModelDBConstants.CLOUD_BUCKET_NAME);
+    if (bucketName != null && !bucketName.isEmpty()) {
+      return new S3Service(System.getProperty(ModelDBConstants.CLOUD_BUCKET_NAME));
+    }
+    return null;
   }
 
   public static App getInstance() {
@@ -236,7 +252,7 @@ public class App implements ApplicationContextAware {
         TracingDriver.setInterceptorProperty(true);
       }
       AuthService authService = new PublicAuthServiceUtils();
-      RoleService roleService = new PublicRoleServiceUtils(authService);
+      app.roleService = new PublicRoleServiceUtils(authService);
 
       Map<String, Object> authServicePropMap =
           (Map<String, Object>) propertiesMap.get(ModelDBConstants.AUTH_SERVICE);
@@ -247,7 +263,7 @@ public class App implements ApplicationContextAware {
         app.setAuthServerPort(authServicePort);
 
         authService = new AuthServiceUtils();
-        roleService = new RoleServiceUtils(authService);
+        app.roleService = new RoleServiceUtils(authService);
       }
 
       Map<String, Object> databasePropMap =
@@ -259,7 +275,7 @@ public class App implements ApplicationContextAware {
 
       // ----------------- Start Initialize database & modelDB services with DAO ---------
       initializeServicesBaseOnDataBase(
-          serverBuilder, databasePropMap, propertiesMap, authService, roleService);
+          serverBuilder, databasePropMap, propertiesMap, authService, app.roleService);
       // ----------------- Finish Initialize database & modelDB services with DAO --------
 
       serverBuilder.intercept(new ModelDBAuthInterceptor());
@@ -331,6 +347,11 @@ public class App implements ApplicationContextAware {
       }
     }
 
+    app.populateConnectionsBasedOnPrivileges =
+        (boolean)
+            propertiesMap.getOrDefault(
+                ModelDBConstants.POPULATE_CONNECTIONS_BASED_ON_PRIVILEGES, false);
+
     Map<String, Object> featureFlagMap =
         (Map<String, Object>) propertiesMap.get(ModelDBConstants.FEATURE_FLAG);
     if (featureFlagMap != null) {
@@ -338,6 +359,8 @@ public class App implements ApplicationContextAware {
           (Boolean) featureFlagMap.getOrDefault(ModelDBConstants.DISABLED_AUTHZ, false));
       app.setPublicSharingEnabled(
           (Boolean) featureFlagMap.getOrDefault(ModelDBConstants.PUBLIC_SHARING_ENABLED, false));
+      app.disabledArtifactStore =
+          (Boolean) featureFlagMap.getOrDefault(ModelDBConstants.DISABLED_ARTIFACT_STORE, false);
     }
 
     Map<String, Object> starterProjectDetail =
@@ -346,8 +369,10 @@ public class App implements ApplicationContextAware {
       app.starterProjectID = (String) starterProjectDetail.get(ModelDBConstants.STARTER_PROJECT_ID);
     }
     // --------------- Start Initialize Cloud Config ---------------------------------------------
-    ArtifactStoreService artifactStoreService =
-        initializeServicesBaseOnArtifactStoreType(propertiesMap);
+    ArtifactStoreService artifactStoreService = null;
+    if (!app.disabledArtifactStore) {
+      artifactStoreService = initializeServicesBaseOnArtifactStoreType(propertiesMap);
+    }
 
     // --------------- Start Initialize Database base on configuration --------------------------
     if (databasePropMap.isEmpty()) {
@@ -394,21 +419,28 @@ public class App implements ApplicationContextAware {
       RoleService roleService) {
 
     // --------------- Start Initialize DAO --------------------------
-    CommitDAO commitDAO = new CommitDAORdbImpl();
+    CommitDAO commitDAO = new CommitDAORdbImpl(authService, roleService);
     RepositoryDAO repositoryDAO = new RepositoryDAORdbImpl(authService, roleService);
-    BlobDAO blobDAO = new BlobDAORdbImpl(authService);
+    BlobDAO blobDAO = new BlobDAORdbImpl(authService, roleService);
+    MetadataDAO metadataDAO = new MetadataDAORdbImpl();
 
     ExperimentDAO experimentDAO = new ExperimentDAORdbImpl(authService, roleService);
     ExperimentRunDAO experimentRunDAO =
-        new ExperimentRunDAORdbImpl(authService, roleService, repositoryDAO, commitDAO, blobDAO);
+        new ExperimentRunDAORdbImpl(
+            authService, roleService, repositoryDAO, commitDAO, blobDAO, metadataDAO);
     ProjectDAO projectDAO =
         new ProjectDAORdbImpl(authService, roleService, experimentDAO, experimentRunDAO);
-    ArtifactStoreDAO artifactStoreDAO = new ArtifactStoreDAORdbImpl(artifactStoreService);
+    ArtifactStoreDAO artifactStoreDAO;
+    if (artifactStoreService != null) {
+      artifactStoreDAO = new ArtifactStoreDAORdbImpl(artifactStoreService);
+    } else {
+      artifactStoreDAO = new ArtifactStoreDAODisabled();
+    }
+
     CommentDAO commentDAO = new CommentDAORdbImpl(authService);
     DatasetDAO datasetDAO = new DatasetDAORdbImpl(authService, roleService);
     LineageDAO lineageDAO = new LineageDAORdbImpl();
     DatasetVersionDAO datasetVersionDAO = new DatasetVersionDAORdbImpl(authService, roleService);
-    MetadataDAO metadataDAO = new MetadataDAORdbImpl();
     LOGGER.info("All DAO initialized");
     // --------------- Finish Initialize DAO --------------------------
     initializeBackendServices(
@@ -465,7 +497,9 @@ public class App implements ApplicationContextAware {
             projectDAO,
             experimentDAO,
             artifactStoreDAO,
-            datasetVersionDAO));
+            datasetVersionDAO,
+            repositoryDAO,
+            commitDAO));
     LOGGER.trace("ExperimentRun serviceImpl initialized");
     wrapService(
         serverBuilder,
@@ -480,11 +514,21 @@ public class App implements ApplicationContextAware {
             datasetVersionDAO,
             projectDAO,
             experimentDAO,
-            experimentRunDAO));
+            experimentRunDAO,
+            repositoryDAO,
+            commitDAO,
+            metadataDAO));
     LOGGER.trace("Dataset serviceImpl initialized");
     wrapService(
         serverBuilder,
-        new DatasetVersionServiceImpl(authService, roleService, datasetDAO, datasetVersionDAO));
+        new DatasetVersionServiceImpl(
+            authService,
+            roleService,
+            repositoryDAO,
+            commitDAO,
+            blobDAO,
+            metadataDAO,
+            artifactStoreDAO));
     LOGGER.trace("Dataset Version serviceImpl initialized");
     wrapService(
         serverBuilder,
@@ -499,8 +543,7 @@ public class App implements ApplicationContextAware {
             datasetDAO,
             datasetVersionDAO));
     LOGGER.trace("Hydrated serviceImpl initialized");
-    wrapService(
-        serverBuilder, new LineageServiceImpl(lineageDAO, experimentRunDAO, datasetVersionDAO));
+    wrapService(serverBuilder, new LineageServiceImpl(lineageDAO, experimentRunDAO, commitDAO));
     LOGGER.trace("Lineage serviceImpl initialized");
 
     wrapService(
@@ -560,17 +603,63 @@ public class App implements ApplicationContextAware {
       app.shutdownTimeout = ModelDBConstants.DEFAULT_SHUTDOWN_TIMEOUT;
     }
 
+    app.pickArtifactStoreHostFromConfig =
+        (Boolean)
+            artifactStoreConfigMap.getOrDefault(
+                ModelDBConstants.PICK_ARTIFACT_STORE_HOST_FROM_CONFIG, false);
+    LOGGER.trace(
+        "ArtifactStore pick host from config flag : {}", app.pickArtifactStoreHostFromConfig);
+    app.artifactStoreServerHost =
+        (String)
+            artifactStoreConfigMap.getOrDefault(ModelDBConstants.ARTIFACT_STORE_SERVER_HOST, "");
+    LOGGER.trace("ArtifactStore server host URL found : {}", app.artifactStoreServerHost);
+    app.artifactStoreUrlProtocol =
+        (String)
+            artifactStoreConfigMap.getOrDefault(
+                ModelDBConstants.ARTIFACT_STORE_URL_PROTOCOL, ModelDBConstants.HTTPS_STR);
+    LOGGER.debug("ArtifactStore URL protocol found : {}", app.artifactStoreUrlProtocol);
+
+    Map<String, Object> artifactStoreEndpointConfigMap =
+        (Map<String, Object>) artifactStoreConfigMap.get(ModelDBConstants.ARTIFACT_ENDPOINT);
+    if (artifactStoreEndpointConfigMap != null && !artifactStoreEndpointConfigMap.isEmpty()) {
+      app.getArtifactEndpoint =
+          (String) artifactStoreEndpointConfigMap.get(ModelDBConstants.GET_ARTIFACT_ENDPOINT);
+      LOGGER.trace("ArtifactStore Get artifact endpoint found : {}", app.getArtifactEndpoint);
+      app.storeArtifactEndpoint =
+          (String) artifactStoreEndpointConfigMap.get(ModelDBConstants.STORE_ARTIFACT_ENDPOINT);
+      LOGGER.trace("ArtifactStore Store artifact endpoint found : {}", app.storeArtifactEndpoint);
+
+      System.getProperties().put("artifactEndpoint.storeArtifact", app.storeArtifactEndpoint);
+      System.getProperties().put("artifactEndpoint.getArtifact", app.getArtifactEndpoint);
+    }
     switch (artifactStoreType) {
       case ModelDBConstants.S3:
         Map<String, Object> s3ConfigMap =
             (Map<String, Object>) artifactStoreConfigMap.get(ModelDBConstants.S3);
         app.cloudAccessKey = (String) s3ConfigMap.get(ModelDBConstants.CLOUD_ACCESS_KEY);
         app.cloudSecretKey = (String) s3ConfigMap.get(ModelDBConstants.CLOUD_SECRET_KEY);
+        app.minioEndpoint = (String) s3ConfigMap.get(ModelDBConstants.MINIO_ENDPOINT);
+        app.awsRegion =
+            (String)
+                s3ConfigMap.getOrDefault(
+                    ModelDBConstants.AWS_REGION, ModelDBConstants.DEFAULT_AWS_REGION);
         String cloudBucketName = (String) s3ConfigMap.get(ModelDBConstants.CLOUD_BUCKET_NAME);
-        artifactStoreService = new S3Service(cloudBucketName);
         app.storeTypePathPrefix = "s3://" + cloudBucketName + ModelDBConstants.PATH_DELIMITER;
-        System.getProperties().put("scan.packages", "dummyPackageName");
-        SpringApplication.run(App.class, new String[0]);
+
+        if (s3ConfigMap.containsKey(ModelDBConstants.S3_PRESIGNED_URL_ENABLED)
+            && !((boolean) s3ConfigMap.get(ModelDBConstants.S3_PRESIGNED_URL_ENABLED))) {
+          app.s3presignedURLEnabled = false;
+
+          System.setProperty(ModelDBConstants.CLOUD_BUCKET_NAME, cloudBucketName);
+          System.getProperties()
+              .put("scan.packages", "ai.verta.modeldb.artifactStore.storageservice.s3");
+          SpringApplication.run(App.class);
+          artifactStoreService = app.applicationContext.getBean(S3Service.class);
+        } else {
+          artifactStoreService = new S3Service(cloudBucketName);
+          System.getProperties().put("scan.packages", "dummyPackageName");
+          SpringApplication.run(App.class);
+        }
         break;
       case ModelDBConstants.NFS:
         Map<String, Object> nfsConfigMap =
@@ -579,30 +668,41 @@ public class App implements ApplicationContextAware {
         LOGGER.trace("NFS server root path {}", rootDir);
         app.storeTypePathPrefix = "nfs://" + rootDir + ModelDBConstants.PATH_DELIMITER;
 
-        app.pickNFSHostFromConfig =
-            (Boolean) nfsConfigMap.getOrDefault(ModelDBConstants.PICK_NFS_HOST_FROM_CONFIG, false);
-        LOGGER.trace("NFS pick host from config flag : {}", app.pickNFSHostFromConfig);
-        app.nfsServerHost =
-            (String) nfsConfigMap.getOrDefault(ModelDBConstants.NFS_SERVER_HOST, "");
-        LOGGER.trace("NFS server host URL found : {}", app.nfsServerHost);
-        app.nfsUrlProtocol =
-            (String)
-                nfsConfigMap.getOrDefault(
-                    ModelDBConstants.NFS_URL_PROTOCOL, ModelDBConstants.HTTPS_STR);
-        LOGGER.debug("NFS URL protocol found : {}", app.nfsUrlProtocol);
+        if (!artifactStoreConfigMap.containsKey(
+            ModelDBConstants.PICK_ARTIFACT_STORE_HOST_FROM_CONFIG)) {
+          app.pickArtifactStoreHostFromConfig =
+              (Boolean)
+                  nfsConfigMap.getOrDefault(ModelDBConstants.PICK_NFS_HOST_FROM_CONFIG, false);
+          LOGGER.trace("NFS pick host from config flag : {}", app.pickArtifactStoreHostFromConfig);
+        }
+        if (!artifactStoreConfigMap.containsKey(ModelDBConstants.ARTIFACT_STORE_SERVER_HOST)) {
+          app.artifactStoreServerHost =
+              (String) nfsConfigMap.getOrDefault(ModelDBConstants.NFS_SERVER_HOST, "");
+          LOGGER.trace("NFS server host URL found : {}", app.artifactStoreServerHost);
+        }
+        if (!artifactStoreConfigMap.containsKey(ModelDBConstants.ARTIFACT_STORE_URL_PROTOCOL)) {
+          app.artifactStoreUrlProtocol =
+              (String)
+                  nfsConfigMap.getOrDefault(
+                      ModelDBConstants.NFS_URL_PROTOCOL, ModelDBConstants.HTTPS_STR);
+          LOGGER.debug("NFS URL protocol found : {}", app.artifactStoreUrlProtocol);
+        }
 
-        Map<String, Object> artifactEndpointConfigMap =
-            (Map<String, Object>) nfsConfigMap.get(ModelDBConstants.ARTIFACT_ENDPOINT);
-        app.getArtifactEndpoint =
-            (String) artifactEndpointConfigMap.get(ModelDBConstants.GET_ARTIFACT_ENDPOINT);
-        LOGGER.trace("Get artifact endpoint found : {}", app.getArtifactEndpoint);
-        app.storeArtifactEndpoint =
-            (String) artifactEndpointConfigMap.get(ModelDBConstants.STORE_ARTIFACT_ENDPOINT);
-        LOGGER.trace("Store artifact endpoint found : {}", app.storeArtifactEndpoint);
-
+        if (artifactStoreEndpointConfigMap == null || artifactStoreEndpointConfigMap.isEmpty()) {
+          Map<String, Object> artifactEndpointConfigMap =
+              (Map<String, Object>) nfsConfigMap.get(ModelDBConstants.ARTIFACT_ENDPOINT);
+          if (artifactEndpointConfigMap != null && !artifactEndpointConfigMap.isEmpty()) {
+            app.getArtifactEndpoint =
+                (String) artifactEndpointConfigMap.get(ModelDBConstants.GET_ARTIFACT_ENDPOINT);
+            LOGGER.trace("Get artifact endpoint found : {}", app.getArtifactEndpoint);
+            app.storeArtifactEndpoint =
+                (String) artifactEndpointConfigMap.get(ModelDBConstants.STORE_ARTIFACT_ENDPOINT);
+            LOGGER.trace("Store artifact endpoint found : {}", app.storeArtifactEndpoint);
+          }
+          System.getProperties().put("artifactEndpoint.storeArtifact", app.storeArtifactEndpoint);
+          System.getProperties().put("artifactEndpoint.getArtifact", app.getArtifactEndpoint);
+        }
         System.getProperties().put("file.upload-dir", rootDir);
-        System.getProperties().put("artifactEndpoint.storeArtifact", app.storeArtifactEndpoint);
-        System.getProperties().put("artifactEndpoint.getArtifact", app.getArtifactEndpoint);
         System.getProperties()
             .put("scan.packages", "ai.verta.modeldb.artifactStore.storageservice.nfs");
         SpringApplication.run(App.class, new String[0]);
@@ -665,16 +765,20 @@ public class App implements ApplicationContextAware {
     this.authServerPort = authServerPort;
   }
 
-  public Boolean getPickNFSHostFromConfig() {
-    return pickNFSHostFromConfig;
+  public boolean isS3presignedURLEnabled() {
+    return s3presignedURLEnabled;
   }
 
-  public String getNfsServerHost() {
-    return nfsServerHost;
+  public Boolean getPickArtifactStoreHostFromConfig() {
+    return pickArtifactStoreHostFromConfig;
   }
 
-  public String getNfsUrlProtocol() {
-    return nfsUrlProtocol;
+  public String getArtifactStoreServerHost() {
+    return artifactStoreServerHost;
+  }
+
+  public String getArtifactStoreUrlProtocol() {
+    return artifactStoreUrlProtocol;
   }
 
   public String getStoreArtifactEndpoint() {
@@ -721,6 +825,14 @@ public class App implements ApplicationContextAware {
     return cloudSecretKey;
   }
 
+  public String getMinioEndpoint() {
+    return minioEndpoint;
+  }
+
+  public String getAwsRegion() {
+    return awsRegion;
+  }
+
   public Boolean getStoreClientCreationTimestamp() {
     return storeClientCreationTimestamp;
   }
@@ -739,5 +851,17 @@ public class App implements ApplicationContextAware {
 
   public Integer getRequestTimeout() {
     return requestTimeout;
+  }
+
+  public void setRoleService(RoleService roleService) {
+    this.roleService = roleService;
+  }
+
+  public RoleService getRoleService() {
+    return roleService;
+  }
+
+  public boolean isPopulateConnectionsBasedOnPrivileges() {
+    return populateConnectionsBasedOnPrivileges;
   }
 }
